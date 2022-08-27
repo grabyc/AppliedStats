@@ -1,0 +1,984 @@
+---
+title: "TP01"
+author: "Gabriel Raby"
+date: "26/01/2022"
+output: rmdformats::readthedown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    sapply(pkg, require, character.only = TRUE)
+}
+
+packages <- c("knitr", "tidyverse", "readxl")
+ipak(packages)
+```
+
+## Ejercicio 1
+
+Sea $X \sim N_{3} (0, \Sigma)$ con:
+
+$$
+\begin{aligned}
+\mu = 
+  \begin{bmatrix} 
+    0 \\ 0 \\ 0
+  \end{bmatrix}
+\text{ y }
+\Sigma =   
+  \begin{bmatrix} 
+    3 && 1 && 0 \\ 1 && 2 && 1 \\ 0 && 1 && 4
+  \end{bmatrix}
+\end{aligned}
+$$
+
+#### 1) Encontrar las distribuciones marginales de $X_1$ y $X_3$
+
+Para hallar la distribución marginal de un sub-vector $y_1$ se aplica el teorema de distribución de transformaciones lineales de vectores aleatorios, escogiendo apropiadamente la matriz **C**. 
+
+Si se toma $C = \begin{bmatrix} I_k ; 0_{k \times (n-k)} \end{bmatrix}$ y $c=0$ se tiene que $Cy+c = y_1$, y luego, la distribución resultante será 
+
+$$
+\begin{aligned}
+N(C\mu+c, C \Sigma C') &= N(\mu_1, \Sigma_{11}) \quad \text{donde} \\
+\mu_1&=E(y_1)\\
+\Sigma_{11}  &\text{ es el bloque de varianzas y covarianzas correspondiente a } y_1 
+\end{aligned}
+$$
+
+Así, para $y_1=X_1$
+
+$$
+\begin{aligned}
+N(\mu_1, \Sigma_{11}) &= N(0, \begin{bmatrix} 3 \end{bmatrix}) 
+\end{aligned}
+$$
+
+y para $y_1=X_3$
+
+$$
+\begin{aligned}
+N(\mu_1, \Sigma_{11}) &= N(0, \begin{bmatrix} 4 \end{bmatrix}) 
+\end{aligned}
+$$
+
+#### 2) Encontrar la distribución conjunta de $X_1$ y $X_2$.
+
+Para encontrar la distribución conjunta de $X_1$ y $X_2$ consideramos la siguiente partición del vector aleatorio original
+
+$$
+\begin{aligned}
+Y = 
+  \Bigg( 
+    \begin{matrix} 
+      y_1 \\ y_2
+    \end{matrix}
+  \Bigg)
+\text{ donde }
+y_1 = 
+  \Bigg( 
+    \begin{matrix} 
+      X_1 \\ X_2
+    \end{matrix}
+  \Bigg)
+\text{ y }
+y_2 = 
+  \Big( X_3 \Big)
+\end{aligned}
+$$
+
+De esta manera, el vector de medias y la matriz de coviarianzas para $Y$ puede expresarse como 
+
+$$
+\begin{aligned}
+  \mu = E(Y) =
+    E \Bigg( 
+      \begin{matrix} 
+        y_1 \\ y_2
+      \end{matrix}
+      \Bigg)
+    =
+      \Bigg( 
+        \begin{matrix} 
+          E(y_1) \\ E(y_2)
+        \end{matrix}
+      \Bigg)
+    =
+      \Bigg( 
+        \begin{matrix} 
+          \mu_{y_1} \\ \mu_{y_2} 
+        \end{matrix}
+      \Bigg) \\
+  \Sigma = cov(Y) =
+      cov \Bigg( 
+            \begin{matrix} 
+              y_1 \\ y_2
+            \end{matrix}
+          \Bigg)
+    =
+          \Bigg( 
+            \begin{matrix} 
+              \Sigma_{y_1 y_1} & \Sigma_{y_1 y_2}  \\ 
+              \Sigma_{y_2 y_1} & \Sigma_{y_2 y_2}
+            \end{matrix}
+          \Bigg)
+\end{aligned}
+$$
+
+donde la submatriz $\mu_{y_1} = [E(X_1), E(X_2)]'$ contiene las medias de $X_1, X_2$, y la submatriz $\Sigma_{y_1 y_1} = cov(y_1)$ es una matriz de covarianza de $2 \times 2$ que contiene las varianzas de $X_1, X_2$ en la diagonal y la covarianza de $X_1$ y $X_2$ fuera de la diagonal. Esto es
+
+$$
+\begin{aligned}
+  \mu_{y_1} = 
+      \begin{bmatrix} 
+        E(X_1) \\ E(X_2)
+      \end{bmatrix}
+    =
+      \begin{bmatrix} 
+        0 \\ 0
+      \end{bmatrix} \\
+  \Sigma_{y_1 y_1} = 
+      \begin{bmatrix} 
+        \sigma^2_{X_1} & \sigma_{X_1 X_2} \\
+        \sigma_{X_2 X_1} &  \sigma^2_{X_2}
+      \end{bmatrix}
+    =
+      \begin{bmatrix} 
+        3 & 1 \\
+        1 &  2
+      \end{bmatrix}
+\end{aligned}
+$$
+
+Luego, la distribución conjunta de $y_1 = \Bigg( \begin{matrix} X_1 \\ X_2 \end{matrix} \Bigg)$ es la siguiente
+
+$$
+\begin{aligned}
+y_1=[X_1,X_2]' \sim  N_2 \Bigg(    
+  \begin{bmatrix} 
+      0 \\ 0
+  \end{bmatrix}, 
+  \begin{bmatrix} 
+      3 & 1 \\
+      1 &  2
+  \end{bmatrix}
+  \Bigg) 
+\end{aligned}
+$$
+
+#### 3) Encontrar la distribución condicional de $X_2 | X_1 = x_1 \wedge X_3 = x_3$
+
+Si consideramos la siguiente partición del vector aleatorio original
+
+$$
+\begin{aligned}
+Y = 
+  \Bigg( 
+    \begin{matrix} 
+      Y_1 \\ Y_2
+    \end{matrix}
+  \Bigg)
+\text{ donde }
+Y_1 = 
+  \Big( 
+    \begin{matrix} 
+      X_2
+    \end{matrix}
+  \Big)
+\text{ y }
+Y_2 = 
+  \Bigg(
+    \begin{matrix} 
+      X_1 \\ X_3 
+    \end{matrix}
+  \Bigg)
+\end{aligned}
+$$
+
+entonces la función de densidad de $Y_1 | Y_2=y_2$, es decir, $Y_1 | Y_2=[x_1, x_3]'$ está dada por
+
+$$
+\begin{aligned}
+  f(Y_1 | Y_2=y_2) = \frac {(2\pi)^{-3/2} |\Sigma_{22}|^{-1/2} |\Sigma_{11.2}|^{-1/2} e^{-\frac {1} {2} \Big[ (Y_1 - \mu_{1.2})' \text{ } \Sigma_{11.2}^{-1} \text{ } (Y_1 - \mu_{1.2}) \Big] }}   {(2\pi)^{-1}|\Sigma_{22}|^{-1/2}} 
+\end{aligned}
+$$
+
+que simplificando queda
+
+$$
+\begin{aligned}
+  f(Y_1 | Y_2=y_2) = (2\pi)^{-1/2}  |\Sigma_{11.2}|^{-1/2} e^{-\frac {1} {2} \Big[ (Y_1 - \mu_{1.2})' \text{ } \Sigma_{11.2}^{-1} \text{ } (Y_1 - \mu_{1.2}) \Big] } 
+\end{aligned}
+$$
+
+Ahora, si reemplazamos $Y_1 = [X_2]$ y $Y_2=[X_1, X_3]$, obtenemos
+
+$$
+\begin{aligned}
+  \mu_{1.2} &= \mu_1 + \Sigma_{12} \Sigma_{22}^{-1} (y-\mu)_2 \\
+            &=\mu_{X_2} + 
+              \begin{bmatrix} 
+                \sigma_{X_1 X_2} & \sigma_{X_2 X_3} 
+              \end{bmatrix} 
+              \begin{bmatrix} 
+                \sigma^2_{X_1} & \sigma_{X_1 X_3} \\
+                \sigma_{X_3 X_1} &  \sigma^2_{X_3}
+              \end{bmatrix}^{-1}
+              \begin{bmatrix} 
+                X_1 - \mu_1 \\ 
+                X_3 - \mu_3 
+              \end{bmatrix} \\
+  \Sigma_{11.2} &= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21} \\
+                &=  \begin{bmatrix} 
+                      \sigma^2_{X_2} 
+                    \end{bmatrix} - 
+                    \begin{bmatrix} 
+                      \sigma_{X_1 X_2} & \sigma_{X_2 X_3} 
+                    \end{bmatrix} 
+                    \begin{bmatrix} 
+                      \sigma^2_{X_1} & \sigma_{X_1 X_3} \\
+                      \sigma_{X_3 X_1} &  \sigma^2_{X_3}
+                    \end{bmatrix}^{-1}
+                    \begin{bmatrix} 
+                      \sigma_{X_2 X_1} \\ 
+                      \sigma_{X_3 X_2} 
+                    \end{bmatrix}
+\end{aligned}
+$$
+              
+A continuacion, trabajamos con datos en R
+
+```{r echo=TRUE}
+# Matriz de esperanzas
+mu <- matrix(c(0,0,0),nrow=3,byrow=TRUE)
+
+# Matriz de varianzas y covarianzas
+S <- matrix(c(3,1,0,1,2,1,0,1,4),nrow=3,byrow=TRUE)
+
+# Particion en Y1=[X2] y Y2=[X1, X3]
+Y1 <- c(2)
+Y2 <- c(1,3)
+
+mu_Y1 <- mu[Y1] 
+mu_Y2 <- mu[Y2] 
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Esperanza condicional
+mu_Y1_Y2 <- round(mu_Y1 + S_12 %*% solve(S_22), 3)
+mu_Y1_Y2
+
+# Varianza condicional
+S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
+S_Y1_Y2
+```
+
+Luego, 
+
+$$
+\begin{aligned}
+    \mu_{1.2}   &=0 + 
+              \begin{bmatrix} 
+                1 & 1 
+              \end{bmatrix} 
+              \begin{bmatrix} 
+                3 & 0 \\
+                0 &  4
+              \end{bmatrix}^{-1}
+              \begin{bmatrix} 
+                x_1 - 0 \\ 
+                x_3 - 0 
+              \end{bmatrix} \\ 
+            &= 
+              \begin{bmatrix} 
+                1 & 1 
+              \end{bmatrix} 
+              \begin{bmatrix} 
+                0.333 & 0 \\
+                0 &  0.25
+              \end{bmatrix}
+              \begin{bmatrix} 
+                x_1 \\ 
+                x_3 
+              \end{bmatrix} \\ 
+            &= 0.333 x_1 + 0.25 x_3 \\
+  \Sigma_{11.2} &= \begin{bmatrix} 
+                2 
+              \end{bmatrix} -
+              \begin{bmatrix} 
+                1 & 1 
+              \end{bmatrix} 
+              \begin{bmatrix} 
+                3 & 0 \\
+                0 &  4
+              \end{bmatrix}^{-1}
+              \begin{bmatrix} 
+                1 \\ 
+                1
+              \end{bmatrix} \\  
+              &= 2 - 0.583 = 1.417
+\end{aligned}
+$$
+
+Finalmente, la dsitribucion condicional es la siguiente
+
+$$
+\begin{aligned}
+  X_2 | X_1 = x_1 \wedge X_3 = x_3 \sim N(0.333 x_1 + 0.25 x_3, 1.417)
+\end{aligned}
+$$
+
+
+#### 4) Encontrar la matriz de correlación.
+
+Si $\Sigma$ es la matriz de varianzas y covarianzas, y se toma $D$ como la matriz de elementos diagonales de $\Sigma$, entonces se puede obtener la matriz de correlacion $R$ de la siguiente forma:
+
+$$
+\begin{aligned}
+  R = D^{-1/2} \Sigma D^{-1/2}
+\end{aligned}
+$$
+
+En R
+
+```{r echo=TRUE}
+# Matriz de varianzas y covarianzas ya definida en 3)
+
+# Matriz diagonal D y su raiz de la inversa
+D <- diag(diag(S))
+D_Inv <- sqrt(solve(D)) 
+
+# Matriz de correlacion R
+R <- D_Inv %*% S %*% D_Inv
+round(R, 3)
+```
+
+#### 5) Encontrar las siguientes correlaciones parciales $\rho_{13|2}$ y $\rho_{12|3}$
+
+Si se tiene una particion de $Y$ en $Y_1$ e $Y_2$ donde $Y_1|Y_2$, entonces encontrar la matriz de correlaciones depende de hallar la matriz de varianzas condicionales
+
+$$
+\begin{aligned}
+  \Sigma_{11.2} &= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21}
+\end{aligned}
+$$
+
+Luego, el calculo de la matriz de correlaciones está dado por
+
+$$
+\begin{aligned}
+  R_{11.2} = D_{11.2}^{-1/2} \Sigma_{11.2} D_{11.2}^{-1/2}
+\end{aligned}
+$$
+
+Para el caso de $\rho_{13|2}$, en R
+
+```{r echo=TRUE}
+# Particion en Y1=[X1, X3] y Y2=[X2]  
+Y1 <- c(1,3)
+Y2 <- c(2)
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Varianza condicional
+S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
+
+# Matriz diagonal D parcial y su raiz de la inversa
+D_Y1_Y2 <- diag(diag(S_Y1_Y2))
+D_Inv_Y1_Y2 <- sqrt(solve(D_Y1_Y2)) 
+
+# Matriz de correlacion R parcial
+R_Y1_Y2 <- D_Inv_Y1_Y2 %*% S_Y1_Y2 %*% D_Inv_Y1_Y2
+round(R_Y1_Y2, 3)
+```
+
+Para el caso de $\rho_{12|3}$, en R
+
+```{r echo=TRUE}
+# Particion en Y1=[X1, X2] y Y2=[X3]
+Y1 <- c(1,2)
+Y2 <- c(3)
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Varianza condicional
+S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
+
+# Matriz diagonal D parcial y su raiz de la inversa
+D_Y1_Y2 <- diag(diag(S_Y1_Y2))
+D_Inv_Y1_Y2 <- sqrt(solve(D_Y1_Y2)) 
+
+# Matriz de correlacion R parcial
+R_Y1_Y2 <- D_Inv_Y1_Y2 %*% S_Y1_Y2 %*% D_Inv_Y1_Y2
+round(R_Y1_Y2, 3)
+```
+
+
+#### 6) Encontrar la distribución de $Z = 3x_1 - 2x_2 - 11$
+
+Para obtener la esperanza y la varianza de esta transformacion lineal, se puede aplicar las propiedades de la esperanza y varianza univariadas.
+
+Luego, la esperanza y la varianza de Z
+
+$$
+\begin{aligned}
+  E(Z) &= E(Ay + c) = A \mu + c \\
+  V(Z) &= V(Ay + c) = A V(y) A' = A \Sigma A'
+\end{aligned}
+$$
+Si se convierte la primer expresion de la transformacion lineal Z a notacion matricial, entonces
+
+$$
+\begin{aligned}
+  Z &= Ay + c \quad \text{ donde } 
+        A = 
+              \begin{bmatrix} 
+                3 & -2 
+              \end{bmatrix} 
+        \text{ ,  }
+        y =
+              \begin{bmatrix} 
+                x_1 \\
+                x_2
+              \end{bmatrix} 
+        \text{ y  }
+        c =
+              \begin{bmatrix} 
+                -11
+              \end{bmatrix} 
+\end{aligned}
+$$
+
+entonces, en R
+
+```{r echo=TRUE}
+# mu y S quedaron definidas en 3)
+
+# matriz A y c
+A <- matrix(c(3,-2),nrow=1,byrow=TRUE)
+c <- c(-11)
+
+# Y1=[X1, X2]
+Y1 <- c(1,2)
+
+mu_Y1 <- mu[Y1] 
+S_Y1 <- S[Y1, Y1] 
+
+# E(Z) = A*mu_Y1 + c
+mu_Z <- A %*% mu_Y1 + c
+round(mu_Z, 3)
+
+# V(Z) = A*S_Y1*A'
+S_Z <- A %*% S_Y1 %*% t(A)
+round(S_Z, 3)
+```
+
+Así, la dsitribucion de la transformación lineal es la siguiente
+
+$$
+\begin{aligned}
+  Z \sim N(-11, 23)
+\end{aligned}
+$$
+
+#### 7) Encontrar la covarianza entre $Z_1$ y $Z_2$ donde $Z_1 = 2X_1 - 3X_2 + X_3 -3$ y $Z_2 = 3X_3 + 2$
+
+Se tiene que
+
+$$
+\begin{aligned}
+  Cov(Ax + a, By + b) = A Cov(x,y) B'
+\end{aligned}
+$$
+
+Luego, si se toma
+
+$$
+\begin{aligned}
+   Z_1 &= Ax + a = 2X_1 - 3X_2 + X_3 -3 
+      \quad & \text{ donde } 
+        A = 
+              \begin{bmatrix} 
+                2 & -3 & 1 
+              \end{bmatrix} 
+         \text{ ,  }
+        x' =
+              \begin{bmatrix} 
+                x_1 & x_2 & x_3
+              \end{bmatrix} '
+         \text{ y  }
+        a =
+              \begin{bmatrix} 
+                -3
+              \end{bmatrix} \\
+   Z_2 &= By + b = 3X_3 + 2
+      \quad & \text{ donde } 
+        B = 
+              \begin{bmatrix} 
+                0 & 0 & 3 
+              \end{bmatrix} 
+         \text{ ,  }
+        y' =
+              \begin{bmatrix} 
+                x_1 & x_2 & x_3
+              \end{bmatrix} '
+         \text{ y  }
+        b =
+              \begin{bmatrix} 
+                2
+              \end{bmatrix} 
+\end{aligned}
+$$
+
+Como puede verse, $x=y$, es decir
+
+$$
+\begin{aligned}
+  Cov(x, y) = V(x) = V(y) = \Sigma
+\end{aligned}
+$$
+
+Así,
+
+$$
+\begin{aligned}
+  Cov(Z_1, Z_2) = A \Sigma B'
+\end{aligned}
+$$
+
+entonces, en R
+
+```{r echo=TRUE}
+# S fue definida en 3)
+
+# matriz A y B
+A <- matrix(c(2,-3,1),nrow=1,byrow=TRUE)
+B <- matrix(c(0,0,3),nrow=1,byrow=TRUE)
+
+# Cov(Z) = A*S*B'
+Cov_Z <- A %*% S %*% t(B)
+round(Cov_Z, 3)
+```
+
+Finalmente, la covarianza de $Z_1$ y $Z_2$ es
+
+$$
+\begin{aligned}
+  Cov(Z_1, Z_2) = 3
+\end{aligned}
+$$
+
+## Ejercicio 2
+
+En el archivo *calefacción* se muestran datos correspondientes a una población de 20 inmuebles ubicados en cierta zona residencial. Se consideran tres variables que están relacionadas con el costo de calefacción de la vivienda: 
+
+ - la temperatura exterior media diaria ($X_1$), 
+ 
+ - el número de cm. de aislamiento térmico de las paredes ($X_2$) y 
+ 
+ - la antiguedad del calefactor ($X_3$). 
+ 
+#### 1)  Obtener el vector de medias y la matriz de varianzas y covarianzas del vector $X´= (X_1 X_2 X_3)$.
+
+Para hallar vector de medias y matriz de varianzas y covarianzas de $X$, se trabajará con notación matricial, por lo que se utilizará la matriz de centrado $H$
+
+$$
+\begin{aligned}
+  H = I - \frac {1} {n} J \quad \text{ donde } 1=(1...1)'_{n \times 1} \text{ , y } J=11' 
+\end{aligned}
+$$
+
+En R
+
+```{r echo=TRUE}
+# matrices auxiliares
+m_unos <-  function(x) {
+  matrix(rep(1, times = x), ncol = 1, byrow = FALSE)
+}
+
+m_jota <- function(x){
+  uno <- m_unos(x)
+  uno %*% t(uno)
+}
+
+m_hat <- function(x){
+  I <- diag(x)
+  J <- m_jota(x)
+  
+  I - (1/x) * J
+}
+```
+
+Luego, el vector de medias y matriz de varianzas y covarianzas pueden expresarse de la siguiente manera
+
+$$
+\begin{aligned}
+ \overline{x}' &= \frac {1} {n} 1' X \\
+ S &=  \frac {1} {n}  X' H X
+\end{aligned}
+$$
+
+Ahora, tomando los datos del ejercicio en R
+
+```{r echo=TRUE}
+# datos de archivo calefaccion.xlsx
+data <- read_excel("calefaccion.xlsx")
+
+# calculos auxiliares
+n <- nrow(data)
+X <- as.matrix(data)
+
+unos <- m_unos(n)
+J <- m_jota(n)
+H <- m_hat(n)
+
+# vector de medias
+X_means <- (1/n) * t(unos) %*% X
+round(X_means, 3)
+
+# matriz de varianzas y covarianzas
+X_cov <- (1/(n-1)) * t(X) %*% H %*% X
+round(X_cov, 3)
+```
+
+En ambos casos, es posible comparar los resultados obtenidos con los valores que devuelven las funciones de R
+
+```{r echo=TRUE}
+# vector de medias
+round(colMeans(X), 3)
+
+# matriz de varianzas y covarianzas
+round(cov(X), 3)
+```
+
+#### 2) Obtener la matriz de correlación. 
+
+La matriz de correlación puede expresarse matricialmente de la siguiente manera
+
+$$
+\begin{aligned}
+ R &= D^{-1} S D^{-1} 
+\end{aligned}
+$$
+
+En R
+
+```{r echo=TRUE}
+# X y X_cov fueron definidas en el inciso anterior
+
+# matriz de correlaciones
+D <- diag(diag(X_cov))
+D_inv <- sqrt(solve(D))
+
+R <- D_inv %*% X_cov %*% D_inv
+round(R, 3)
+```
+
+Este resultado también puede compararse con los valores que devuelve la funciòn de R
+
+```{r echo=TRUE}
+# matriz de correlaciones
+round(cov2cor(cov(X)), 3)
+```
+
+#### 3) Obtener la matriz de correlación parcial de $X^{(1)} = (X_1 X_2)$ dado $X^{(2)} = X_3$.
+
+Primero se debe hallar la matriz de varianzas condicionales
+
+$$
+\begin{aligned}
+  \Sigma_{11.2} &= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21}
+\end{aligned}
+$$
+
+En R
+
+```{r echo=TRUE}
+# S definida en inciso anterior
+S <- X_cov
+
+# Particion en Y1=[X1, X2] y Y2=[X3]  
+Y1 <- c(1,2)
+Y2 <- c(3)
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Varianza condicional
+S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
+```
+
+Luego, el calculo de la matriz de correlaciones está dado por
+
+$$
+\begin{aligned}
+  R_{11.2} = D_{11.2}^{-1/2} \Sigma_{11.2} D_{11.2}^{-1/2}
+\end{aligned}
+$$
+
+Asì, en R
+
+```{r echo=TRUE}
+# Matriz diagonal D parcial y su raiz de la inversa
+D_Y1_Y2 <- diag(diag(S_Y1_Y2))
+D_Inv_Y1_Y2 <- sqrt(solve(D_Y1_Y2)) 
+
+# Matriz de correlacion R parcial
+R_Y1_Y2 <- D_Inv_Y1_Y2 %*% S_Y1_Y2 %*% D_Inv_Y1_Y2
+round(R_Y1_Y2, 3)
+```
+
+## Ejercicio 3
+
+Sea $X \sim N_{3} (\mu, \Sigma)$ con:
+
+$$
+\begin{aligned}
+\mu = 
+  \begin{bmatrix} 
+    2 \\ 1 \\ 4
+  \end{bmatrix}
+\text{ y }
+\Sigma =   
+  \begin{bmatrix} 
+    2 && -1 && 0 \\ -1 && 4 && 0 \\ 0 && 0 && 1
+  \end{bmatrix}
+\end{aligned}
+$$
+
+#### 1) Encontrar la distribución conjunta de $X_1$ y $X_2$.
+
+Esto es
+
+$$
+\begin{aligned}
+  \mu_{y_1} &= 
+      \begin{bmatrix} 
+        E(X_1) \\ E(X_2)
+      \end{bmatrix}
+    =
+      \begin{bmatrix} 
+        2 \\ 1
+      \end{bmatrix} \\
+  \Sigma_{y_1 y_1} &= 
+      \begin{bmatrix} 
+        \sigma^2_{X_1} & \sigma_{X_1 X_2} \\
+        \sigma_{X_2 X_1} &  \sigma^2_{X_2}
+      \end{bmatrix}
+    =
+      \begin{bmatrix} 
+        2 & -1 \\
+        -1 & 4
+      \end{bmatrix}
+\end{aligned}
+$$
+
+Luego, la distribución conjunta de $X_1$ y $X_2$ es la siguiente
+
+$$
+\begin{aligned}
+X_1=[X_1,X_2]' \sim  N_2 \Bigg(    
+  \begin{bmatrix} 
+      2 \\ 1
+  \end{bmatrix}, 
+  \begin{bmatrix} 
+      2 & -1 \\
+      -1 &  4
+  \end{bmatrix}
+  \Bigg) 
+\end{aligned}
+$$
+
+#### 2) Encontrar la distribución condicional de $X_1 = x_1 \wedge X_2 = x_2  |  X_3 = x_3$, la esperanza y varianza
+
+Si consideramos la siguiente partición del vector aleatorio original
+
+$$
+\begin{aligned}
+Y = 
+  \Bigg( 
+    \begin{matrix} 
+      Y_1 \\ Y_2
+    \end{matrix}
+  \Bigg)
+\text{ donde }
+Y_1 = 
+  \Bigg( 
+    \begin{matrix} 
+      X_1 \\ X_2
+    \end{matrix}
+  \Bigg)
+\text{ y }
+Y_2 = 
+  \Big(
+    \begin{matrix} 
+      X_3 
+    \end{matrix}
+  \Big)
+\end{aligned}
+$$
+
+Entonces $Y_1 = [X_1, X_2]$ y $Y_2=[X_3]$, obtenemos
+
+$$
+\begin{aligned}
+  \mu_{1.2} &= \mu_1 + \Sigma_{12} \Sigma_{22}^{-1} (y-\mu)_2 \\
+            &=
+              \begin{bmatrix} 
+                \mu_1 \\ 
+                \mu_2 
+              \end{bmatrix} + 
+              \begin{bmatrix} 
+                \sigma_{X_1 X_3} \\
+                \sigma_{X_2 X_3} 
+              \end{bmatrix} 
+              \begin{bmatrix} 
+                \sigma^2_{X_3}
+              \end{bmatrix}^{-1}
+              \begin{bmatrix} 
+                X_3 - \mu_3 
+              \end{bmatrix} \\
+  \Sigma_{11.2} &= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21} \\
+                &=  \begin{bmatrix} 
+                      \sigma^2_{X_1} & \sigma_{X_1 X_2} \\
+                      \sigma_{X_2 X_1} &  \sigma^2_{X_2}
+                    \end{bmatrix} - 
+                    \begin{bmatrix} 
+                      \sigma_{X_1 X_3} \\
+                      \sigma_{X_2 X_3} 
+                    \end{bmatrix} 
+                    \begin{bmatrix} 
+                      \sigma^2_{X_3}
+                    \end{bmatrix}^{-1}
+                    \begin{bmatrix} 
+                      \sigma_{X_3 X_1} & 
+                      \sigma_{X_3 X_2} 
+                    \end{bmatrix}
+\end{aligned}
+$$
+              
+A continuacion, trabajamos con datos en R
+
+```{r echo=TRUE}
+# Matriz de esperanzas
+mu <- matrix(c(2,1,4),nrow=3,byrow=TRUE)
+
+# Matriz de varianzas y covarianzas
+S <- matrix(c(2,-1,0,-1,4,0,0,0,1),nrow=3,byrow=TRUE)
+
+# Particion en Y1=[X1,X2] y Y2=[X3]
+Y1 <- c(1,2)
+Y2 <- c(3)
+
+mu_Y1 <- mu[Y1] 
+mu_Y2 <- mu[Y2] 
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Esperanza condicional
+mu_Y1_Y2 <- round(mu_Y1 + S_12 %*% solve(S_22), 3)
+mu_Y1_Y2
+
+# Varianza condicional
+S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
+S_Y1_Y2
+```
+
+Luego, 
+
+$$
+\begin{aligned}
+    \mu_{1.2} &=  \begin{bmatrix} 
+                2 \\ 
+                1 
+              \end{bmatrix} + 
+              \begin{bmatrix} 
+                0 \\
+                0 
+              \end{bmatrix} 
+              \begin{bmatrix} 
+                1
+              \end{bmatrix}^{-1}
+              \begin{bmatrix} 
+                x_3 - 4 
+              \end{bmatrix} \\ 
+            &= 
+              \begin{bmatrix} 
+                2 \\ 
+                1 
+              \end{bmatrix} + 
+              \begin{bmatrix} 
+                0 \\
+                0 
+              \end{bmatrix}  =
+              \begin{bmatrix} 
+                2 \\ 
+                1 
+              \end{bmatrix} \\
+  \Sigma_{11.2} &=  \begin{bmatrix} 
+                      2 & -1 \\
+                      -1 & 4
+                    \end{bmatrix} - 
+                    \begin{bmatrix} 
+                      0 \\
+                      0 
+                    \end{bmatrix} 
+                    \begin{bmatrix} 
+                      1
+                    \end{bmatrix}^{-1}
+                    \begin{bmatrix} 
+                      0 & 
+                      0 
+                    \end{bmatrix} \\  
+              &= \begin{bmatrix} 
+                      2 & -1 \\
+                      -1 & 4
+                    \end{bmatrix} - 
+                    \begin{bmatrix} 
+                      0 \\
+                      0 
+                    \end{bmatrix}  =
+                    \begin{bmatrix} 
+                      2 & -1 \\
+                      -1 & 4
+                    \end{bmatrix}
+\end{aligned}
+$$
+
+Finalmente, la dsitribucion condicional es la siguiente
+
+$$
+\begin{aligned}
+  X_1 = x_1 \wedge X_2 = x_2 | X_3 = x_3 
+      \sim N_2 \Bigg(
+              \begin{bmatrix} 
+                2 \\ 
+                1 
+              \end{bmatrix}, 
+              \begin{bmatrix} 
+                      2 & -1 \\
+                      -1 & 4
+              \end{bmatrix}
+              \Bigg)
+\end{aligned}
+$$
+

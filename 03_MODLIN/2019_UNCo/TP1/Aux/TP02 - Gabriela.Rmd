@@ -1,0 +1,731 @@
+---
+title:  'Curso Modelos Lineales'
+subtitle: <h1>Magister en Estadística Aplicada</h1>
+author: Gabriela Carrasco
+date: "Guia de Actividades II"
+output: 
+  rmdformats::readthedown
+code_folding: hide
+# runtime: shiny
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, comment = NA, background = NA, results='asis', warning=FALSE)
+library("mat2tex")
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<!-- ```{r echo=FALSE, include=FALSE} -->
+<!-- tryCatch(library(knitr),error=function(e) install.packages("knitr"),finally = library(knitr)) -->
+<!-- tryCatch(library(devtools),error=function(e) install.packages("devtools"),finally = library(devtools)) -->
+<!-- tryCatch(library(rmdformats),error=function(e) install.packages("rmdformats"),finally = library(rmdformats)) -->
+<!-- tryCatch(library(readxl),error=function(e) install.packages("readxl"),finally = library(readxl)) -->
+<!-- tryCatch(library(mat2tex),error=function(e){ -->
+<!-- install_github("markheckmann/mat2tex") -->
+<!-- },finally = library(mat2tex)) -->
+<!-- ``` -->
+
+```{r}
+#require(devtools)
+#nstall_github("markheckmann/mat2tex")
+```
+
+
+## Ejercicio 1
+Para el modelo $Y=X \beta+ \epsilon$, demostrar que el estimador de mínimos cuadrados de $\beta$, definido como aquel que minimiza $\epsilon´\epsilon$, es el mismo estimador que el de máxima verosimilitud.
+
+##### PASAR EN LIMPIO
+
+## Ejercicio 2
+Los datos del archivo `trigo` fueron obtenidos en un ensayo de rendimiento de trigo bajo diferentes combinaciones de aportes de nitrógeno y potasio. (qq/ha: quintales por hectárea).
+
+```{r}
+library(readxl)
+trigo <- read_excel("trigo.xlsx")
+```
+
+##### a. Escriba el modelo para el rendimiento en función del aporte de nitrógeno y potasio suponiendo un efecto aditivo para los aportes de fertilizantes, que sin aporte de fertilizantes el rendimiento es nulo y que los errores del modelo se comportan normales con esperanza cero y varianza común desconocida y covarianzas cero.
+
+
+
+Por condicion mu=0
+
+x1= aporte de Nitrógeno
+x2= aporte de Potasio
+
+$$Y_i = \beta_0 + x_{i1} \cdot \beta_1 + x_{i2} \cdot \beta_2 + \varepsilon_i \quad \text{con} \quad i=1,2,..., 6 \quad \text{y} \quad \varepsilon \sim N(0,\sigma^2 I)$$
+Donde:
+
+* $x_{i1}$ representa el aporte de nitrógeno para la observación $i$.
+
+* $x_{i2}$ representa el aporte de potasio para la observación $i$.
+
+Como se solicita que "sin aporte de fertilizantes el rendimiento es nulo", entonces $\beta_0 = 0$, y el modelo quedaría como:
+
+$$Y_i = x_{i1} \cdot \beta_1 + x_{i2} \cdot \beta_2 + \varepsilon_i \quad \text{con } i=1,2,..., 6$$
+
+Otra forma de escribir el modelo sería en la forma:
+
+$$Y_{ij} = \mu + N_i + P_j + \varepsilon_{ij} \quad \text{con} \quad i=1,2,3 \quad j=1,2 \quad \text{y} \quad \varepsilon \sim N(0,\sigma^2 I)$$
+Donde:
+
+* $N_i$ representa el aporte de nitrógeno para la observación $i$.
+
+* $P_j$ representa el aporte de potasio para la observación $i$.
+
+Como se solicita que "sin aporte de fertilizantes el rendimiento es nulo", entonces $\mu = 0$, y el modelo quedaría como:
+
+$$Y_{ij} = N_i + P_j + \varepsilon_{ij} \quad \text{con} \quad i=1,2,3 \quad j=1,2 \quad \text{y} \quad \varepsilon \sim N(0,\sigma^2 I)$$
+
+
+##### b. Escriba el modelo "muestral" utilizando notación matricial.
+
+ 
+
+```{r}
+
+Y <- as.matrix(trigo[,1])
+X <- as.matrix(cbind(1,trigo[,2:3]))
+
+b <- as.matrix(c("B0","B1","B2"),ncol = 1)
+e <- as.matrix(c("e0","e1","e2","e3","e4","e5"),ncol = 1)
+
+```
+
+
+El modelo se puede escribir en forma matricial de la siguiente manera:
+
+$Y_i = X \cdot \beta + \varepsilon_i \longrightarrow$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(Y, mtype = "bm")  %_% "$"
+
+$=$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(X, mtype = "bm")  %_% "$"
+
+$\cdot$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(b, mtype = "bm")  %_% "$"
+
+$+$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(e, mtype = "bm")  %_% "$"
+
+
+{r}
+b <- as.matrix(c(0,"B1","B2"),ncol = 1) #Averiguar cómo poner beta
+
+
+Pero como $\beta_0 = 0$, queda en la forma:
+
+$Y_i = X \cdot \beta + \varepsilon_i \longrightarrow$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(Y, mtype = "bm")  %_% "$"
+
+$=$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(X, mtype = "bm")  %_% "$"
+
+$\cdot$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(b, mtype = "bm")  %_% "$"
+
+$+$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(e, mtype = "bm")  %_% "$"
+
+
+
+
+
+
+Siendo:
+
+##### c. Estime los parámetros del modelo.
+```{r}
+X <- as.matrix(cbind(trigo[,2:3]))
+Y <- as.matrix(trigo[,1])
+b <- solve(t(X)%*%X) %*% t(X) %*% Y
+```
+Planteando que $\hat{\beta}=(X'X)^{-1}X'Y$ llegamos a 
+$\hat{\beta}=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(b, mtype = "bm")  %_% "$"
+```
+
+También podemos encontrar estas estimaciones con el comando "lm", obteniendo lo siguiente: 
+```{r}
+
+modelo<- lm(Rendimiento~0+Nitrogeno+Potasio, data = trigo)
+```
+
+$\hat \beta_1 =$ `r modelo$coefficients[1]`, $\hat \beta_2 =$ `r modelo$coefficients[2]` y $\hat \beta_0 =$ `r modelo$coefficients[3]`.
+
+Como puede observarse, las estimaciones tienen los mismos valores.
+
+##### d. Calcule la varianza de las estimaciones y sus covarianzas.
+La varianza viene dada por:
+
+$$\displaystyle \hat \sigma^2 = \frac{Y' \left( I - X(X'X)^{-1}X' \right) Y}{n-p}$$ 
+
+```{r}
+X <- as.matrix(cbind(trigo[,2:3]))
+A <- t(X) %*% X
+A <- solve(A)
+A <- X %*% A %*% t(X)
+Y <- as.matrix(trigo[,1])
+I <- diag(length(Y))
+A <- I - A
+
+num <- t(Y) %*% A %*% Y
+den <- sum(diag(A))
+S2 <- num/den
+
+# Otra forma de encontrar el denominador
+ n <- length(Y)
+p <- length(modelo$coefficients) # Cantidad de parámetros estimados
+ den <- n-p
+
+# Cov <- S2 %*%
+ 
+ a <- t(X) %*% X
+ a2 <- solve(a)
+ S2<-as.numeric(S2)
+ 
+ 
+ C<-S2*a2
+ 
+#V(B1)= 37,34549
+ # V(B2)=124,48498
+ 
+ 
+ 
+```
+
+Luego, $\hat \sigma^2 =$ `r S2`.
+
+La matriz de covariancias de las estimaciones es:
+$$\displaystyle COV {\left(\hat\beta\right)} = \hat \sigma^2  (X'X)^{-1}  $$
+
+
+Luego, ${COV{\left(\hat\beta\right)}}=$ 
+
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(C, mtype = "bm")  %_% "$"
+
+
+
+```
+${\hat\beta_1} =37,35$
+
+${\hat\beta_2} =124,48$
+
+
+
+
+<!-- e. Calcule el intervalo de confianza al 95% para la esperanza de rendimientos dado que el aporte de nitrógeno es 0.5 qq/hh y el potasio 0.3 qq/hh. -->
+
+El rendimiento estimado para los valores de x1= 0,5 qq/hh y x2= 0,3 qq/hh
+
+```{r}
+xo<-cbind(0.5,0.3)
+
+
+b<-matrix(cbind(15.66,17.78), nrow = 2,ncol= 1, byrow=T)
+
+
+yo<-xo%*%b
+
+X <- as.matrix(cbind(trigo[,2:3]))
+```
+```{r}
+S2yo<-S2*xo%*%(solve(t(X)%*%X))%*%t(xo)
+
+Syo<-sqrt(S2yo)
+
+#t(n-p)=t(6-2)= t4
+
+#calculamos la distribuciòn t para 4 grados de libertad y 0,05% de significancia
+
+t4<- 2.776
+
+LS<-yo+t4*Syo
+LS<-yo+qt(0.975,4)*Syo
+
+LI<-yo-t4*Syo
+LI<-yo-qt(0.975,4)*Syo
+
+```
+
+El rendimiento esperado dado que el aporte de nitrógeno es 0.5 qq/hh y el potasio es 0.3 qq/hh, se encuentra en el intervalo de confianza [4.68, 21.65] con un 95 % de confianza.
+
+Calculamos el intervalo de confianza que viene dado por:
+$$\displaystyle \hat Y0 \mp t_ {n-p} * S(\hat yo)$$ 
+
+Calculas la distribucion t-student para 4 grados de libertad y un 0.05 de significancia.
+
+
+
+<!-- f. Estime la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_0=0$, calcule la suma de cuadrados asociada y sus grados de libertad. -->
+
+$$H_0: H\beta=0 \\ H_1: H\beta\neq0$$
+```{r}
+
+X <- as.matrix(cbind(1,trigo[,2:3]))
+H=matrix(c(0,1,0),ncol=3)
+
+b<-matrix(c(0,15.66,17.78))
+
+h<-0
+
+
+
+a<-t(H%*%b-h)
+c<-solve(t(X)%*%X)
+d<-solve(H%*%c%*%t(H))
+Y <- as.matrix(trigo[,1])
+I <- diag(length(Y))
+
+
+
+
+wn<-a%*%d%*%(H%*%b-h)
+w4<-wn*4
+
+wd<-t(Y)%*%(I-X%*%solve(t(X)%*%X)%*%t(X))%*%Y
+
+w<-w4/wd
+
+
+
+
+1-pf(w,1,15)
+lambda=w*nrow(H)/2
+```
+
+
+
+
+
+
+
+
+```{r}
+H0<-cbind
+```
+
+
+<!-- g. Encuentre la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_1=0$ y $\beta_2=0$, calcule la suma de cuadrados asociada y sus grados de libertad. -->
+
+
+
+
+
+<!-- h. Encuentre la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_1=\beta_2$, calcule la suma de cuadrados asociada y sus grados de libertad. -->
+
+<!-- h. Realice las pruebas para las hipótesis planteadas. -->
+
+ ## Ejercicio 3 -->
+
+
+1
+
+
+```{r}
+#rendimiento <- read_excel("rendimiento1.xls")
+
+```
+
+
+Los datos del archivo `rendimiento` permiten proponer el siguiente modelo lineal que representa la respuesta a una covariable $x$ bajo varios tratamientos: -->
+$$Y_{ijk}=\mu+T_i+\beta x_j + \gamma_i x_{ij} + e_{ijk}$$ -->
+donde $T_i$ representa el efecto del i-ésimo tratamiento, $x_j$ el j-ésimo valor de la covariable, $\beta$ la pendiente asociada a la covariable, $x_{ij}$ un conjunto de nuevas covariables necesarias para representar la interacción de los tratamientos con la covariable $x$,$y$ y $\gamma_i$ el conjunto de pendientes que acompañan a las nuevas covariables. A los efectos de notación, es posible expresar el vector de parámetros como $\theta = [\mu, T_2,T_3,\beta, \gamma_2, \gamma_3 ]$. Finalmente $e_{ijk}$ expresa el error experimental de cada observación.  -->
+
+a. ¿Como escribiría la matriz $\textbf{H}$ y el vector $\textbf{h}$ para las hipótesis de los efectos principales e iteracción? (Suponer que se utiliza la forma $\textbf{H}\theta = \textbf{h}$ para especificar las hipótesis). -->
+
+```{r}
+#modelo<- lm(Y~trat+x+trat:x, data = rendimiento)
+
+#X<-model.matrix(modelo) #matriz de incidencia
+
+#xo<-mean(rendimiento$x)
+
+
+#M<-matrix(c(1,0,0,x0,0,0,
+          #  1,1,0,x0,x0,0,
+          #  1,0,1,x0,0,x0),byrow=T,nrow=3)
+
+#thetha<-coefficients(modelo)
+
+#efectos principales: las medias son iguales o el tao de a es 0. Usarías K, se debe trabajar con diferencias de medias.
+
+
+#K<-matrix(c(1,0,0,
+       #     0,1,0,
+        #    0,0,1),byrow = T, nrow = 3)
+
+#H<-K%*%M
+
+#h <- matrix(c(0,0,0), byrow = T, nrow = 1) #h es 0 porque mi hipòtesis es que no hay efecto tratamiento y los tau son 0.
+
+
+#interacciones: H y h
+
+
+#H<-matrix(c(0,0,0,1,0,
+          #  0,0,0,0,1),byrow = T,nrow=2)
+
+#h<-
+
+
+
+
+
+
+
+
+
+```
+
+$H=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(H, mtype = "bm")  %_% "$"
+```
+
+$h=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(h, mtype = "bm")  %_% "$"
+```
+
+b. ¿Como se escribiría la matriz $\textbf{H}$ para probar la hipótesis de que la covariable tiene el mismo efecto en todos los tratamientos? -->
+
+```{r}
+H2<-matrix(c(0,0,0,1,0,0),byrow=T,nrow=1)
+
+h2<-matrix(c(0),byrow = T, nrow=1)
+
+```
+
+$H2=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(H2, mtype = "bm")  %_% "$"
+
+```
+
+$h2=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(h2, mtype = "bm")  %_% "$"
+
+```
+
+c. Estimar los parámetros del vector $\theta$ -->
+
+```{r}
+parthe<-coefficients(modelo)
+
+```
+
+
+
+
+d. Estimar la matriz de covarianzas asociada al vector $\theta$. -->
+
+```{r}
+
+#covtheta<-cov(theta)
+
+
+```
+
+
+e. Escribir los coeficientes de la combinación lineal que, aplicados al vector de parámetros, produce el valor esperado de rendimiento para el $T_1$ cuando la covariable tiene un valor de 5. -->
+
+
+```{r}
+
+```
+
+
+<!-- f. Escribir los coeficientes de la combinación lineal que, aplicados al vector de parámetros, produce el valor esperado de la diferencia de medias entre $T_2$ y $T_3$ cuando la covariable tiene un valor de 15. -->
+
+```{r}
+
+```
+
+
+
+<!-- g. Realice las pruebas para las hipótesis planteadas. -->
+
+
+```{r}
+
+```
+
+
+## Ejercicio 4 -->
+
+
+En un experimento las plántulas (plantas recién nacidas) de un arbusto forrajero son sometidas a 3 niveles de estrés hídrico (simulación de condiciones de sequía) designados como $E_1$, $E_2$, $E_3$. Al final del experimento se registra el peso seco promedio por planta de cada una de las unidades experimentales, constituidas por un grupo de 10 plántulas. Para cada condición de estrés se realizaron 3 repeticiones según un diseño completamente aleatorizado. Se considera que el peso seco por planta es una variable que se comporta como una normal con varianza homogénea para los distintos tratamientos. -->
+
+ a.	Escribir el modelo lineal que describe este experimento. -->
+ 
+ $$Y_{ij} = \mu + \tau_{i} + \varepsilon_{ij} \quad \text{con } \varepsilon \sim N(0,\sigma^2I)\\ \text{con} \quad i=1,2,3 \quad \text{y} \quad j=1,2,3$$
+ 
+
+ b.	Escribir la matriz de incidencia de acuerdo al modelo propuesto. -->
+ 
+```{r}
+X<-matrix(c(1,1,0,0,
+            1,1,0,0,
+            1,1,0,0,
+            1,0,1,0,
+            1,0,1,0,
+            1,0,1,0,
+            1,0,0,1,
+            1,0,0,1,
+            1,0,0,1),byrow=T,nrow=9)
+
+```
+ 
+ 
+ $X=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(X, mtype = "bm")  %_% "$"
+
+```
+ 
+ c.	Si los resultados (en mg) son E1:{4, 3, 4}, E2:{ 3, 2, 3}, E3:{ 2, 2,1}, de una solución para el vector de parámetros utilizando la restricción de que los efectos de tratamiento suman cero. -->
+ 
+```{r}
+
+XPX<-t(X)%*%X
+
+C<-matrix(c(0,
+            1,
+            1,
+            1),byrow = T,nrow=4)
+
+b<-matrix(c(0,
+            1,
+            1,
+            1),byrow = T,nrow = 4)
+
+G<-t(C)%*%b
+
+Y<-matrix(c(4,
+            3,
+            4,
+            3,
+            2,
+            3,
+            2,
+            2,
+            1),byrow = T, nrow = 9)
+
+
+
+R1 <- matrix(c(XPX[1,],C[1]), byrow = T, ncol = 5)
+R2 <- matrix(c(XPX[2,],C[2]), byrow = T, ncol = 5)
+R3 <- matrix(c(XPX[3,],C[3]), byrow = T, ncol = 5)
+R4 <- matrix(c(XPX[4,],C[4]), byrow = T, ncol = 5)
+R5 <- matrix(c(t(C),0), byrow = T, ncol = 5)
+R <- matrix(rbind(R1,R2,R3,R4,R5),byrow = T, nrow = 5)
+
+
+XPY<-t(X)%*%Y
+
+S <- matrix(rbind(XPY,0),byrow = T, nrow = 5)
+
+#G=0 por restricción
+
+U<-solve(R)%*%S
+
+
+
+```
+Se obtuvieron los siguientes estimadores
+
+ 
+ $$\hat{\mu} = `r U[1]` \\ \hat{\tau_1} = `r U[2]`\\ \hat{\tau_2} = `r U[3]`\\ \hat{\tau_3} = `r U[4]`\\ \hat{\lambda} = `r U[5]`$$
+
+[16:02, 4/2/2020] Julian Illescas: Redondeando y expresado como vector:
+
+$\hat{b^0}=$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(be[-5], mtype = "bm")  %_% "$"
+
+[16:03, 4/2/2020] Julian Illescas: Redondeando y expresado como vector:
+
+$b^0=$
+{r echo=FALSE,results='asis'}
+"$" %_% xm(be[-5], mtype = "bm")  %_% "$"
+
+
+ d. Obtener nuevamente la solución para el vector de parámetros considerando la parametrización implıcita de R consistente en contrastar la respuesta del primer nivel frente a cada uno de los restantes niveles. -->
+ 
+```{r}
+XPX<-t(X)%*%X
+
+C<-matrix(c(0,
+            1,
+            0,
+            0),byrow = T,nrow=4)
+
+b<-matrix(c(0,
+            1,
+            1,
+            1),byrow = T,nrow = 4)
+
+G<-t(C)%*%b
+
+Y<-matrix(c(4,
+            3,
+            4,
+            3,
+            2,
+            3,
+            2,
+            2,
+            1),byrow = T, nrow = 9)
+
+
+
+R1 <- matrix(c(XPX[1,],C[1]), byrow = T, ncol = 5)
+R2 <- matrix(c(XPX[2,],C[2]), byrow = T, ncol = 5)
+R3 <- matrix(c(XPX[3,],C[3]), byrow = T, ncol = 5)
+R4 <- matrix(c(XPX[4,],C[4]), byrow = T, ncol = 5)
+R5 <- matrix(c(t(C),0), byrow = T, ncol = 5)
+R <- matrix(rbind(R1,R2,R3,R4,R5),byrow = T, nrow = 5)
+
+
+XPY<-t(X)%*%Y
+
+S <- matrix(rbind(XPY,0),byrow = T, nrow = 5)
+
+#G=0 por restricción
+
+U2<-solve(R)%*%S
+
+
+
+```
+
+Se obtuvieron los siguientes estimadores
+
+ 
+ $$\hat{\mu} = `r U2[1]` \\ \hat{\tau_1} = `r U2[2]`\\ \hat{\tau_2} = `r U2[3]`\\ \hat{\tau_3} = `r U2[4]`\\ \hat{\lambda} = `r U2[5]`$$
+ 
+
+## Ejercicio 5 -->
+
+El archivo `altura` contiene los datos de un experimento bi-factorial (A y B) y una covariable (x) que interactúa con B. -->
+
+ a.	Escribir el modelo lineal que describe este experimento. -->
+ 
+ $$Y_{ij} = \mu + A_{i} + B_{j} + AB_{ij} + \beta_0.x_{ij} + \beta_{j} (B_{j}.x_{ij}) + \varepsilon_{ij } \quad \text{con } \varepsilon \sim N(0,\sigma^2I)\\ \text{con} \quad i=1,2,3 \quad \text{y} \quad j=1,2\ $$
+ 
+```{r}
+
+```
+ 
+
+ b.	Escribir la matriz de incidencia de acuerdo al modelo propuesto. -->
+ 
+```{r}
+library(readxl)
+altura <- read_excel("altura.xlsx")
+
+x0=mean(altura$x)
+
+X=matrix(c(1,0,0,0,0,0,x0,0,
+           1,0,0,0,0,0,x0,0,
+           1,0,0,1,0,0,x0,x0,
+           1,1,0,0,0,0,x0,0,
+           1,1,0,0,0,0,x0,0,
+           1,1,0,1,1,0,x0,x0,
+           1,1,0,1,1,0,x0,x0,
+           1,0,1,0,0,0,x0,0,
+           1,0,1,0,0,0,x0,0,
+           1,0,1,1,0,1,x0,x0,
+           1,0,1,1,0,1,x0,x0),byrow=T,nrow =11)
+```
+
+
+
+ 
+
+ d. Obtener una solución para el vector de parámetros considerando la parametrización implıcita de R. -->
+ 
+```{r}
+#altura$A<-paste0("a",altura$A)
+#table(altura$A,altura$B)
+#altura$B<-paste0("b",altura$B)
+
+#modelo=lm(Y~A+B+A:B+x+B:x,data=altura)
+#b=coefficients(modelo)
+#b<-as.matrix(b)
+ 
+#anova con suma de cuadrados tipo 1
+
+```
+ 
+ 
+
+ e. Proponer la matriz $\textbf{M}$ de la transformación lineal de los parámetros que devuelve las medias de los tratamientos para un valor de la covariable igual a 4. -->
+ 
+```{r}
+#x0=4
+
+#M=matrix(c(1,0,0,0,0,0,x0,0,
+  #         1,0,0,1,0,0,x0,x0,
+  #         1,1,0,0,0,0,x0,0,
+   #        1,1,0,1,1,0,x0,x0,
+    #       1,0,1,0,0,0,x0,0,
+     #      1,0,1,1,0,1,x0,x0),byrow=T,ncol=8)
+
+#medias<-M%*%b
+
+
+```
+ 
+
+ f. Escribir la matriz $\textbf{H}$, que aplicada al vector de medias $\textbf{M}\beta$ permite probar la hipótesis $H_0 : \mu_{A1} = \mu_{A2} = \mu_{A3}$ para un nivel de la covariable igual a 1. -->
+ 
+```{r}
+#EE=sqrt(diag(M%*%vcov(modelo)%*%t(M)))
+#medias=cbind(medias,EE)
+#rownames(medias)=c("a1b1","a1b2","a2b1","a2b2","a3b1","a3b2")
+#medias=medias[order(-medias[,1]),,drop=F]
+#medias
+
+#x0=0
+#MB=matrix(c(1,1/3,1/3,0,x0,0,0,0,
+       #     1,1/3,1/3,1,x0,1/3,1/3,x0),byrow=T,ncol=length(b))
+#MB%*%b
+
+
+#K=matrix(c(1,1,-1,-1,0,0,
+      #     0,0,1,1,-1.-1),byrow=T,ncol=6)
+#H=K%*%MB
+```
+ 
+
+ g. Escribir la matriz $\textbf{H
+ }$, que aplicada a $\textbf{M}\beta$ permite probar la hipótesis de no interacción $A:B$  para un nivel de la covariable igual a 1. -->
+ 
+```{r}
+
+```
+ 
+
+ h.	Calcule las sumas de cuadrado Tipo I y construya la tabla de ANAVA -->
+ 
+```{r}
+
+```
+ 

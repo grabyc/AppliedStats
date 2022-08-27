@@ -1,0 +1,163 @@
+---
+title:  'Curso Modelos Lineales'
+subtitle: <h1>Magister en Estadística Aplicada</h1>
+author:
+- Cohorte 2019-2020
+date: "Guia de Actividades I"
+output: 
+  rmdformats::readthedown
+code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA, background = NA, results='asis', warning=FALSE)
+```
+
+## Ejercicio 1
+```{r echo=FALSE}
+library("mat2tex")
+U1=matrix(c(0,0,0),nrow=3,byrow=TRUE)
+W1=matrix(c(3,1,0,1,2,1,0,1,4),nrow=3,byrow=TRUE)
+```
+
+Sea $X \sim N_3(0,\sum)$ con: X=
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(U1, mtype = "bm")  %_% "$"
+```
+y $\sum =$ 
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(W1, mtype = "bm") %_% "$"
+```
+
+a. Encontrar las distribuciones marginales de $X_1$ y $X_3$.
+b. Encontrar la distribución conjunta de $X_1$ y $X_2$.
+c. Encontrar la distribución condicional de $X_2 \mid X_1=x_1, X_3=x_3$.
+d. Encontrar la matriz de correlación.
+e. Encontrar $\rho_{{13}\mid 2} ,\rho_{{12}\mid 3}$.
+f. Encontrar la distribución de $Z=3x_1 - 2x_2 -11$.
+g. Encontrar la covarianza entre $Z_1$ y $Z_2$ donde $Z_1=2 X_1 -3 X_2+X_3 -3$ Y $Z_2=3 X_3+2$.
+
+## Ejercicio 2
+
+En el archivo *calefacción* se muestran datos correspondientes a una población de 20 inmuebles ubicados en cierta zona residencial. Se consideran tres variables que están relacionadas con el costo de calefacción de la vivienda: la temperatura exterior media diaria ($X_1$), el número de cm. de aislamiento térmico de las paredes ($X_2$) y la antiguedad del calefactor ($X_3$).
+a. Obtener el vector de medias y la matriz de varianzas y covarianzas del vector $X´= (X_1 X_2 X_3)$.
+b. Obtener la matriz de correlación.
+c. Obtener la matriz de correlación parcial de $X^{(1)}= (X_1 X_2$ dado $X^{(2)}=X_3$.
+
+## Ejercicio 3
+
+```{r echo=FALSE}
+U3<-matrix(c(2,1,4),ncol =1,byrow=TRUE)
+W3<-matrix(c(2,-1,0,-1,4,0,0,0,1),ncol =3,byrow=FALSE)
+```
+
+Sea $X \sim N_3(\mu,\sum)$ con: $\mu$=
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(U3, mtype = "bm")  %_% "$"
+```
+y $\sum =$ 
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(W3, mtype = "bm") %_% "$"
+```
+
+a. Encontrar la distribución conjunta de $X_1$ y $X_2$.
+b. Encontrar la distribución condicional de $X_1=x_1, X_2=x_2 \mid X_3=x_3$, la esperanza y varianza.
+
+## Ejercicio 4
+
+```{r echo=FALSE}
+U4<-matrix(c(0,0,0),ncol =1,byrow=TRUE)
+W4<- matrix(c(7,2,1,2,7,-1,1,-1,4),3,3) 
+```
+
+Sea $X \sim N_3(0,\sum)$, encontrar la transformación $CX$ tal que la matriz de covarianzas de la variable resultante sea:$\sum =$ 
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(W4, mtype = "bm") %_% "$"
+```
+. (Ayuda. Pensar en descomposición espectral o descomposición de Cholesky)
+
+## Ejercicio 5
+
+```{r echo=FALSE}
+U5<-matrix(c(1,2),ncol =1,byrow=TRUE)
+W5<- matrix(c(3,1,1,3),2,2) 
+```
+
+Dada $X\sim N_2($
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(U5, mtype = "bm")  %_% "$"
+```
+, 
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(W5, mtype = "bm") %_% "$"
+```
+$)$ encontrar la transformación $Y=TX+c$ tal que $Y\sim N_3(0,I)$
+
+
+## Ejercicio 6
+
+En el ejercicio anterior la función de densidad multivariada está dada por:
+$f(x)=(2\pi)^{-1} \mid\sum\mid^{-1/2} e^{-1/2[(x-\mu)´\sum^{-1} (x-\mu)]}$ donde $Q=(x-\mu)´\sum^{-1}(x-\mu)$ es una forma cuadrática que mide el cuadrado de la distancia entre cada punto del plano y el vector de medias $\mu$. Encontrar la distribución de dicha forma cuadrática.
+
+## Ejercicio 7
+```{r echo=FALSE,results='asis'}
+B<- matrix(c(2,-1,-1,0,0,1),2,3) 
+A<- matrix(c(1/6,1/3,1/6,1/3,2/3,1/3,1/6,1/3,1/6),3,3) 
+```
+
+Dado $Y\sim N_3(\mu,I)$ establecer si el vector $BY$ es independiente de la forma cuadrática $Y´AY$ donde: $B=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(B, mtype = "bm") %_% "$"
+```
+y $A=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(A, mtype = "bm") %_% "$"
+```
+
+## Ejercicio 8
+
+```{r echo=FALSE,results='asis'}
+A<- matrix(c(2,-1,-1,1),2,2)
+B<- matrix(c(0.5,-1,0.5,1),2,2)
+W8<- matrix(c(1,1,1,2),2,2)
+U8<-matrix(c(1,3),2,1)
+```
+
+
+Dado $Y\sim N_2($
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(U8, mtype = "bm")  %_% "$"
+```
+, 
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(W8, mtype = "bm") %_% "$"
+```
+$)$, con: $B=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(B, mtype = "bm") %_% "$"
+```
+y $A=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(A, mtype = "bm") %_% "$"
+```
+
+a. Probar si la forma linear $BY$ es independiente de la forma cuadrática $Y´AY$.
+b. Determinar la distribución de la forma cuadrática $Y´AY$.
+
+## Ejercicio 9
+
+```{r echo=FALSE,results='asis'}
+A9<- matrix(c(3,0.5,0.5,2),2,2)
+B9<- matrix(c(2,-1,-1,1),2,2)
+W9<- matrix(c(1,1,1,2),2,2)
+```
+
+Con $Y$ y $\sum$ como en el ejercicio anterior, establezca si las formas cuadráticas $Y´BY$ e $Y´AY$ son independientes, donde: $B=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(B9, mtype = "bm") %_% "$"
+```
+y $A=$
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(A9, mtype = "bm") %_% "$"
+```
+

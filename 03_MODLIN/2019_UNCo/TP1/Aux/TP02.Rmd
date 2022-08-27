@@ -1,0 +1,360 @@
+---
+title: "TP02"
+author: "Gabriel Raby"
+date: "26/01/2022"
+output: rmdformats::readthedown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+ipak <- function(pkg){
+    new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+    if (length(new.pkg)) 
+        install.packages(new.pkg, dependencies = TRUE)
+    sapply(pkg, require, character.only = TRUE)
+}
+
+packages <- c("knitr", "tidyverse", "readxl")
+ipak(packages)
+```
+
+## Ejercicio 1
+
+Para el modelo $Y=X \beta + \epsilon$, demostrar que el estimador de mínimos cuadrados de $\beta$, definido como aquel que minimiza $\epsilon´\epsilon$, es el mismo estimador que el de máxima verosimilitud.
+
+#### Supuestos
+
+Tomando el modelo $Y=X \beta + \epsilon$ y considerando los supuestos básicos de que los errores tienen esperanza 0 y varianza $\sigma^2$, y suponiendo que los mismos son conjuntamente normales e independientes, entonces se tiene que 
+
+$$
+\begin{aligned}
+\epsilon \sim N_n (0, \sigma^2 I) \\ 
+Y \sim N_n (X \beta, \sigma^2 I)
+\end{aligned}
+$$
+
+#### Estimador de máxima verosimilitud
+
+La función de densidad conjunta de los elementos del vector de observaciones Y es
+
+$$
+\begin{aligned}
+f(y:\beta, \sigma^2) = (2 \pi)^{-n/2} (\sigma^2)^{-n/2} e^{- \frac {1} {2 \sigma^2} (y - X \beta)' (y - X \beta) }
+\end{aligned}
+$$
+
+Esta función depende de los valores de y mientras que los parámetros son fijos. En cambio, la función de verosimilitud es similar a la función de densidad pero en ésta los valores de y están dados y la función se interpreta como dependiente de los parámetros.  
+
+Luego la idea es encontrar valores para $\beta$ y para $\sigma^2$ de tal manera que la función alcance un máximo global dada la muestra observada.
+
+Así,
+
+$$
+\begin{aligned}
+max_{\beta, \sigma^2} \Big[ L(\beta, \sigma^2 : y) \Big] = max_{\beta, \sigma^2} \bigg[ (2 \pi)^{-n/2} (\sigma^2)^{-n/2} e^{- \frac {1} {2 \sigma^2} (y - X \beta)' (y - X \beta) } \bigg]
+\end{aligned}
+$$
+
+Para simplificar la expresión se aplica logaritmo natural y se obtiene
+
+$$
+\begin{aligned}
+ln \Big( L(\beta, \sigma^2 : y) \Big) &= -\frac {n} {2} ln(2 \pi) -\frac {n} {2} ln(\sigma^2) {- \frac {1} {2 \sigma^2} (y - X \beta)' (y - X \beta) } \\
+ &= -\frac {n} {2} ln(2 \pi) -\frac {n} {2} ln(\sigma^2) {- \frac {1} {2 \sigma^2} (y'y - y'X \beta - \beta' X' y + \beta' X' X \beta) }
+\end{aligned}
+$$
+
+Se deriva con respecto al parámetro $\beta$ y se obtiene
+
+$$
+\begin{aligned}
+\frac {\delta ln \Big( L(\beta, \sigma^2 : y) \Big)} {\delta \beta} =  - \frac {1} {2 \sigma^2} (- 2 X' y + 2 X' X \beta) 
+\end{aligned}
+$$
+
+Igualando a 0 se obtiene
+
+$$
+\begin{aligned}
+- \frac {1} {2 \sigma^2} (- 2 X' y + 2 X' X \beta) = 0 \quad \Rightarrow \quad X' X \beta = X' y 
+\end{aligned}
+$$
+
+Finalmente, despejando $\beta$ se obtiene el estimador máximo verosímil
+
+$$
+\begin{aligned}
+ \hat \beta = (X'X)^{-1}X' y 
+\end{aligned}
+$$
+
+#### Estimador de mínimos cuadrados
+
+Se busca minimizar la varianza $S = \epsilon'\epsilon$. Considerando que 
+
+$$
+\begin{aligned}
+ Y &= X \beta + \epsilon  \\
+ \epsilon &= Y - X \beta  
+\end{aligned}
+$$
+
+entonces
+
+$$
+\begin{aligned}
+ S = \epsilon ' \epsilon =  (Y - X \beta)' (Y - X \beta)  
+\end{aligned}
+$$
+
+desarrollando
+
+$$
+\begin{aligned}
+  &= (Y' - \beta' X') (Y - X \beta) \\
+  &= (Y'Y - Y' X \beta - \beta ' X' Y + \beta ' X' X \beta) \\
+\end{aligned}
+$$
+
+Se deriva con respecto al parámetro $\beta$ y se obtiene
+
+$$
+\begin{aligned}
+\frac {\delta S} {\delta \beta} =  - X' Y - X' Y + 2 X' X \beta
+\end{aligned}
+$$
+
+Igualando a 0 se obtiene
+
+$$
+\begin{aligned}
+- X' Y - X' Y + 2 X' X \beta = 0 \quad \Rightarrow \quad X' X \beta = X' Y
+\end{aligned}
+$$
+
+Finalmente, despejando $\beta$ se obtiene el estimador de mínimos cuadrados
+
+$$
+\begin{aligned}
+ \hat \beta = (X'X)^{-1}X' y 
+\end{aligned}
+$$
+
+#### Conclusión
+
+Como puede observarse el estimador de mínimos cuadrados es igual al estimador de máxima verosimilitud
+
+$$
+\begin{aligned}
+ \hat \beta = (X'X)^{-1}X' y 
+\end{aligned}
+$$
+
+## Ejercicio 2
+
+Los datos del archivo `trigo` fueron obtenidos en un ensayo de rendimiento de trigo bajo diferentes combinaciones de aportes de nitrógeno y potasio. (qq/ha: quintales por hectárea).
+
+```{r}
+data <- read_excel("trigo.xlsx")
+```
+
+#### 1)  Escriba el modelo para el rendimiento en función del aporte de nitrógeno y potasio suponiendo un efecto aditivo para los aportes de fertilizantes, que sin aporte de fertilizantes el rendimiento es nulo y que los errores del modelo se comportan normales con esperanza cero y varianza común desconocida y covarianzas cero.
+
+El modelo queda expresado de la siguiente manera:
+
+$$
+\begin{aligned}
+ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon 
+\end{aligned}
+$$
+
+donde
+
+ - $y$: rendimiento de trigo en qq/ha
+ 
+ - $x_1$: aporte de nitrógeno
+
+ - $x_2$: aporte de potasio
+ 
+ - $\beta_i$: coeficientes de regresión, con $i=1,2$ 
+ 
+    - $\beta_0=0$
+
+ - $\epsilon$: error del modelo con los siguientes supuestos
+ 
+ $$
+\begin{aligned}
+    E(\epsilon_i)&=0 \text{ para } i=1,2 \\
+    Var(\epsilon_i)&= \sigma^2 \text{ para } i=1,2 \\
+    cov(\epsilon_i , \epsilon_j)&=0  \text{ para todo } i \neq j
+\end{aligned}
+$$
+
+
+    
+#### 2) Escriba el modelo "muestral" utilizando notación matricial.
+
+El modelo muestral
+
+$$
+\begin{aligned}
+ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon 
+\end{aligned}
+$$
+
+puede ser expresado mediante vectores y matrices de la siguiente manera
+
+$$
+\begin{aligned}
+  \begin{bmatrix} 
+    y_1 \\ y_2 \\ \vdots \\ y_n
+  \end{bmatrix}
+  = 
+  \begin{bmatrix} 
+    1 && x_{11} && x_{12} \\ 
+    1 && x_{21} && x_{22} \\ 
+    \vdots && \vdots && \vdots \\
+    1 && x_{n1} && x_{n2} \\ 
+  \end{bmatrix}
+  \begin{bmatrix} 
+    \beta_1 \\ \beta_2 \\ \vdots \\ \beta_k
+  \end{bmatrix}
+  +
+  \begin{bmatrix} 
+    \epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_n
+  \end{bmatrix}
+\end{aligned}
+$$
+
+o su equivalente
+
+$$
+\begin{aligned}
+ y = X \beta + \epsilon 
+\end{aligned}
+$$
+
+donde
+
+
+ - $y$: vector de rendimientos de trigo en qq/ha
+ 
+ - $X$: matriz de $n \times (k+1)$ con $k=2$ para los aportes de fertilizantes
+
+ - $\beta$: vector de $(k+1)$ coeficientes de regresión 
+
+ - $\epsilon$: vector de errores del modelo con los siguientes supuestos
+
+$$
+\begin{aligned}
+    E(\epsilon)&=0 \\ 
+    cov(\epsilon)&= \sigma^2 I  
+\end{aligned}
+$$ 
+
+#### 3) Estime los parámetros del modelo.
+
+El estimador para los coeficientes de regresión es
+
+$$
+\begin{aligned}
+ \hat \beta = (X'X)^{-1}X' y 
+\end{aligned}
+$$
+
+Calculando sobre los datos muestrales
+
+```{r}
+n <- nrow(data)
+
+# Vector de rendimientos
+y <- as.matrix(data[,1])
+y
+
+# Matriz de diseño
+X <- as.matrix(cbind(rep(1,n), data[,2-3]))
+X
+
+# Estimación de Beta
+B <- solve( t(X) %*% X ) %*% t(X) %*% y
+colnames(B) <-  c("")
+rownames(B) <-  c("Beta_0", "Beta_1", "Beta_2")
+B
+```
+
+Luego, a partir de obtener el estimador $\hat \beta$, se puede calcular el estimador para $\sigma^2$
+
+$$
+\begin{aligned}
+ \hat \sigma^2 = \frac {(y - X' \beta)' (y - X' \beta)} {n-k-1}= \frac {y'y - \hat \beta' X' y} {n-k-1}
+\end{aligned}
+$$
+
+> Observación: con la corrección en el denominador $n-k-1$, el estimador $\hat \sigma^2$  se vuelve insesgado
+
+Calculando sobre los datos muestrales
+
+```{r}
+# Cantidad de variables predictoras 
+k <- ncol(X) - 1  
+
+# Estimador de sigma^2
+S_2 <-  ( (t(y) %*% y) - (t(B) %*% t(X) %*% y ) ) / (n - k - 1) 
+as.numeric(S_2)
+```
+
+#### 4) Calcule la varianza de las estimaciones y sus covarianzas.
+
+Dado que
+
+$$
+\begin{aligned}
+ \hat \beta = (X'X)^{-1}X' y 
+\end{aligned}
+$$
+
+con distribución de $y$
+
+$$
+\begin{aligned}
+ y \sim N(X \beta, \sigma^2 I) 
+\end{aligned}
+$$
+
+es posible obtener la distribución de $\hat \beta$ aplicando los teoremas de distribución de combinaciones lineales de vectores normales multivariados  que establecen que
+
+$$
+\begin{aligned}
+ Ax \sim N_n(A \mu, A \Sigma A') 
+\end{aligned}
+$$
+
+Luego,
+
+$$
+\begin{aligned}
+ \hat \beta \sim N_p(\beta, (X'X)^{-1}X' (\sigma^2 I) X(X'X)^{-1}) = N_p( \beta, \sigma^2 (X'X)^{-1})
+\end{aligned}
+$$
+
+En R,
+
+```{r}
+# Matriz de covarianzas de Beta_hat 
+Beta_cov <- as.numeric(S_2) * solve( t(X) %*% X) 
+rownames(Beta_cov) <-  c("Beta_0", "Beta_1", "Beta_2")
+colnames(Beta_cov) <-  c("Beta_0", "Beta_1", "Beta_2")
+round(Beta_cov, 3)
+```
+
+
+#### 5) Calcule el intervalo de confianza al 95% para la esperanza de rendimientos dado que el aporte de nitrógeno es 0.5 qq/hh y el potasio 0.3 qq/hh.
+
+#### 6) Estime la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_0=0$, calcule la suma de cuadrados asociada y sus grados de libertad.
+
+#### 7) Encuentre la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_1=0$ y $\beta_2=0$, calcule la suma de cuadrados asociada y sus grados de libertad.
+
+#### 8) Encuentre la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_1=\beta_2$, calcule la suma de cuadrados asociada y sus grados de libertad.
+
+#### 9) Realice las pruebas para las hipótesis planteadas.

@@ -1,0 +1,111 @@
+---
+title:  'Curso Modelos Lineales'
+subtitle: <h1>Magister en Estadística Aplicada</h1>
+author:
+- Cohorte 2019-2020
+date: "Guia de Actividades II"
+output: 
+  rmdformats::readthedown
+code_folding: hide
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA, background = NA, results='asis', warning=FALSE)
+```
+
+```{r echo=FALSE}
+tryCatch(library(knitr),error=function(e) install.packages("knitr"),finally = library(knitr))
+tryCatch(library(devtools),error=function(e) install.packages("devtools"),finally = library(devtools))
+tryCatch(library(rmdformats),error=function(e) install.packages("rmdformats"),finally = library(rmdformats))
+tryCatch(library(readxl),error=function(e) install.packages("readxl"),finally = library(readxl))
+tryCatch(library(mat2tex),error=function(e){
+install_github("markheckmann/mat2tex")
+},finally = library(mat2tex))
+```
+
+
+## Ejercicio 1
+
+Para el modelo $Y=X \beta+ \epsilon$, demostrar que el estimador de mínimos cuadrados de $\beta$, definido como aquel que minimiza $\epsilon´\epsilon$, es el mismo estimador que el de máxima verosimilitud.
+
+
+## Ejercicio 2
+
+```{r}
+trigo <- read_excel("trigo.xlsx")
+```
+
+Los datos del archivo `trigo` fueron obtenidos en un ensayo de rendimiento de trigo bajo diferentes combinaciones de aportes de nitrógeno y potasio. (qq/ha: quintales por hectárea).
+
+a. Escriba el modelo para el rendimiento en función del aporte de nitrógeno y potasio suponiendo un efecto aditivo para los aportes de fertilizantes, que sin aporte de fertilizantes el rendimiento es nulo y que los errores del modelo se comportan normales con esperanza cero y varianza común desconocida y covarianzas cero.
+
+b. Escriba el modelo "muestral" utilizando notación matricial.
+
+c. Estime los parámetros del modelo.
+
+d. Calcule la varianza de las estimaciones y sus covarianzas.
+
+e. Calcule el intervalo de confianza al 95% para la esperanza de rendimientos dado que el aporte de nitrógeno es 0.5 qq/hh y el potasio 0.3 qq/hh.
+
+f. Estime la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_0=0$, calcule la suma de cuadrados asociada y sus grados de libertad.
+
+g. Encuentre la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_1=0$ y $\beta_2=0$, calcule la suma de cuadrados asociada y sus grados de libertad.
+
+h. Encuentre la matriz $H$ y el vector $h$ para la prueba de hipótesis $\beta_1=\beta_2$, calcule la suma de cuadrados asociada y sus grados de libertad.
+
+h. Realice las pruebas para las hipótesis planteadas.
+
+## Ejercicio 3
+
+
+```{r}
+rendimiento <- read_excel("rendimiento.xlsx")
+```
+
+Los datos del archivo `rendimiento` permiten proponer el siguiente modelo lineal que representa la respuesta a una covariable $x$ bajo varios tratamientos:
+$$Y_{ijk}=\mu+T_i+\beta x_j + \gamma_i x_{ij} + e_{ijk}$$
+donde $T_i$ representa el efecto del i-ésimo tratamiento, $x_j$ el j-ésimo valor de la covariable, $\beta$ la pendiente asociada a la covariable, $x_{ij}$ un conjunto de nuevas covariables necesarias para representar la interacción de los tratamientos con la covariable $x$,$y$ y $\gamma_i$ el conjunto de pendientes que acompañan a las nuevas covariables. A los efectos de notación, es posible expresar el vector de parámetros como $\theta = [\mu, T_2,T_3,\beta, \gamma_2, \gamma_3 ]$. Finalmente $e_{ijk}$ expresa el error experimental de cada observación. 
+
+a. ¿Como escribiría la matriz $\textbf{H}$ y el vector $\textbf{h}$ para las hipótesis de los efectos principales e iteracción? (Suponer que se utiliza la forma $\textbf{H}\theta = \textbf{h}$ para especificar las hipótesis).
+
+b. ¿Como se escribiría la matriz $\textbf{H}$ para probar la hipótesis de que la covariable tiene el mismo efecto en todos los tratamientos?
+
+c. Estimar los parámetros del vector $\theta$
+
+d. Estimar la matriz de covarianzas asociada al vector $\theta$.
+
+e. Escribir los coeficientes de la combinación lineal que, aplicados al vector de parámetros, produce el valor esperado de rendimiento para el $T_1$ cuando la covariable tiene un valor de 5.
+
+f. Escribir los coeficientes de la combinación lineal que, aplicados al vector de parámetros, produce el valor esperado de la diferencia de medias entre $T_2$ y $T_3$ cuando la covariable tiene un valor de 15.
+
+
+## Ejercicio 4
+
+En un experimento las plántulas (plantas recién nacidas) de un arbusto forrajero son sometidas a 3 niveles de estrés hídrico (simulación de condiciones de sequía) designados como $E_1$, $E_2$, $E_3$. Al final del experimento se registra el peso seco promedio por planta de cada una de las unidades experimentales, constituidas por un grupo de 10 plántulas. Para cada condición de estrés se realizaron 3 repeticiones según un diseño completamente aleatorizado. Se considera que el peso seco por planta es una variable que se comporta como una normal con varianza homogénea para los distintos tratamientos.
+
+a.	Escribir el modelo lineal que describe este experimento.
+
+b.	Escribir la matriz de incidencia de acuerdo al modelo propuesto.
+
+c.	Si los resultados (en mg) son E1:{4, 3, 4}, E2:{ 3, 2, 3}, E3:{ 2, 2,1}, de una solución para el vector de parámetros utilizando la restricción de que los efectos de tratamiento suman cero.
+
+d. Obtener nuevamente la solución para el vector de parámetros considerando la parametrización implıcita de R consistente en contrastar la respuesta del primer nivel frente a cada uno de los restantes niveles.
+
+## Ejercicio 5
+
+El archivo `altura` contiene los datos de un experimento bi-factorial (A y B) y una covariable (x) que interactúa con B.
+
+a.	Escribir el modelo lineal que describe este experimento.
+
+b.	Escribir la matriz de incidencia de acuerdo al modelo propuesto.
+
+d. Obtener una solución para el vector de parámetros considerando la parametrización implıcita de R.
+
+e. Proponer la matriz $\textbf{M}$ de la transformación lineal de los parámetros que devuelve las medias de los tratamientos para un valor de la covariable igual a 4.
+
+f. Escribir la matriz $\textbf{K}$, que aplicada al vector de medias $\textbf{M}\beta$ permite probar la hipótesis $H_0 : \mu_{A1} = \mu_{A2} = \mu_{A3}$ para un nivel de la covariable igual a 1.
+
+g. Escribir la matriz $\textbf{K}$, que aplicada a $\textbf{M}\beta$ permite probar la hipótesis de no interacción $A:B$  para un nivel de la covariable igual a 1.
+
+h.	Calcule las sumas de cuadrado Tipo I y construya la tabla de ANAVA
