@@ -20,7 +20,7 @@ U=matrix(c(0,0,0),nrow=3,byrow=TRUE)
 W=matrix(c(3,1,0,1,2,1,0,1,4),nrow=3,byrow=TRUE)
 ```
 
-Sea $X \sim N_3(0,\sum)$ con: X=
+Sea $X \sim N_3(0,\sum)$ con: $\mu$=
 ```{r echo=FALSE,results='asis'}
 "$" %_% xm(U, mtype = "bm")  %_% "$"
 ```
@@ -31,9 +31,24 @@ y $\sum =$
 
 #### a. Plantear $f(X)$
 
+Dada un vector aleatorio $\mathbf{X}$ con $n$ variables aleatorias, y con vector de esperanzas $\boldsymbol{\mu}$ y matriz de covarianzas $\boldsymbol{\Sigma}$, la función de densidad conjunta viene dada por la forma general
 
+$$
+\begin{aligned}
+f(\mathbf{X}) = (2\pi)^{-\frac {n} {2}} |\Sigma|^{-\frac {1} {2}} 
+e^{-\frac {1} {2} \big[(\mathbf{X} - \boldsymbol{\mu})' \Sigma^{-1} (\mathbf{X} - \boldsymbol{\mu})\big]}   
+\end{aligned}
+$$
  
- 
+Considerando que $n=3$ y que $\boldsymbol{\mu} = \begin{pmatrix} 0 & 0 & 0 \end{pmatrix}'$ entonces
+
+$$
+\begin{aligned}
+f(\mathbf{X}) = (2\pi)^{-\frac {3} {2}} |\Sigma|^{-\frac {1} {2}} 
+e^{-\frac {1} {2} \big[\mathbf{X} ' \Sigma^{-1} \mathbf{X} \big]}   
+\end{aligned}
+$$
+
 #### b. Encontrar las distribuciones marginales de $X_1$ y $X_3$.
 
 Para hallar la distribución marginal de un sub-vector $y_1$ se aplica el teorema de distribución de combinaciones lineales de vectores aleatorios, escogiendo apropiadamente la matriz **C**. 
