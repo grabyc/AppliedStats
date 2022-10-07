@@ -112,174 +112,92 @@ $$
 
 #### c. Encontrar la distribución conjunta de $(X_1,X_2)$ y $(X_1,X_3)$.
 
-Para encontrar la distribución conjunta de $(X_1, X_2)$ consideramos la siguiente partición del vector aleatorio original
+Se expresa $(X_1, X_2)$ como combinación lineal del vector $X$. 
+Sea 
 
 $$
 \begin{aligned}
-Y = 
-  \Bigg( 
-    \begin{matrix} 
-      y_1 \\ y_2
-    \end{matrix}
-  \Bigg)
-\text{ donde }
-y_1 = 
-  \Bigg( 
-    \begin{matrix} 
-      X_1 \\ X_2
-    \end{matrix}
-  \Bigg)
-\text{ y }
-y_2 = 
-  \Big( X_3 \Big)
+X' = \begin{bmatrix} X_1 & X_2 & X_3 \end{bmatrix} = \begin{bmatrix} [X_1 & X_2] & [X_3] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}
 \end{aligned}
 $$
 
-De esta manera, el vector de medias y la matriz de coviarianzas para $Y$ puede expresarse como 
+Entonces en la forma general
 
 $$
 \begin{aligned}
-  \mu &= E(Y) =
-    E \Bigg( 
-      \begin{matrix} 
-        y_1 \\ y_2
-      \end{matrix}
-      \Bigg)
-    =
-      \Bigg( 
-        \begin{matrix} 
-          E(y_1) \\ E(y_2)
-        \end{matrix}
-      \Bigg)
-    =
-      \Bigg( 
-        \begin{matrix} 
-          \mu_{y_1} \\ \mu_{y_2} 
-        \end{matrix}
-      \Bigg) \\
-  \Sigma &= cov(Y) =
-      cov \Bigg( 
-            \begin{matrix} 
-              y_1 \\ y_2
-            \end{matrix}
-          \Bigg)
-    =
-          \Bigg( 
-            \begin{matrix} 
-              \Sigma_{y_1 y_1} & \Sigma_{y_1 y_2}  \\ 
-              \Sigma_{y_2 y_1} & \Sigma_{y_2 y_2}
-            \end{matrix}
-          \Bigg)
+X'^{(1)} = CX+c = \begin{bmatrix} I_k & 0_{k \times (n-k)} \end{bmatrix} X + 0 \\
+X'^{(1)}  \sim N(\mu_1 = C\mu+c, \Sigma_{11}=C \Sigma C')
+\end{aligned}
+$$
+Luego en la forma particular
+
+$$
+\begin{aligned}
+X'^{(1)} &= CX+c \\
+ &= \begin{bmatrix} I_2 & 0_{2 \times (3-2)} \end{bmatrix} X + 0  \\
+ &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+    \begin{bmatrix} X_1 \\ X_2 \\ X_3 \end{bmatrix} + 
+    \begin{bmatrix} 0 \\ 0 \end{bmatrix} \\
+ &= \begin{bmatrix} X_1 \\ X_2 \end{bmatrix}
 \end{aligned}
 $$
 
-donde la submatriz $\mu_{y_1} = [E(X_1), E(X_2)]'$ contiene las medias de $X_1, X_2$, y la submatriz $\Sigma_{y_1 y_1} = cov(y_1)$ es una matriz de covarianza de $2 \times 2$ que contiene las varianzas de $X_1, X_2$ en la diagonal y la covarianza de $X_1$ y $X_2$ fuera de la diagonal. Esto es
+Finalmente
 
 $$
 \begin{aligned}
-  \mu_{y_1} &= 
-      \begin{bmatrix} 
-        E(X_1) \\ E(X_2)
-      \end{bmatrix}
-    =
-      \begin{bmatrix} 
-        0 \\ 0
-      \end{bmatrix} \\
-  \Sigma_{y_1 y_1} &= 
-      \begin{bmatrix} 
-        \sigma^2_{X_1} & \sigma_{X_1 X_2} \\
-        \sigma_{X_2 X_1} &  \sigma^2_{X_2}
-      \end{bmatrix}
-    =
-      \begin{bmatrix} 
-        3 & 1 \\
-        1 &  2
-      \end{bmatrix}
-\end{aligned}
-$$
-
-Luego, la distribución conjunta de $y_1 = \Bigg( \begin{matrix} X_1 \\ X_2 \end{matrix} \Bigg)$ es la siguiente
-
-$$
-\begin{aligned}
-y_1=[X_1,X_2]' \sim  N_2 \Bigg(    
-  \begin{bmatrix} 
-      0 \\ 0
-  \end{bmatrix}, 
-  \begin{bmatrix} 
-      3 & 1 \\
-      1 &  2
-  \end{bmatrix}
-  \Bigg) 
-\end{aligned}
-$$
-
-Para el caso de $(X_1, X_3)$ consideramos la siguiente partición 
-
-$$
-\begin{aligned}
-Y = 
-  \Bigg( 
-    \begin{matrix} 
-      y_1 \\ y_2
-    \end{matrix}
-  \Bigg)
-\text{ donde }
-y_1 = 
-  \Bigg( 
-    \begin{matrix} 
-      X_1 \\ X_3
-    \end{matrix}
-  \Bigg)
-\text{ y }
-y_2 = 
-  \Big( X_2 \Big)
-\end{aligned}
-$$
-
-Así, el vector de medias y la matriz de coviarianzas para $y_1$ se expresa como 
-
-$$
-\begin{aligned}
-  \mu_{y_1} &= E(y_1) 
-    =
-      \begin{bmatrix} 
-          E(X_1) \\ E(X_3) 
-      \end{bmatrix}
-    =  
-      \begin{bmatrix} 
-          0 \\ 0 
-        \end{bmatrix}
-      \\
-  \Sigma_{y_1 y_1} &= cov(y_1) =
-      \begin{bmatrix} 
-        \sigma^2_{X_1} & \sigma_{X_1 X_3} \\
-        \sigma_{X_3 X_1} &  \sigma^2_{X_3}
-      \end{bmatrix}
-    =
-      \begin{bmatrix} 
-        3 & 0 \\
-        0 &  4
-      \end{bmatrix}
+\begin{bmatrix} X_1 \\ X_2 \end{bmatrix} &\sim N_2(
+  \mu_1 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+          \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} + 
+          \begin{bmatrix} 0 \\ 0 \end{bmatrix}, 
+  \Sigma_{11} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+                \begin{bmatrix} 3 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 4 \end{bmatrix} 
+                \begin{bmatrix} 1 & 0 \\ 0 & 1 \\ 0 & 0 \end{bmatrix}  ) \\
+\begin{bmatrix} X_1 \\ X_2 \end{bmatrix} &\sim N_2(\mu_1 =  \begin{bmatrix} 0 \\ 0 \end{bmatrix} , \Sigma_{11} = 
+                \begin{bmatrix} 3 & 1 \\ 1 & 2 \end{bmatrix}) 
 \end{aligned}
 $$
 
 
-Luego, la distribución conjunta de $y_1 = \Bigg( \begin{matrix} X_1 \\ X_3 \end{matrix} \Bigg)$ es la siguiente
+
+El caso de $(X_1, X_3)$ es similar al anterior, pero previamente debe reordenarse los elementos de $X$.
+Sea 
 
 $$
 \begin{aligned}
-y_1=[X_1,X_3]' \sim  N_2 \Bigg(    
-  \begin{bmatrix} 
-      0 \\ 0
-  \end{bmatrix}, 
-  \begin{bmatrix} 
-      3 & 0 \\
-      0 & 4
-  \end{bmatrix}
-  \Bigg) 
+X' = \begin{bmatrix} X_1 & X_3 & X_2 \end{bmatrix} = \begin{bmatrix} [X_1 & X_3] & [X_2] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}
 \end{aligned}
 $$
+
+Así en la forma particular
+
+$$
+\begin{aligned}
+X'^{(1)} &= CX+c \\
+ &= \begin{bmatrix} I_2 & 0_{2 \times (3-2)} \end{bmatrix} X + 0  \\
+ &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+    \begin{bmatrix} X_1 \\ X_3 \\ X_2 \end{bmatrix} + 
+    \begin{bmatrix} 0 \\ 0 \end{bmatrix} \\
+ &= \begin{bmatrix} X_1 \\ X_3 \end{bmatrix}
+\end{aligned}
+$$
+
+Finalmente
+
+$$
+\begin{aligned}
+\begin{bmatrix} X_1 \\ X_3 \end{bmatrix} &\sim N_2(
+  \mu_1 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+          \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} + 
+          \begin{bmatrix} 0 \\ 0 \end{bmatrix}, 
+  \Sigma_{11} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+                \begin{bmatrix} 3 & 0 & 1 \\ 0 & 4 & 1 \\ 1 & 1 & 2 \end{bmatrix} 
+                \begin{bmatrix} 1 & 0 \\ 0 & 1 \\ 0 & 0 \end{bmatrix}  ) \\
+\begin{bmatrix} X_1 \\ X_3 \end{bmatrix} &\sim N_2(\mu_1 =  \begin{bmatrix} 0 \\ 0 \end{bmatrix} , \Sigma_{11} = 
+                \begin{bmatrix} 3 & 0 \\ 0 & 4 \end{bmatrix}) 
+\end{aligned}
+$$
+
 
 
 #### d. Encontrar la distribución condicional de $X_2 \mid X_1=x_1, X_3=x_3$ y $(X_1,X_3 \mid X_2=x_2)$.
