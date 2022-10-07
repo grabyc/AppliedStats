@@ -51,31 +51,62 @@ $$
 
 #### b. Encontrar las distribuciones marginales de $X_1$ y $X_3$.
 
-Para hallar la distribución marginal de un sub-vector $y_1$ se aplica el teorema de distribución de combinaciones lineales de vectores aleatorios, escogiendo apropiadamente la matriz **C**. 
+Para hallar la distribución marginal de un sub-vector $X'^{(1)}$ se aplica el teorema de distribución de combinaciones lineales de vectores aleatorios, escogiendo apropiadamente la matriz **C**. Este teorema asegura toda combinación lineal de un vector normal multivariado sigue una distribución normal multivariada.
 
-Si se toma $C = \begin{bmatrix} I_k ; 0_{k \times (n-k)} \end{bmatrix}$ y $c=0$ se tiene que $Cy+c = y_1$ y, luego, la distribución resultante será 
+Si se toma $C = \begin{bmatrix} I_k ; 0_{k \times (n-k)} \end{bmatrix}$ y $c=0$ se tiene que $CX+c = X'^{(1)}$ y, luego, la distribución resultante será 
 
 $$
 \begin{aligned}
 N(C\mu+c, C \Sigma C') &= N(\mu_1, \Sigma_{11}) \quad \text{donde} \\
-\mu_1&=E(y_1)\\
-\Sigma_{11}  &\text{ es el bloque de varianzas y covarianzas correspondiente a } y_1 
+\mu_1&=E(X'^{(1)})\\
+\Sigma_{11}  &\text{ es el bloque de varianzas y covarianzas correspondiente a } X'^{(1)} 
 \end{aligned}
 $$
 
-Así, para $y_1=X_1$
+Se expresa $X_1$ como combinación lineal del vector $X$. Sea $X' = \begin{bmatrix} X_1 & X_2 & X_3 \end{bmatrix} = \begin{bmatrix} [X_1] & [X_2 & X_3] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}$
+
+Entonces en la forma general
 
 $$
 \begin{aligned}
-X_1 \sim N(\mu_1, \Sigma_{11}) &= N(0, \begin{bmatrix} 3 \end{bmatrix}) 
+X'^{(1)} = CX+c = \begin{bmatrix} I_k & 0_{k \times (n-k)} \end{bmatrix} X + 0 \\
+X'^{(1)}  \sim N(\mu_1 = C\mu+c, \Sigma_{11}=C \Sigma C')
+\end{aligned}
+$$
+Luego en la forma particular
+
+$$
+\begin{aligned}
+X'^{(1)} &= CX+c \\
+ &= \begin{bmatrix} I_1 & 0_{1 \times (3-1)} \end{bmatrix} X + 0  \\
+ &= \begin{bmatrix} 1 & 0 & 0\end{bmatrix} \begin{bmatrix} X_1 \\ X_2 \\ X_3 \end{bmatrix} + 0 \\
+ &= X_1
 \end{aligned}
 $$
 
-y para $y_1=X_3$
+Finalmente
 
 $$
 \begin{aligned}
-X_3 \sim N(\mu_1, \Sigma_{11}) &= N(0, \begin{bmatrix} 4 \end{bmatrix}) 
+X_1 &\sim N(
+  \mu_1 = \begin{bmatrix} 1 & 0 & 0\end{bmatrix} \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} + 0 , 
+  \Sigma_{11} = \begin{bmatrix} 1 & 0 & 0\end{bmatrix} 
+                \begin{bmatrix} 3 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 4 \end{bmatrix} 
+                \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} = 3 ) \\
+X_1 &\sim N(\mu_1 = 0, \Sigma_{11} = \begin{bmatrix} 3 \end{bmatrix}) 
+\end{aligned}
+$$
+
+Del mismo modo para $X_3$
+
+$$
+\begin{aligned}
+X_3 &\sim N(
+  \mu_1 = \begin{bmatrix} 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} + 0 , 
+  \Sigma_{11} = \begin{bmatrix} 0 & 0 & 1\end{bmatrix} 
+                \begin{bmatrix} 3 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 4 \end{bmatrix} 
+                \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix} = 4 ) \\
+X_3 &\sim N(\mu_1 = 0, \Sigma_{11} = \begin{bmatrix} 4 \end{bmatrix}) 
 \end{aligned}
 $$
 

@@ -1322,8 +1322,8 @@ de Actividades I</p>
 <div id="main">
 <div id="ejercicio-1" class="section level2">
 <h2>Ejercicio 1</h2>
-<p>Sea <span class="math inline">\(X \sim N_3(0,\sum)\)</span> con: X=
-<span class="math inline">\(\begin{bmatrix}  0.00 \\  0.00 \\  0.00
+<p>Sea <span class="math inline">\(X \sim N_3(0,\sum)\)</span> con:
+<span class="math inline">\(\mu\)</span>= <span class="math inline">\(\begin{bmatrix}  0.00 \\  0.00 \\  0.00
 \\  \end{bmatrix}\)</span> y <span class="math inline">\(\sum =\)</span>
 <span class="math inline">\(\begin{bmatrix}  3.00 &amp; 1.00 &amp; 0.00
 \\  1.00 &amp; 2.00 &amp; 1.00 \\  0.00 &amp; 1.00 &amp; 4.00
@@ -1345,7 +1345,7 @@ e^{-\frac {1} {2} \big[(\mathbf{X} - \boldsymbol{\mu})&#39; \Sigma^{-1}
 0 \end{pmatrix}&#39;\)</span> entonces</p>
 <p><span class="math display">\[
 \begin{aligned}
-f(\mathbf{x}) = (2\pi)^{-\frac {3} {2}} |\Sigma|^{-\frac {1} {2}}
+f(\mathbf{X}) = (2\pi)^{-\frac {3} {2}} |\Sigma|^{-\frac {1} {2}}
 e^{-\frac {1} {2} \big[\mathbf{X} &#39; \Sigma^{-1} \mathbf{X} \big]}   
 \end{aligned}
 \]</span></p>
@@ -1354,7 +1354,9 @@ e^{-\frac {1} {2} \big[\mathbf{X} &#39; \Sigma^{-1} \mathbf{X} \big]}
 <h4>b. Encontrar las distribuciones marginales de <span class="math inline">\(X_1\)</span> y <span class="math inline">\(X_3\)</span>.</h4>
 <p>Para hallar la distribución marginal de un sub-vector <span class="math inline">\(y_1\)</span> se aplica el teorema de distribución
 de combinaciones lineales de vectores aleatorios, escogiendo
-apropiadamente la matriz <strong>C</strong>.</p>
+apropiadamente la matriz <strong>C</strong>. Este teorema asegura toda
+combinación lineal de un vector normal multivariado sigue una
+distribución normal multivariada.</p>
 <p>Si se toma <span class="math inline">\(C = \begin{bmatrix} I_k ; 0_{k
 \times (n-k)} \end{bmatrix}\)</span> y <span class="math inline">\(c=0\)</span> se tiene que <span class="math inline">\(Cy+c = y_1\)</span> y, luego, la distribución
 resultante será</p>
@@ -1367,17 +1369,54 @@ N(C\mu+c, C \Sigma C&#39;) &amp;= N(\mu_1, \Sigma_{11}) \quad
 correspondiente a } y_1
 \end{aligned}
 \]</span></p>
-<p>Así, para <span class="math inline">\(y_1=X_1\)</span></p>
+<p>Se expresa <span class="math inline">\(X_1\)</span> como combinación
+lineal del vector <span class="math inline">\(X\)</span>. Sea <span class="math inline">\(X&#39; = \begin{bmatrix} X_1 &amp; X_2 &amp; X_3
+\end{bmatrix} = \begin{bmatrix} [X_1] &amp; [X_2 &amp; X_3]
+\end{bmatrix} = \begin{bmatrix} X&#39;^{(1)} &amp; X&#39;^{(2)}
+\end{bmatrix}\)</span></p>
+<p>Entonces en la forma general</p>
 <p><span class="math display">\[
 \begin{aligned}
-X_1 \sim N(\mu_1, \Sigma_{11}) &amp;= N(0, \begin{bmatrix} 3
+X&#39;^{(1)} = CX+c = \begin{bmatrix} I_k &amp; 0_{k \times (n-k)}
+\end{bmatrix} X + 0 \\
+X&#39;^{(1)}  \sim N(\mu_1 = C\mu+c, \Sigma_{11}=C \Sigma C&#39;)
+\end{aligned}
+\]</span> Luego en la forma particular</p>
+<p><span class="math display">\[
+\begin{aligned}
+X&#39;^{(1)} &amp;= CX+c \\
+&amp;= \begin{bmatrix} I_1 &amp; 0_{1 \times (3-1)} \end{bmatrix} X +
+0  \\
+&amp;= \begin{bmatrix} 1 &amp; 0 &amp; 0\end{bmatrix} \begin{bmatrix}
+X_1 \\ X_2 \\ X_3 \end{bmatrix} + 0 \\
+&amp;= X_1
+\end{aligned}
+\]</span></p>
+<p>Finalmente</p>
+<p><span class="math display">\[
+\begin{aligned}
+X_1 &amp;\sim N(
+  \mu_1 = \begin{bmatrix} 1 &amp; 0 &amp; 0\end{bmatrix} \begin{bmatrix}
+0 \\ 0 \\ 0 \end{bmatrix} + 0 ,
+  \Sigma_{11} = \begin{bmatrix} 1 &amp; 0 &amp; 0\end{bmatrix}
+                \begin{bmatrix} 3 &amp; 1 &amp; 0 \\ 1 &amp; 2 &amp; 1
+\\ 0 &amp; 1 &amp; 4 \end{bmatrix}
+                \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} = 3 ) \\
+X_1 &amp;\sim N(\mu_1 = 0, \Sigma_{11} = \begin{bmatrix} 3
 \end{bmatrix})
 \end{aligned}
 \]</span></p>
-<p>y para <span class="math inline">\(y_1=X_3\)</span></p>
+<p>Del mismo modo para <span class="math inline">\(X_3\)</span></p>
 <p><span class="math display">\[
 \begin{aligned}
-X_3 \sim N(\mu_1, \Sigma_{11}) &amp;= N(0, \begin{bmatrix} 4
+X_3 &amp;\sim N(
+  \mu_1 = \begin{bmatrix} 0 &amp; 0 &amp; 1 \end{bmatrix}
+\begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} + 0 ,
+  \Sigma_{11} = \begin{bmatrix} 0 &amp; 0 &amp; 1\end{bmatrix}
+                \begin{bmatrix} 3 &amp; 1 &amp; 0 \\ 1 &amp; 2 &amp; 1
+\\ 0 &amp; 1 &amp; 4 \end{bmatrix}
+                \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix} = 4 ) \\
+X_3 &amp;\sim N(\mu_1 = 0, \Sigma_{11} = \begin{bmatrix} 4
 \end{bmatrix})
 \end{aligned}
 \]</span></p>
