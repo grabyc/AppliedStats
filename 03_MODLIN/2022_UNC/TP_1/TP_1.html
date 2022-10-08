@@ -1473,7 +1473,7 @@ X&#39;^{(1)} &amp;= CX+c \\
 \end{aligned}
 \]</span></p>
 <p>El caso de <span class="math inline">\((X_1, X_3)\)</span> es similar
-al anterior, pero previamente debe reordenarse los elementos de <span class="math inline">\(X\)</span> Sea</p>
+al anterior, pero previamente debe reordenarse los elementos de <span class="math inline">\(X\)</span>. Sea</p>
 <p><span class="math display">\[
 \begin{aligned}
 X&#39; = \begin{bmatrix} X_1 &amp; X_3 &amp; X_2 \end{bmatrix} =
@@ -1520,88 +1520,70 @@ X&#39;^{(1)} &amp;= CX+c \\
 <li>Para <span class="math inline">\(X_2 \mid X_1=x_1,
 X_3=x_3\)</span></li>
 </ul>
-<p>Si consideramos la siguiente partición del vector aleatorio
-original</p>
+<p>Sea</p>
 <p><span class="math display">\[
 \begin{aligned}
-Y =
-  \Bigg(
-    \begin{matrix}
-      Y_1 \\ Y_2
-    \end{matrix}
-  \Bigg)
-\text{ donde }
-Y_1 =
-  \Big(
-    \begin{matrix}
-      X_2
-    \end{matrix}
-  \Big)
-\text{ y }
-Y_2 =
-  \Bigg(
-    \begin{matrix}
-      X_1 \\ X_3
-    \end{matrix}
-  \Bigg)
+X&#39; = \begin{bmatrix} X_2 &amp; X_1 &amp; X_3 \end{bmatrix} =
+\begin{bmatrix} [X_2] &amp; [X_1 &amp; X_3] \end{bmatrix} =
+\begin{bmatrix} X&#39;^{(1)} &amp; X&#39;^{(2)} \end{bmatrix}
 \end{aligned}
 \]</span></p>
-<p>entonces la función de densidad de <span class="math inline">\(Y_1 |
-Y_2=y_2\)</span>, es decir, <span class="math inline">\(Y_1 | Y_2=[x_1,
-x_3]&#39;\)</span> está dada por</p>
+<p>Entonces en la forma general</p>
 <p><span class="math display">\[
 \begin{aligned}
-  f(Y_1 | Y_2=y_2) = \frac {(2\pi)^{-3/2} |\Sigma_{22}|^{-1/2}
-|\Sigma_{11.2}|^{-1/2} e^{-\frac {1} {2} \Big[ (Y_1 - \mu_{1.2})&#39;
-\text{ } \Sigma_{11.2}^{-1} \text{ } (Y_1 - \mu_{1.2}) \Big]
-}}   {(2\pi)^{-1}|\Sigma_{22}|^{-1/2}}
+X&#39;^{(1)} / X&#39;^{(2)} \sim N_k(\mu_{1.2} = \mu^1 +
+\Sigma_{12}\Sigma_{22}^{-1}(x-\mu)^{(2)},
+                             \Sigma_{11.2} = \Sigma_{11} - \Sigma_{12}
+\Sigma_{22}^{-1} \Sigma_{21} )
 \end{aligned}
 \]</span></p>
-<p>que simplificando queda</p>
+<p>Luego en la forma particular</p>
 <p><span class="math display">\[
 \begin{aligned}
-  f(Y_1 | Y_2=y_2) = (2\pi)^{-1/2}  |\Sigma_{11.2}|^{-1/2} e^{-\frac {1}
-{2} \Big[ (Y_1 - \mu_{1.2})&#39; \text{ } \Sigma_{11.2}^{-1} \text{ }
-(Y_1 - \mu_{1.2}) \Big] }
-\end{aligned}
-\]</span></p>
-<p>Ahora, si reemplazamos <span class="math inline">\(Y_1 =
-[X_2]\)</span> y <span class="math inline">\(Y_2=[X_1, X_3]\)</span>,
-obtenemos</p>
-<p><span class="math display">\[
-\begin{aligned}
-  \mu_{1.2} &amp;= \mu_1 + \Sigma_{12} \Sigma_{22}^{-1} (y-\mu)_2 \\
-            &amp;=\mu_{X_2} +
-              \begin{bmatrix}
-                \sigma_{X_1 X_2} &amp; \sigma_{X_2 X_3}
-              \end{bmatrix}
-              \begin{bmatrix}
-                \sigma^2_{X_1} &amp; \sigma_{X_1 X_3} \\
-                \sigma_{X_3 X_1} &amp;  \sigma^2_{X_3}
-              \end{bmatrix}^{-1}
-              \begin{bmatrix}
-                X_1 - \mu_1 \\
-                X_3 - \mu_3
-              \end{bmatrix} \\
+  \Sigma &amp;= \begin{bmatrix} 2 &amp; 1 &amp; 1 \\ 1 &amp; 3 &amp; 0
+\\ 1 &amp; 0 &amp; 4 \end{bmatrix} =
+            \begin{bmatrix} \Sigma_{11} &amp; \Sigma_{12} \\ \Sigma_{21}
+&amp; \Sigma_{22}  \end{bmatrix} \\
+  \mu_{1.2} &amp;= \mu^1 + \Sigma_{12}\Sigma_{22}^{-1}(x-\mu)^{(2)} =
+               \begin{bmatrix} 0  \end{bmatrix} +
+               \begin{bmatrix} 1 &amp; 1 \end{bmatrix}
+               \begin{bmatrix} 3 &amp; 0 \\ 0 &amp;
+4  \end{bmatrix}^{-1}
+               \begin{bmatrix} x_1  - 0 \\ x_3  - 0 \end{bmatrix} \\
+            &amp;= \begin{bmatrix} 1 &amp; 1  \end{bmatrix}  
+               \begin{bmatrix} \frac {1} {3} &amp; 0 \\ 0 &amp; \frac
+{1} {4}  \end{bmatrix}
+               \begin{bmatrix} x_1 \\ x_3 \end{bmatrix} =
+               \begin{bmatrix} \frac {x_1} {3}  + \frac {x_3}
+{4}  \end{bmatrix} \\
   \Sigma_{11.2} &amp;= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1}
-\Sigma_{21} \\
-                &amp;=  \begin{bmatrix}
-                      \sigma^2_{X_2}
-                    \end{bmatrix} -
-                    \begin{bmatrix}
-                      \sigma_{X_1 X_2} &amp; \sigma_{X_2 X_3}
-                    \end{bmatrix}
-                    \begin{bmatrix}
-                      \sigma^2_{X_1} &amp; \sigma_{X_1 X_3} \\
-                      \sigma_{X_3 X_1} &amp;  \sigma^2_{X_3}
-                    \end{bmatrix}^{-1}
-                    \begin{bmatrix}
-                      \sigma_{X_2 X_1} \\
-                      \sigma_{X_3 X_2}
-                    \end{bmatrix}
+\Sigma_{21} =      
+                   \begin{bmatrix} 2 \end{bmatrix} -
+                   \begin{bmatrix} 1 &amp; 1  \end{bmatrix}
+                   \begin{bmatrix} 3 &amp; 0 \\ 0 &amp;
+4  \end{bmatrix}^{-1}
+                   \begin{bmatrix} 1 \\ 1  \end{bmatrix} \\
+                &amp;= \begin{bmatrix} 2 \end{bmatrix} -
+                   \begin{bmatrix} 1 &amp; 1 \end{bmatrix}
+                   \begin{bmatrix} \frac {1} {3} &amp; 0 \\ 0 &amp;
+\frac {1} {4}  \end{bmatrix}
+                   \begin{bmatrix} 1 \\ 1  \end{bmatrix} =
+                   \begin{bmatrix} 2 \end{bmatrix} -
+                   \begin{bmatrix} \frac {1} {3}  + \frac {1} {4}
+\end{bmatrix} \\
+                &amp;= \begin{bmatrix} \frac {17} {12} \end{bmatrix}
 \end{aligned}
 \]</span></p>
-<p>A continuación, trabajamos con datos en R</p>
+<p>Finalmente</p>
+<p><span class="math display">\[
+\begin{aligned}
+  X_2 | X_1 = x_1 \land X_3 = x_3 &amp;\sim N_1(
+  \mu_{1.2} = \begin{bmatrix} \frac {x_1} {3}  + \frac {x_3}
+{4}  \end{bmatrix},
+  \Sigma_{11.2} = \begin{bmatrix} \frac {17} {12} \end{bmatrix}  )
+\end{aligned}
+\]</span><br />
+A continuación, trabajamos con datos en R</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de esperanzas</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1630,57 +1612,92 @@ obtenemos</p>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>S_Y1_Y2</span></code></pre></div>
 <pre><code>  [,1]</code></pre>
 <p>[1,] 1.417</p>
-<p>Luego,</p>
+<ul>
+<li>Para <span class="math inline">\(X_1, X_3 \mid X_2=x_2\)</span></li>
+</ul>
+<p>Sea</p>
 <p><span class="math display">\[
 \begin{aligned}
-    \mu_{1.2}   &amp;=0 +
-              \begin{bmatrix}
-                1 &amp; 1
-              \end{bmatrix}
-              \begin{bmatrix}
-                3 &amp; 0 \\
-                0 &amp;  4
-              \end{bmatrix}^{-1}
-              \begin{bmatrix}
-                x_1 - 0 \\
-                x_3 - 0
-              \end{bmatrix} \\
-            &amp;=
-              \begin{bmatrix}
-                1 &amp; 1
-              \end{bmatrix}
-              \begin{bmatrix}
-                0.333 &amp; 0 \\
-                0 &amp;  0.25
-              \end{bmatrix}
-              \begin{bmatrix}
-                x_1 \\
-                x_3
-              \end{bmatrix} \\
-            &amp;= 0.333 x_1 + 0.25 x_3 \\
-  \Sigma_{11.2} &amp;= \begin{bmatrix}
-                2
-              \end{bmatrix} -
-              \begin{bmatrix}
-                1 &amp; 1
-              \end{bmatrix}
-              \begin{bmatrix}
-                3 &amp; 0 \\
-                0 &amp;  4
-              \end{bmatrix}^{-1}
-              \begin{bmatrix}
-                1 \\
-                1
-              \end{bmatrix} \\  
-              &amp;= 2 - 0.583 = 1.417
+X&#39; = \begin{bmatrix} X_1 &amp; X_3 &amp; X_2 \end{bmatrix} =
+\begin{bmatrix} [X_1 &amp; X_3] &amp; [X_2] \end{bmatrix} =
+\begin{bmatrix} X&#39;^{(1)} &amp; X&#39;^{(2)} \end{bmatrix}
 \end{aligned}
 \]</span></p>
-<p>Finalmente, la distribución condicional es la siguiente</p>
+<p>En la forma particular</p>
 <p><span class="math display">\[
 \begin{aligned}
-  X_2 | X_1 = x_1 \wedge X_3 = x_3 \sim N(0.333 x_1 + 0.25 x_3, 1.417)
+  \Sigma &amp;= \begin{bmatrix} 3 &amp; 0 &amp; 1 \\ 0 &amp; 4 &amp; 1
+\\ 1 &amp; 1 &amp; 2 \end{bmatrix} =
+            \begin{bmatrix} \Sigma_{11} &amp; \Sigma_{12} \\ \Sigma_{21}
+&amp; \Sigma_{22}  \end{bmatrix} \\
+  \mu_{1.2} &amp;= \mu^1 + \Sigma_{12}\Sigma_{22}^{-1}(x-\mu)^{(2)} =
+               \begin{bmatrix} 0 \\ 0 \end{bmatrix} +
+               \begin{bmatrix} 1 \\ 1 \end{bmatrix}
+               \begin{bmatrix} 2  \end{bmatrix}^{-1}
+               \begin{bmatrix} x_2  - 0 \end{bmatrix} \\
+            &amp;= \begin{bmatrix} 1 \\ 1  \end{bmatrix}  
+               \begin{bmatrix} \frac {x_2} {2} \end{bmatrix} =
+               \begin{bmatrix} \frac {x_2} {2} \\ \frac {x_2} {2}
+\end{bmatrix} \\
+  \Sigma_{11.2} &amp;= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1}
+\Sigma_{21} =      
+                   \begin{bmatrix} 3 &amp; 0 \\ 0 &amp; 4  \end{bmatrix}
+-
+                   \begin{bmatrix} 1 \\ 1  \end{bmatrix}
+                   \begin{bmatrix} 2 \end{bmatrix}^{-1}
+                   \begin{bmatrix} 1 &amp; 1  \end{bmatrix} \\
+                &amp;= \begin{bmatrix} 3 &amp; 0 \\ 0 &amp; 4
+\end{bmatrix} -
+                   \begin{bmatrix} 1 \\ 1 \end{bmatrix}
+                   \begin{bmatrix} \frac {1} {2} &amp; \frac {1}
+{2}  \end{bmatrix} \\
+                &amp;= \begin{bmatrix} 3 &amp; 0 \\ 0 &amp; 4
+\end{bmatrix} -
+                   \begin{bmatrix} \frac {1} {2} &amp; \frac {1} {2} \\
+\frac {1} {2} &amp; \frac {1} {2}  \end{bmatrix} =
+                   \begin{bmatrix} \frac {5} {2} &amp; -\frac {1} {2} \\
+-\frac {1} {2} &amp; \frac {7} {2} \end{bmatrix}
 \end{aligned}
 \]</span></p>
+<p>Finalmente</p>
+<p><span class="math display">\[
+\begin{aligned}
+  X_1, X_3 | X_2 = x_2 &amp;\sim N_2(
+    \mu_{1.2} = \begin{bmatrix} \frac {x_2} {2} \\ \frac {x_2}
+{2}  \end{bmatrix},
+    \Sigma_{11.2} = \begin{bmatrix} \frac {5} {2} &amp; -\frac {1} {2}
+\\ -\frac {1} {2} &amp; \frac {7} {2} \end{bmatrix}  )
+\end{aligned}
+\]</span><br />
+A continuación, trabajamos con datos en R</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de esperanzas</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X2] y Y2=[X1, X3]</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>mu_Y1 <span class="ot">&lt;-</span> mu[Y1] </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>mu_Y2 <span class="ot">&lt;-</span> mu[Y2] </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>S_11 <span class="ot">&lt;-</span> S[Y1,Y1]</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>S_12 <span class="ot">&lt;-</span> S[Y1,Y2]</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>S_21 <span class="ot">&lt;-</span> S[Y2,Y1]</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>S_22 <span class="ot">&lt;-</span> S[Y2,Y2]</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Esperanza condicional</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>mu_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">round</span>(mu_Y1 <span class="sc">+</span> S_12 <span class="sc">%*%</span> <span class="fu">solve</span>(S_22), <span class="dv">3</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>mu_Y1_Y2</span></code></pre></div>
+<pre><code> [,1]</code></pre>
+<p>[1,] 0.5 [2,] 0.5</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza condicional</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>S_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">round</span>(S_11 <span class="sc">-</span> S_12 <span class="sc">%*%</span> <span class="fu">solve</span>(S_22) <span class="sc">%*%</span> S_21, <span class="dv">3</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>S_Y1_Y2</span></code></pre></div>
+<pre><code> [,1] [,2]</code></pre>
+<p>[1,] 2.5 -0.5 [2,] -0.5 3.5</p>
 </div>
 <div id="e.-encontrar-la-matriz-de-correlación." class="section level4">
 <h4>e. Encontrar la matriz de correlación.</h4>

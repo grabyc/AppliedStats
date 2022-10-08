@@ -203,85 +203,63 @@ $$
 #### d. Encontrar la distribución condicional de $X_2 \mid X_1=x_1, X_3=x_3$ y $(X_1,X_3 \mid X_2=x_2)$.
 
  - Para $X_2 \mid X_1=x_1, X_3=x_3$
- 
-Si consideramos la siguiente partición del vector aleatorio original
+
+Sea 
 
 $$
 \begin{aligned}
-Y = 
-  \Bigg( 
-    \begin{matrix} 
-      Y_1 \\ Y_2
-    \end{matrix}
-  \Bigg)
-\text{ donde }
-Y_1 = 
-  \Big( 
-    \begin{matrix} 
-      X_2
-    \end{matrix}
-  \Big)
-\text{ y }
-Y_2 = 
-  \Bigg(
-    \begin{matrix} 
-      X_1 \\ X_3 
-    \end{matrix}
-  \Bigg)
+X' = \begin{bmatrix} X_2 & X_1 & X_3 \end{bmatrix} = \begin{bmatrix} [X_2] & [X_1 & X_3] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}
 \end{aligned}
 $$
 
-entonces la función de densidad de $Y_1 | Y_2=y_2$, es decir, $Y_1 | Y_2=[x_1, x_3]'$ está dada por
+Entonces en la forma general
 
 $$
 \begin{aligned}
-  f(Y_1 | Y_2=y_2) = \frac {(2\pi)^{-3/2} |\Sigma_{22}|^{-1/2} |\Sigma_{11.2}|^{-1/2} e^{-\frac {1} {2} \Big[ (Y_1 - \mu_{1.2})' \text{ } \Sigma_{11.2}^{-1} \text{ } (Y_1 - \mu_{1.2}) \Big] }}   {(2\pi)^{-1}|\Sigma_{22}|^{-1/2}} 
+X'^{(1)} / X'^{(2)} \sim N_k(\mu_{1.2} = \mu^1 + \Sigma_{12}\Sigma_{22}^{-1}(x-\mu)^{(2)}, 
+                             \Sigma_{11.2} = \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21} )
 \end{aligned}
 $$
 
-que simplificando queda
+Luego en la forma particular
 
 $$
 \begin{aligned}
-  f(Y_1 | Y_2=y_2) = (2\pi)^{-1/2}  |\Sigma_{11.2}|^{-1/2} e^{-\frac {1} {2} \Big[ (Y_1 - \mu_{1.2})' \text{ } \Sigma_{11.2}^{-1} \text{ } (Y_1 - \mu_{1.2}) \Big] } 
+  \Sigma &= \begin{bmatrix} 2 & 1 & 1 \\ 1 & 3 & 0 \\ 1 & 0 & 4 \end{bmatrix} =
+            \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22}  \end{bmatrix} \\
+  \mu_{1.2} &= \mu^1 + \Sigma_{12}\Sigma_{22}^{-1}(x-\mu)^{(2)} =
+               \begin{bmatrix} 0  \end{bmatrix} +
+               \begin{bmatrix} 1 & 1 \end{bmatrix} 
+               \begin{bmatrix} 3 & 0 \\ 0 & 4  \end{bmatrix}^{-1}
+               \begin{bmatrix} x_1  - 0 \\ x_3  - 0 \end{bmatrix} \\
+            &= \begin{bmatrix} 1 & 1  \end{bmatrix}  
+               \begin{bmatrix} \frac {1} {3} & 0 \\ 0 & \frac {1} {4}  \end{bmatrix} 
+               \begin{bmatrix} x_1 \\ x_3 \end{bmatrix} = 
+               \begin{bmatrix} \frac {x_1} {3}  + \frac {x_3} {4}  \end{bmatrix} \\
+  \Sigma_{11.2} &= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21} =      
+                   \begin{bmatrix} 2 \end{bmatrix} - 
+                   \begin{bmatrix} 1 & 1  \end{bmatrix} 
+                   \begin{bmatrix} 3 & 0 \\ 0 & 4  \end{bmatrix}^{-1}
+                   \begin{bmatrix} 1 \\ 1  \end{bmatrix} \\
+                &= \begin{bmatrix} 2 \end{bmatrix} - 
+                   \begin{bmatrix} 1 & 1 \end{bmatrix} 
+                   \begin{bmatrix} \frac {1} {3} & 0 \\ 0 & \frac {1} {4}  \end{bmatrix} 
+                   \begin{bmatrix} 1 \\ 1  \end{bmatrix} =
+                   \begin{bmatrix} 2 \end{bmatrix} - 
+                   \begin{bmatrix} \frac {1} {3}  + \frac {1} {4} \end{bmatrix} \\
+                &= \begin{bmatrix} \frac {17} {12} \end{bmatrix}
 \end{aligned}
 $$
 
-Ahora, si reemplazamos $Y_1 = [X_2]$ y $Y_2=[X_1, X_3]$, obtenemos
+Finalmente
 
 $$
 \begin{aligned}
-  \mu_{1.2} &= \mu_1 + \Sigma_{12} \Sigma_{22}^{-1} (y-\mu)_2 \\
-            &=\mu_{X_2} + 
-              \begin{bmatrix} 
-                \sigma_{X_1 X_2} & \sigma_{X_2 X_3} 
-              \end{bmatrix} 
-              \begin{bmatrix} 
-                \sigma^2_{X_1} & \sigma_{X_1 X_3} \\
-                \sigma_{X_3 X_1} &  \sigma^2_{X_3}
-              \end{bmatrix}^{-1}
-              \begin{bmatrix} 
-                X_1 - \mu_1 \\ 
-                X_3 - \mu_3 
-              \end{bmatrix} \\
-  \Sigma_{11.2} &= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21} \\
-                &=  \begin{bmatrix} 
-                      \sigma^2_{X_2} 
-                    \end{bmatrix} - 
-                    \begin{bmatrix} 
-                      \sigma_{X_1 X_2} & \sigma_{X_2 X_3} 
-                    \end{bmatrix} 
-                    \begin{bmatrix} 
-                      \sigma^2_{X_1} & \sigma_{X_1 X_3} \\
-                      \sigma_{X_3 X_1} &  \sigma^2_{X_3}
-                    \end{bmatrix}^{-1}
-                    \begin{bmatrix} 
-                      \sigma_{X_2 X_1} \\ 
-                      \sigma_{X_3 X_2} 
-                    \end{bmatrix}
+  X_2 | X_1 = x_1 \land X_3 = x_3 &\sim N_1(
+  \mu_{1.2} = \begin{bmatrix} \frac {x_1} {3}  + \frac {x_3} {4}  \end{bmatrix}, 
+  \Sigma_{11.2} = \begin{bmatrix} \frac {17} {12} \end{bmatrix}  ) 
 \end{aligned}
-$$
-              
+$$              
 A continuación, trabajamos con datos en R
 
 ```{r echo=TRUE}
@@ -312,60 +290,84 @@ S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
 S_Y1_Y2
 ```
 
-Luego, 
+ - Para $X_1, X_3 \mid X_2=x_2$
+
+Sea 
 
 $$
 \begin{aligned}
-    \mu_{1.2}   &=0 + 
-              \begin{bmatrix} 
-                1 & 1 
-              \end{bmatrix} 
-              \begin{bmatrix} 
-                3 & 0 \\
-                0 &  4
-              \end{bmatrix}^{-1}
-              \begin{bmatrix} 
-                x_1 - 0 \\ 
-                x_3 - 0 
-              \end{bmatrix} \\ 
-            &= 
-              \begin{bmatrix} 
-                1 & 1 
-              \end{bmatrix} 
-              \begin{bmatrix} 
-                0.333 & 0 \\
-                0 &  0.25
-              \end{bmatrix}
-              \begin{bmatrix} 
-                x_1 \\ 
-                x_3 
-              \end{bmatrix} \\ 
-            &= 0.333 x_1 + 0.25 x_3 \\
-  \Sigma_{11.2} &= \begin{bmatrix} 
-                2 
-              \end{bmatrix} -
-              \begin{bmatrix} 
-                1 & 1 
-              \end{bmatrix} 
-              \begin{bmatrix} 
-                3 & 0 \\
-                0 &  4
-              \end{bmatrix}^{-1}
-              \begin{bmatrix} 
-                1 \\ 
-                1
-              \end{bmatrix} \\  
-              &= 2 - 0.583 = 1.417
+X' = \begin{bmatrix} X_1 & X_3 & X_2 \end{bmatrix} = \begin{bmatrix} [X_1 & X_3] & [X_2] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}
 \end{aligned}
 $$
 
-Finalmente, la distribución condicional es la siguiente
+En la forma particular
 
 $$
 \begin{aligned}
-  X_2 | X_1 = x_1 \wedge X_3 = x_3 \sim N(0.333 x_1 + 0.25 x_3, 1.417)
+  \Sigma &= \begin{bmatrix} 3 & 0 & 1 \\ 0 & 4 & 1 \\ 1 & 1 & 2 \end{bmatrix} =
+            \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22}  \end{bmatrix} \\
+  \mu_{1.2} &= \mu^1 + \Sigma_{12}\Sigma_{22}^{-1}(x-\mu)^{(2)} =
+               \begin{bmatrix} 0 \\ 0 \end{bmatrix} +
+               \begin{bmatrix} 1 \\ 1 \end{bmatrix} 
+               \begin{bmatrix} 2  \end{bmatrix}^{-1}
+               \begin{bmatrix} x_2  - 0 \end{bmatrix} \\
+            &= \begin{bmatrix} 1 \\ 1  \end{bmatrix}  
+               \begin{bmatrix} \frac {x_2} {2} \end{bmatrix} = 
+               \begin{bmatrix} \frac {x_2} {2} \\ \frac {x_2} {2} \end{bmatrix} \\
+  \Sigma_{11.2} &= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21} =      
+                   \begin{bmatrix} 3 & 0 \\ 0 & 4  \end{bmatrix} - 
+                   \begin{bmatrix} 1 \\ 1  \end{bmatrix} 
+                   \begin{bmatrix} 2 \end{bmatrix}^{-1}
+                   \begin{bmatrix} 1 & 1  \end{bmatrix} \\
+                &= \begin{bmatrix} 3 & 0 \\ 0 & 4 \end{bmatrix} - 
+                   \begin{bmatrix} 1 \\ 1 \end{bmatrix} 
+                   \begin{bmatrix} \frac {1} {2} & \frac {1} {2}  \end{bmatrix} \\
+                &= \begin{bmatrix} 3 & 0 \\ 0 & 4 \end{bmatrix} - 
+                   \begin{bmatrix} \frac {1} {2} & \frac {1} {2} \\ \frac {1} {2} & \frac {1} {2}  \end{bmatrix} =
+                   \begin{bmatrix} \frac {5} {2} & -\frac {1} {2} \\ -\frac {1} {2} & \frac {7} {2} \end{bmatrix}
 \end{aligned}
 $$
+
+Finalmente
+
+$$
+\begin{aligned}
+  X_1, X_3 | X_2 = x_2 &\sim N_2(
+    \mu_{1.2} = \begin{bmatrix} \frac {x_2} {2} \\ \frac {x_2} {2}  \end{bmatrix}, 
+    \Sigma_{11.2} = \begin{bmatrix} \frac {5} {2} & -\frac {1} {2} \\ -\frac {1} {2} & \frac {7} {2} \end{bmatrix}  ) 
+\end{aligned}
+$$              
+A continuación, trabajamos con datos en R
+
+```{r echo=TRUE}
+# Matriz de esperanzas
+mu <- matrix(c(0,0,0),nrow=3,byrow=TRUE)
+
+# Matriz de varianzas y covarianzas
+S <- matrix(c(3,1,0,1,2,1,0,1,4),nrow=3,byrow=TRUE)
+
+# Particion en Y1=[X2] y Y2=[X1, X3]
+Y1 <- c(1,3)
+Y2 <- c(2)
+
+mu_Y1 <- mu[Y1] 
+mu_Y2 <- mu[Y2] 
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Esperanza condicional
+mu_Y1_Y2 <- round(mu_Y1 + S_12 %*% solve(S_22), 3)
+mu_Y1_Y2
+
+# Varianza condicional
+S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
+S_Y1_Y2
+```
+
+
 
 #### e. Encontrar la matriz de correlación.
 
