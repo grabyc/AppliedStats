@@ -371,6 +371,65 @@ S_Y1_Y2
 
 #### e. Encontrar la matriz de correlación.
 
+Se tiene que 
+
+$$
+\begin{aligned}
+  \Pi = D^{- \frac {1} {2} } \Sigma D^{- \frac {1} {2} } \quad \quad \quad \text{ donde } D=diag(\Sigma)
+\end{aligned}
+$$              
+
+Así, 
+
+$$
+\begin{aligned}
+  \Sigma &= \begin{bmatrix} 3 & 0 & 1 \\ 0 & 4 & 1 \\ 1 & 1 & 2 \end{bmatrix} \\
+  D &= \begin{bmatrix} 3 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 2 \end{bmatrix} \implies
+  D^{- \frac {1} {2}} = \begin{bmatrix} 
+                          \frac {1} {\sqrt 3} & 0 & 0 \\ 
+                          0 & \frac {1} {\sqrt 4} & 0 \\ 
+                          0 & 0 & \frac {1} {\sqrt 2} 
+                        \end{bmatrix}\\
+\end{aligned}
+$$
+
+Luego, 
+
+$$
+\begin{aligned}
+  \Pi &= \begin{bmatrix} 
+           \frac {1} {\sqrt 3} & 0 & 0 \\ 
+           0 & \frac {1} {\sqrt 4} & 0 \\ 
+           0 & 0 & \frac {1} {\sqrt 2} 
+         \end{bmatrix}
+         \begin{bmatrix} 3 & 0 & 1 \\ 0 & 4 & 1 \\ 1 & 1 & 2 \end{bmatrix} 
+         \begin{bmatrix} 
+           \frac {1} {\sqrt 3} & 0 & 0 \\ 
+           0 & \frac {1} {\sqrt 4} & 0 \\ 
+           0 & 0 & \frac {1} {\sqrt 2} 
+         \end{bmatrix}
+      &= \begin{bmatrix} 1 & 0.4082 & 0 \\ 0.4082 & 1 & 0.3536 \\ 0 & 0.3536 & 1 \end{bmatrix} 
+\end{aligned}
+$$
+A continuación, trabajamos con datos en R
+
+```{r echo=TRUE}
+# Matriz de varianzas y covarianzas
+S <- matrix(c(3,1,0,1,2,1,0,1,4),nrow=3,byrow=TRUE)
+
+# Matriz D
+D <- diag(diag(S))
+
+# Matriz de correlacion
+R <- solve(sqrt(D)) %*% S %*% solve(sqrt(D))
+```
+
+```{r echo=FALSE}
+
+"$" %_% xm(R ,3, mtype = "bm")  %_% "$"
+
+```
+
 
 #### f. Encontrar $\rho_{{13}\mid 2} ,\rho_{{12}\mid 3}$.
 #### g. Encontrar la distribución de $Z=3x_1 - 2x_2 -11$.

@@ -1701,6 +1701,57 @@ A continuación, trabajamos con datos en R</p>
 </div>
 <div id="e.-encontrar-la-matriz-de-correlación." class="section level4">
 <h4>e. Encontrar la matriz de correlación.</h4>
+<p>Se tiene que</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Pi = D^{- \frac {1} {2} } \Sigma D^{- \frac {1} {2} } \quad \quad
+\quad \text{ donde } D=diag(\Sigma)
+\end{aligned}
+\]</span></p>
+<p>Así,</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Sigma &amp;= \begin{bmatrix} 3 &amp; 0 &amp; 1 \\ 0 &amp; 4 &amp; 1
+\\ 1 &amp; 1 &amp; 2 \end{bmatrix} \\
+  D &amp;= \begin{bmatrix} 3 &amp; 0 &amp; 0 \\ 0 &amp; 4 &amp; 0 \\ 0
+&amp; 0 &amp; 2 \end{bmatrix} \implies
+  D^{- \frac {1} {2}} = \begin{bmatrix}
+                          \frac {1} {\sqrt 3} &amp; 0 &amp; 0 \\
+                          0 &amp; \frac {1} {\sqrt 4} &amp; 0 \\
+                          0 &amp; 0 &amp; \frac {1} {\sqrt 2}
+                        \end{bmatrix}\\
+\end{aligned}
+\]</span></p>
+<p>Luego,</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Pi &amp;= \begin{bmatrix}
+           \frac {1} {\sqrt 3} &amp; 0 &amp; 0 \\
+           0 &amp; \frac {1} {\sqrt 4} &amp; 0 \\
+           0 &amp; 0 &amp; \frac {1} {\sqrt 2}
+         \end{bmatrix}
+         \begin{bmatrix} 3 &amp; 0 &amp; 1 \\ 0 &amp; 4 &amp; 1 \\ 1
+&amp; 1 &amp; 2 \end{bmatrix}
+         \begin{bmatrix}
+           \frac {1} {\sqrt 3} &amp; 0 &amp; 0 \\
+           0 &amp; \frac {1} {\sqrt 4} &amp; 0 \\
+           0 &amp; 0 &amp; \frac {1} {\sqrt 2}
+         \end{bmatrix}
+      &amp;= \begin{bmatrix} 1 &amp; 0.4082 &amp; 0 \\ 0.4082 &amp; 1
+&amp; 0.3536 \\ 0 &amp; 0.3536 &amp; 1 \end{bmatrix}
+\end{aligned}
+\]</span> A continuación, trabajamos con datos en R</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz D</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">diag</span>(S))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de correlacion</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">sqrt</span>(D)) <span class="sc">%*%</span> S <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">sqrt</span>(D))</span></code></pre></div>
+<p><span class="math inline">\(\begin{bmatrix}  1.000 &amp; 0.408 &amp;
+0.000 \\  0.408 &amp; 1.000 &amp; 0.354 \\  0.000 &amp; 0.354 &amp;
+1.000 \\  \end{bmatrix}\)</span></p>
 </div>
 <div id="f.-encontrar-rho_13mid-2-rho_12mid-3." class="section level4">
 <h4>f. Encontrar <span class="math inline">\(\rho_{{13}\mid 2}
