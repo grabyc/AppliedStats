@@ -63,7 +63,16 @@ N(C\mu+c, C \Sigma C') &= N(\mu_1, \Sigma_{11}) \quad \text{donde} \\
 \end{aligned}
 $$
 
-Se expresa $X_1$ como combinación lineal del vector $X$. Sea $X' = \begin{bmatrix} X_1 & X_2 & X_3 \end{bmatrix} = \begin{bmatrix} [X_1] & [X_2 & X_3] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}$
+Se expresa $X_1$ como combinación lineal del vector $X$. 
+Sea 
+
+$$
+\begin{aligned}
+X' = \begin{bmatrix} X_1 & X_2 & X_3 \end{bmatrix} = 
+     \begin{bmatrix} [X_1] & [X_2 & X_3] \end{bmatrix} = 
+     \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}
+\end{aligned}
+$$
 
 Entonces en la forma general
 
@@ -591,8 +600,68 @@ R_Y1_Y2 <- solve(sqrt(D_Y1_Y2)) %*% S_Y1_Y2 %*% solve(sqrt(D_Y1_Y2))
 
 #### g. Encontrar la distribución de $Z=3x_1 - 2x_2 -11$.
 
+Sea
 
-#### h. Encontrar la covarianza entre $Z_1$ y $Z_2$ donde $Z_1=2 X_1 -3 X_2+X_3 -3$ Y $Z_2=3 X_3+2$.
+$$
+\begin{aligned}
+Z &= CX+c = \begin{bmatrix} 3 & -2 & 0 \end{bmatrix} 
+           \begin{bmatrix} X_1 \\ X_2 \\ X_3 \end{bmatrix} + 
+           \begin{bmatrix} -11 \end{bmatrix} \\
+Z &\sim N_1(
+         \mu_1 = \begin{bmatrix} 3 & -2 & 0 \end{bmatrix} 
+                 \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} + 
+                 \begin{bmatrix} -11 \end{bmatrix} = -11, \qquad
+         \Sigma_{11}= \begin{bmatrix} 3 & -2 & 0 \end{bmatrix}
+                      \begin{bmatrix} 3 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 4 \end{bmatrix}
+                      \begin{bmatrix} 3 \\ -2 \\ 0 \end{bmatrix} = 23) 
+\end{aligned}
+$$
+
+Es posible confirmar mediante propiedades de $E$ y $Var$ los resultados obtenidos para $\mu_1$ y $\Sigma_{11}$
+
+$$
+\begin{aligned}
+E(Z) &= E(3X_1 - 2X_2 - 11) \\
+ &= E(3X_1) - E(2X_2) -11 \\
+ &= 3E(X_1) - 2E(X_2) - 11 \\
+ &= -11 \\
+Var(Z) &= Var(3X_1 - 2X_2 - 11) \\
+ &= Var(3X_1) + Var(-2X_2) - 2Cov(3X_1,2X_2) \\
+ &= 9Var(X_1) + 4Var(X_2) - 2 \cdot 3 \cdot 2 \cdot Cov(X_1, X_2) \\
+ &= 9 \cdot 3 + 4 \cdot 2 - 12 \cdot 1 = 23
+\end{aligned}
+$$
+
+
+
+#### h. Encontrar la covarianza entre $Z_1$ y $Z_2$ donde $Z_1=2 X_1 - 3 X_2 + X_3 - 3 $ y $ Z_2=3 X_3 + 2$.
+
+Sean
+
+$$
+\begin{aligned}
+Z_1 &= BX+b = \begin{bmatrix} 2 & -3 & 1 \end{bmatrix} 
+           \begin{bmatrix} X_1 \\ X_2 \\ X_3 \end{bmatrix} + 
+           \begin{bmatrix} -3 \end{bmatrix} \\
+Z_2 &= AX+a = \begin{bmatrix} 0 & 0 & 3 \end{bmatrix} 
+           \begin{bmatrix} X_1 \\ X_2 \\ X_3 \end{bmatrix} + 
+           \begin{bmatrix} 2 \end{bmatrix} 
+\end{aligned}
+$$
+
+Luego
+
+$$
+\begin{aligned}
+Cov(Z_1, Z_2) &= Cov(BX + b, AX + a) \\
+ &= B Cov(X, X) A' = B \Sigma A' \\
+ &= \begin{bmatrix} 2 & -3 & 1 \end{bmatrix}
+    \begin{bmatrix} 3 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 4 \end{bmatrix}
+    \begin{bmatrix} 0 \\ 0 \\ 3 \end{bmatrix} \\
+ &= 3 \\
+\end{aligned}
+$$
+
 
 ## Ejercicio 2
 
