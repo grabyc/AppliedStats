@@ -355,7 +355,7 @@ mu <- matrix(c(0,0,0),nrow=3,byrow=TRUE)
 # Matriz de varianzas y covarianzas
 S <- matrix(c(3,1,0,1,2,1,0,1,4),nrow=3,byrow=TRUE)
 
-# Particion en Y1=[X2] y Y2=[X1, X3]
+# Particion en Y1=[X1, X3] y Y2=[X2]
 Y1 <- c(1,3)
 Y2 <- c(2)
 
@@ -494,7 +494,7 @@ A continuación, trabajamos con datos en R
 # Matriz de varianzas y covarianzas
 S <- matrix(c(3,1,0,1,2,1,0,1,4),nrow=3,byrow=TRUE)
 
-# Particion en Y1=[X2] y Y2=[X1, X3]
+# Particion en Y1=[X1, X3] y Y2=[X2]
 Y1 <- c(1,3)
 Y2 <- c(2)
 
@@ -572,7 +572,7 @@ A continuación, trabajamos con datos en R
 # Matriz de varianzas y covarianzas
 S <- matrix(c(3,1,0,1,2,1,0,1,4),nrow=3,byrow=TRUE)
 
-# Particion en Y1=[X2] y Y2=[X1, X3]
+# Particion en Y1=[X1, X2] y Y2=[X3]
 Y1 <- c(1,2)
 Y2 <- c(3)
 
@@ -722,7 +722,7 @@ En R
 # Matriz de varianzas y covarianzas
 S <- sigma
 
-# Particion en Y1=[X2] y Y2=[X1, X3]
+# Particion en Y1=[X1, X2] y Y2=[X3]
 Y1 <- c(1,2)
 Y2 <- c(3)
 
@@ -774,21 +774,288 @@ $$
 ## Ejercicio 3
 
 ```{r echo=FALSE}
-UU<-matrix(c(2,1,4),ncol =1,byrow=TRUE)
-WW<-matrix(c(2,-1,0,-1,4,0,0,0,1),ncol =3,byrow=FALSE)
+mu <- matrix(c(2,1,4),ncol =1,byrow=TRUE)
+sigma <- matrix(c(2,-1,0,-1,4,0,0,0,1),ncol =3,byrow=FALSE)
 ```
 
 Sea $X \sim N_3(\mu,\sum)$ con: $\mu$=
 ```{r echo=FALSE,results='asis'}
-"$" %_% xm(UU, mtype = "bm")  %_% "$"
+"$" %_% xm(mu, mtype = "bm")  %_% "$"
 ```
 y $\sum =$ 
 ```{r echo=FALSE,results='asis'}
-"$" %_% xm(WW, mtype = "bm") %_% "$"
+"$" %_% xm(sigma, mtype = "bm") %_% "$"
 ```
 
-a. Encontrar la distribución conjunta de $X_1$ y $X_2$.
-b. Encontrar la distribución condicional de $X_1=x_1, X_2=x_2 \mid X_3=x_3$, la esperanza y varianza.
+#### a. Encontrar la distribución conjunta de $X_1$ y $X_2$.
+
+Sea 
+
+$$
+\begin{aligned}
+X' = \begin{bmatrix} X_1 & X_2 & X_3 \end{bmatrix} = \begin{bmatrix} [X_1 & X_2] & [X_3] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}
+\end{aligned}
+$$
+
+Entonces en la forma general
+
+$$
+\begin{aligned}
+X'^{(1)} = CX+c = \begin{bmatrix} I_k & 0_{k \times (n-k)} \end{bmatrix} X + 0 \\
+X'^{(1)}  \sim N(\mu_1 = C\mu+c, \Sigma_{11}=C \Sigma C')
+\end{aligned}
+$$
+Luego en la forma particular
+
+$$
+\begin{aligned}
+X'^{(1)} &= CX+c \\
+ &= \begin{bmatrix} I_2 & 0_{2 \times (3-2)} \end{bmatrix} X + 0  \\
+ &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+    \begin{bmatrix} X_1 \\ X_2 \\ X_3 \end{bmatrix} + 
+    \begin{bmatrix} 0 \\ 0 \end{bmatrix} \\
+ &= \begin{bmatrix} X_1 \\ X_2 \end{bmatrix}
+\end{aligned}
+$$
+
+Finalmente
+
+$$
+\begin{aligned}
+\begin{bmatrix} X_1 \\ X_2 \end{bmatrix} &\sim N_2(
+  \mu_1 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+          \begin{bmatrix} 2 \\ 1 \\ 4 \end{bmatrix} + 
+          \begin{bmatrix} 0 \\ 0 \end{bmatrix}, 
+  \Sigma_{11} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} 
+                \begin{bmatrix} 2 & -1 & 0 \\ -1 & 4 & 0 \\ 0 & 0 & 1 \end{bmatrix} 
+                \begin{bmatrix} 1 & 0 \\ 0 & 1 \\ 0 & 0 \end{bmatrix}  ) \\
+  \begin{bmatrix} X_1 \\ X_2 \end{bmatrix} &\sim N_2(
+                \mu_1 =  \begin{bmatrix} 2 \\ 1 \end{bmatrix} , 
+                \Sigma_{11} = \begin{bmatrix} 2 & -1 \\ -1 & 4 \end{bmatrix}) 
+\end{aligned}
+$$
+
+#### b. Encontrar la distribución condicional de $X_1=x_1, X_2=x_2 \mid X_3=x_3$, la esperanza y varianza.
+
+
+Sea 
+
+$$
+\begin{aligned}
+X' = \begin{bmatrix} X_1 & X_2 & X_3 \end{bmatrix} = \begin{bmatrix} [X_1 & X_2] & [X_3] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}
+\end{aligned}
+$$
+
+En la forma particular
+
+$$
+\begin{aligned}
+  \Sigma &= \begin{bmatrix} 2 & -1 & 0 \\ -1 & 4 & 0 \\ 0 & 0 & 1 \end{bmatrix} =
+            \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22}  \end{bmatrix} \\
+  \mu_{1.2} &= \mu^1 + \Sigma_{12}\Sigma_{22}^{-1}(x-\mu)^{(2)} =
+               \begin{bmatrix} 2 \\ 1 \end{bmatrix} +
+               \begin{bmatrix} 0 \\ 0 \end{bmatrix} 
+               \begin{bmatrix} 1  \end{bmatrix}^{-1}
+               \begin{bmatrix} x_3  - 0 \end{bmatrix} \\
+            &= \begin{bmatrix} 2 \\ 1 \end{bmatrix} +
+               \begin{bmatrix} 0 \\ 0 \end{bmatrix} = 
+               \begin{bmatrix} 2 \\ 1 \end{bmatrix} \\
+  \Sigma_{11.2} &= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21} =      
+                   \begin{bmatrix} 2 & -1 \\ -1 & 4  \end{bmatrix} - 
+                   \begin{bmatrix} 0 \\ 0  \end{bmatrix} 
+                   \begin{bmatrix} 1 \end{bmatrix}^{-1}
+                   \begin{bmatrix} 0 & 0  \end{bmatrix} \\
+                &= \begin{bmatrix} 2 & -1 \\ -1 & 4 \end{bmatrix} - 
+                   \begin{bmatrix} 0 \\ 0 \end{bmatrix} =
+                   \begin{bmatrix} 2 & -1 \\ -1 & 4 \end{bmatrix}
+\end{aligned}
+$$
+
+Finalmente
+
+$$
+\begin{aligned}
+  X_1, X_2 | X_3 = x_3 &\sim N_2(
+    \mu_{1.2} = \begin{bmatrix} 2 \\ 1  \end{bmatrix}, 
+    \Sigma_{11.2} = \begin{bmatrix} 2 & -1 \\ -1 & 4 \end{bmatrix}  ) 
+\end{aligned}
+$$              
+A continuación, trabajamos con datos en R
+
+```{r echo=TRUE}
+# Matriz de esperanzas
+mu <- matrix(c(2,1,4),nrow=3,byrow=TRUE)
+
+# Matriz de varianzas y covarianzas
+S <- matrix(c(2,-1,0,-1,4,0,0,0,1),nrow=3,byrow=TRUE)
+
+# Particion en Y1=[X1, X2] y Y2=[X3]
+Y1 <- c(1,2)
+Y2 <- c(3)
+
+mu_Y1 <- mu[Y1] 
+mu_Y2 <- mu[Y2] 
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Esperanza condicional
+mu_Y1_Y2 <- round(mu_Y1 + S_12 %*% solve(S_22), 3)
+mu_Y1_Y2
+
+# Varianza condicional
+S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
+S_Y1_Y2
+```
+
+
+#### c. Encontrar $\rho_{12}$ $\rho_{12 \mid 3}$.
+
+ - Para $\rho_{12}$
+
+Se tiene que 
+
+$$
+\begin{aligned}
+  \Pi = D^{- \frac {1} {2} } \Sigma D^{- \frac {1} {2} } \quad \quad \quad \text{ donde } D=diag(\Sigma)
+\end{aligned}
+$$              
+
+Así, 
+
+$$
+\begin{aligned}
+  \Sigma &= \begin{bmatrix} 2 & -1 & 0 \\ -1 & 4 & 0 \\ 0 & 0 & 1 \end{bmatrix} \\
+  D &= \begin{bmatrix} 2 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 1 \end{bmatrix} \implies
+  D^{- \frac {1} {2}} = \begin{bmatrix} 
+                          \frac {1} {\sqrt 2} & 0 & 0 \\ 
+                          0 & \frac {1} {2} & 0 \\ 
+                          0 & 0 & 1 
+                        \end{bmatrix}\\
+\end{aligned}
+$$
+
+Luego, 
+
+$$
+\begin{aligned}
+  \Pi &= \begin{bmatrix} 
+           \frac {1} {\sqrt 2} & 0 & 0 \\ 
+           0 & \frac {1} {2} & 0 \\ 
+           0 & 0 & 1  
+         \end{bmatrix}
+         \begin{bmatrix}  2 & -1 & 0 \\ -1 & 4 & 0 \\ 0 & 0 & 1  \end{bmatrix} 
+         \begin{bmatrix} 
+           \frac {1} {\sqrt 2} & 0 & 0 \\ 
+           0 & \frac {1} {2} & 0 \\ 
+           0 & 0 & 1  
+         \end{bmatrix}
+      &= \begin{bmatrix} 1 & -0.354 & 0 \\ -0.354 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} 
+\end{aligned}
+$$
+
+Finalmente,
+
+$$
+\rho_{12} = -0.354
+$$
+
+A continuación, trabajamos con datos en R
+
+```{r echo=TRUE}
+# Matriz de varianzas y covarianzas
+S <- matrix(c(2,-1,0,-1,4,0,0,0,1),nrow=3,byrow=TRUE)
+
+# Matriz D
+D <- diag(diag(S))
+
+# Matriz de correlacion
+R <- solve(sqrt(D)) %*% S %*% solve(sqrt(D))
+```
+
+```{r echo=FALSE}
+
+"$" %_% xm(R ,3, mtype = "bm")  %_% "$"
+
+```
+
+ - Para $\rho_{12 \mid 3}$
+
+Sea 
+
+$$
+\begin{aligned}
+X' = \begin{bmatrix} X_1 & X_2 & X_3 \end{bmatrix} = \begin{bmatrix} [X_1 & X_2] & [X_3] \end{bmatrix} = \begin{bmatrix} X'^{(1)} & X'^{(2)} \end{bmatrix}
+\end{aligned}
+$$
+
+Se tiene que 
+
+$$
+\begin{aligned}
+  \Pi_{[X_1 \: X_2] \; | \; [X_3]} = D^{- \frac {1} {2} } \: \Sigma_{11.2} \: D^{- \frac {1} {2} } \qquad \qquad 
+                                     \text{ donde } D=diag(\Sigma_{11.2}) 
+                                     \text{ y } \Sigma_{11.2} = \begin{bmatrix} 
+                                                                   2 & -1 \\ -1 & 4
+                                                                \end{bmatrix} 
+\end{aligned}
+$$  
+
+Luego, 
+
+$$
+\begin{aligned}
+  \Pi_{[X_1 \: X_2] \; | \; [X_3]} &= 
+         \begin{bmatrix} 2 & 0 \\ 0 & 4 \end{bmatrix}^{- \frac {1} {2} }  
+         \begin{bmatrix} 
+             2 & -1 \\ -1 & 4 
+         \end{bmatrix}          
+         \begin{bmatrix} 2 & 0 \\ 0 & 4 \end{bmatrix}^{- \frac {1} {2} }  
+      = \begin{bmatrix} 1 & -0.354 \\ -0.354 & 1  \end{bmatrix} 
+\end{aligned}
+$$
+
+Finalmente,
+
+$$
+\begin{aligned}
+  \rho_{{12}\mid 3} = -0.354
+\end{aligned}
+$$
+
+A continuación, trabajamos con datos en R
+
+```{r echo=TRUE}
+# Matriz de varianzas y covarianzas
+S <- matrix(c(2,-1,0,-1,4,0,0,0,1),nrow=3,byrow=TRUE)
+
+# Particion en Y1=[X1, X2] y Y2=[X3]
+Y1 <- c(1,2)
+Y2 <- c(3)
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Varianza condicional
+S_Y1_Y2 <- round(S_11 - S_12 %*% solve(S_22) %*% S_21, 3)
+
+# Matriz D
+D_Y1_Y2 <- diag(diag(S_Y1_Y2))
+
+# Matriz de correlacion
+R_Y1_Y2 <- solve(sqrt(D_Y1_Y2)) %*% S_Y1_Y2 %*% solve(sqrt(D_Y1_Y2))
+```
+
+```{r echo=FALSE}
+
+"$" %_% xm(R_Y1_Y2 ,3, mtype = "bm")  %_% "$"
+
+```
+
 
 ## Ejercicio 4
 

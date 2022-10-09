@@ -1680,7 +1680,7 @@ A continuación, trabajamos con datos en R</p>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X2] y Y2=[X1, X3]</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X1, X3] y Y2=[X2]</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>)</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -1813,7 +1813,7 @@ D=diag(\Sigma_{11.2})
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X2] y Y2=[X1, X3]</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X1, X3] y Y2=[X2]</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>)</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -1884,7 +1884,7 @@ D=diag(\Sigma_{11.2})
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X2] y Y2=[X1, X3]</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X1, X2] y Y2=[X3]</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -2016,7 +2016,7 @@ X_3)\)</span>.</h4>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> sigma</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X2] y Y2=[X1, X3]</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X1, X2] y Y2=[X3]</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -2069,11 +2069,266 @@ X_3)\)</span>.</h4>
 <span class="math inline">\(\begin{bmatrix}  2.00 &amp; -1.00 &amp; 0.00
 \\  -1.00 &amp; 4.00 &amp; 0.00 \\  0.00 &amp; 0.00 &amp; 1.00
 \\  \end{bmatrix}\)</span></p>
-<ol style="list-style-type: lower-alpha">
-<li>Encontrar la distribución conjunta de <span class="math inline">\(X_1\)</span> y <span class="math inline">\(X_2\)</span>.</li>
-<li>Encontrar la distribución condicional de <span class="math inline">\(X_1=x_1, X_2=x_2 \mid X_3=x_3\)</span>, la
-esperanza y varianza.</li>
-</ol>
+<div id="a.-encontrar-la-distribución-conjunta-de-x_1-y-x_2." class="section level4">
+<h4>a. Encontrar la distribución conjunta de <span class="math inline">\(X_1\)</span> y <span class="math inline">\(X_2\)</span>.</h4>
+<p>Sea</p>
+<p><span class="math display">\[
+\begin{aligned}
+X&#39; = \begin{bmatrix} X_1 &amp; X_2 &amp; X_3 \end{bmatrix} =
+\begin{bmatrix} [X_1 &amp; X_2] &amp; [X_3] \end{bmatrix} =
+\begin{bmatrix} X&#39;^{(1)} &amp; X&#39;^{(2)} \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Entonces en la forma general</p>
+<p><span class="math display">\[
+\begin{aligned}
+X&#39;^{(1)} = CX+c = \begin{bmatrix} I_k &amp; 0_{k \times (n-k)}
+\end{bmatrix} X + 0 \\
+X&#39;^{(1)}  \sim N(\mu_1 = C\mu+c, \Sigma_{11}=C \Sigma C&#39;)
+\end{aligned}
+\]</span> Luego en la forma particular</p>
+<p><span class="math display">\[
+\begin{aligned}
+X&#39;^{(1)} &amp;= CX+c \\
+&amp;= \begin{bmatrix} I_2 &amp; 0_{2 \times (3-2)} \end{bmatrix} X +
+0  \\
+&amp;= \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0
+\end{bmatrix}
+    \begin{bmatrix} X_1 \\ X_2 \\ X_3 \end{bmatrix} +
+    \begin{bmatrix} 0 \\ 0 \end{bmatrix} \\
+&amp;= \begin{bmatrix} X_1 \\ X_2 \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Finalmente</p>
+<p><span class="math display">\[
+\begin{aligned}
+\begin{bmatrix} X_1 \\ X_2 \end{bmatrix} &amp;\sim N_2(
+  \mu_1 = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0
+\end{bmatrix}
+          \begin{bmatrix} 2 \\ 1 \\ 4 \end{bmatrix} +
+          \begin{bmatrix} 0 \\ 0 \end{bmatrix},
+  \Sigma_{11} = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0
+\end{bmatrix}
+                \begin{bmatrix} 2 &amp; -1 &amp; 0 \\ -1 &amp; 4 &amp; 0
+\\ 0 &amp; 0 &amp; 1 \end{bmatrix}
+                \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 0 &amp; 0
+\end{bmatrix}  ) \\
+  \begin{bmatrix} X_1 \\ X_2 \end{bmatrix} &amp;\sim N_2(
+                \mu_1 =  \begin{bmatrix} 2 \\ 1 \end{bmatrix} ,
+                \Sigma_{11} = \begin{bmatrix} 2 &amp; -1 \\ -1 &amp; 4
+\end{bmatrix})
+\end{aligned}
+\]</span></p>
+</div>
+<div id="b.-encontrar-la-distribución-condicional-de-x_1x_1-x_2x_2-mid-x_3x_3-la-esperanza-y-varianza." class="section level4">
+<h4>b. Encontrar la distribución condicional de <span class="math inline">\(X_1=x_1, X_2=x_2 \mid X_3=x_3\)</span>, la
+esperanza y varianza.</h4>
+<p>Sea</p>
+<p><span class="math display">\[
+\begin{aligned}
+X&#39; = \begin{bmatrix} X_1 &amp; X_2 &amp; X_3 \end{bmatrix} =
+\begin{bmatrix} [X_1 &amp; X_2] &amp; [X_3] \end{bmatrix} =
+\begin{bmatrix} X&#39;^{(1)} &amp; X&#39;^{(2)} \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>En la forma particular</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Sigma &amp;= \begin{bmatrix} 2 &amp; -1 &amp; 0 \\ -1 &amp; 4 &amp; 0
+\\ 0 &amp; 0 &amp; 1 \end{bmatrix} =
+            \begin{bmatrix} \Sigma_{11} &amp; \Sigma_{12} \\ \Sigma_{21}
+&amp; \Sigma_{22}  \end{bmatrix} \\
+  \mu_{1.2} &amp;= \mu^1 + \Sigma_{12}\Sigma_{22}^{-1}(x-\mu)^{(2)} =
+               \begin{bmatrix} 2 \\ 1 \end{bmatrix} +
+               \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+               \begin{bmatrix} 1  \end{bmatrix}^{-1}
+               \begin{bmatrix} x_3  - 0 \end{bmatrix} \\
+            &amp;= \begin{bmatrix} 2 \\ 1 \end{bmatrix} +
+               \begin{bmatrix} 0 \\ 0 \end{bmatrix} =
+               \begin{bmatrix} 2 \\ 1 \end{bmatrix} \\
+  \Sigma_{11.2} &amp;= \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1}
+\Sigma_{21} =      
+                   \begin{bmatrix} 2 &amp; -1 \\ -1 &amp;
+4  \end{bmatrix} -
+                   \begin{bmatrix} 0 \\ 0  \end{bmatrix}
+                   \begin{bmatrix} 1 \end{bmatrix}^{-1}
+                   \begin{bmatrix} 0 &amp; 0  \end{bmatrix} \\
+                &amp;= \begin{bmatrix} 2 &amp; -1 \\ -1 &amp; 4
+\end{bmatrix} -
+                   \begin{bmatrix} 0 \\ 0 \end{bmatrix} =
+                   \begin{bmatrix} 2 &amp; -1 \\ -1 &amp; 4
+\end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Finalmente</p>
+<p><span class="math display">\[
+\begin{aligned}
+  X_1, X_2 | X_3 = x_3 &amp;\sim N_2(
+    \mu_{1.2} = \begin{bmatrix} 2 \\ 1  \end{bmatrix},
+    \Sigma_{11.2} = \begin{bmatrix} 2 &amp; -1 \\ -1 &amp; 4
+\end{bmatrix}  )
+\end{aligned}
+\]</span><br />
+A continuación, trabajamos con datos en R</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de esperanzas</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X1, X2] y Y2=[X3]</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>mu_Y1 <span class="ot">&lt;-</span> mu[Y1] </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>mu_Y2 <span class="ot">&lt;-</span> mu[Y2] </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>S_11 <span class="ot">&lt;-</span> S[Y1,Y1]</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>S_12 <span class="ot">&lt;-</span> S[Y1,Y2]</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>S_21 <span class="ot">&lt;-</span> S[Y2,Y1]</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>S_22 <span class="ot">&lt;-</span> S[Y2,Y2]</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Esperanza condicional</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>mu_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">round</span>(mu_Y1 <span class="sc">+</span> S_12 <span class="sc">%*%</span> <span class="fu">solve</span>(S_22), <span class="dv">3</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>mu_Y1_Y2</span></code></pre></div>
+<pre><code> [,1]</code></pre>
+<p>[1,] 2 [2,] 1</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza condicional</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>S_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">round</span>(S_11 <span class="sc">-</span> S_12 <span class="sc">%*%</span> <span class="fu">solve</span>(S_22) <span class="sc">%*%</span> S_21, <span class="dv">3</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>S_Y1_Y2</span></code></pre></div>
+<pre><code> [,1] [,2]</code></pre>
+<p>[1,] 2 -1 [2,] -1 4</p>
+</div>
+<div id="c.-encontrar-rho_12-rho_12-mid-3." class="section level4">
+<h4>c. Encontrar <span class="math inline">\(\rho_{12}\)</span> <span class="math inline">\(\rho_{12 \mid 3}\)</span>.</h4>
+<ul>
+<li>Para <span class="math inline">\(\rho_{12}\)</span></li>
+</ul>
+<p>Se tiene que</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Pi = D^{- \frac {1} {2} } \Sigma D^{- \frac {1} {2} } \quad \quad
+\quad \text{ donde } D=diag(\Sigma)
+\end{aligned}
+\]</span></p>
+<p>Así,</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Sigma &amp;= \begin{bmatrix} 2 &amp; -1 &amp; 0 \\ -1 &amp; 4 &amp; 0
+\\ 0 &amp; 0 &amp; 1 \end{bmatrix} \\
+  D &amp;= \begin{bmatrix} 2 &amp; 0 &amp; 0 \\ 0 &amp; 4 &amp; 0 \\ 0
+&amp; 0 &amp; 1 \end{bmatrix} \implies
+  D^{- \frac {1} {2}} = \begin{bmatrix}
+                          \frac {1} {\sqrt 2} &amp; 0 &amp; 0 \\
+                          0 &amp; \frac {1} {2} &amp; 0 \\
+                          0 &amp; 0 &amp; 1
+                        \end{bmatrix}\\
+\end{aligned}
+\]</span></p>
+<p>Luego,</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Pi &amp;= \begin{bmatrix}
+           \frac {1} {\sqrt 2} &amp; 0 &amp; 0 \\
+           0 &amp; \frac {1} {2} &amp; 0 \\
+           0 &amp; 0 &amp; 1  
+         \end{bmatrix}
+         \begin{bmatrix}  2 &amp; -1 &amp; 0 \\ -1 &amp; 4 &amp; 0 \\ 0
+&amp; 0 &amp; 1  \end{bmatrix}
+         \begin{bmatrix}
+           \frac {1} {\sqrt 2} &amp; 0 &amp; 0 \\
+           0 &amp; \frac {1} {2} &amp; 0 \\
+           0 &amp; 0 &amp; 1  
+         \end{bmatrix}
+      &amp;= \begin{bmatrix} 1 &amp; -0.354 &amp; 0 \\ -0.354 &amp; 1
+&amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Finalmente,</p>
+<p><span class="math display">\[
+\rho_{12} = -0.354
+\]</span></p>
+<p>A continuación, trabajamos con datos en R</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz D</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">diag</span>(S))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de correlacion</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">sqrt</span>(D)) <span class="sc">%*%</span> S <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">sqrt</span>(D))</span></code></pre></div>
+<p><span class="math inline">\(\begin{bmatrix}  1.000 &amp; -0.354 &amp;
+0.000 \\  -0.354 &amp; 1.000 &amp; 0.000 \\  0.000 &amp; 0.000 &amp;
+1.000 \\  \end{bmatrix}\)</span></p>
+<ul>
+<li>Para <span class="math inline">\(\rho_{12 \mid 3}\)</span></li>
+</ul>
+<p>Sea</p>
+<p><span class="math display">\[
+\begin{aligned}
+X&#39; = \begin{bmatrix} X_1 &amp; X_2 &amp; X_3 \end{bmatrix} =
+\begin{bmatrix} [X_1 &amp; X_2] &amp; [X_3] \end{bmatrix} =
+\begin{bmatrix} X&#39;^{(1)} &amp; X&#39;^{(2)} \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Se tiene que</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Pi_{[X_1 \: X_2] \; | \; [X_3]} = D^{- \frac {1} {2} } \:
+\Sigma_{11.2} \: D^{- \frac {1} {2} } \qquad \qquad
+                                     \text{ donde }
+D=diag(\Sigma_{11.2})
+                                     \text{ y } \Sigma_{11.2} =
+\begin{bmatrix}
+                                                                   2
+&amp; -1 \\ -1 &amp; 4
+                                                                \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Luego,</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Pi_{[X_1 \: X_2] \; | \; [X_3]} &amp;=
+         \begin{bmatrix} 2 &amp; 0 \\ 0 &amp; 4 \end{bmatrix}^{- \frac
+{1} {2} }  
+         \begin{bmatrix}
+             2 &amp; -1 \\ -1 &amp; 4
+         \end{bmatrix}          
+         \begin{bmatrix} 2 &amp; 0 \\ 0 &amp; 4 \end{bmatrix}^{- \frac
+{1} {2} }  
+      = \begin{bmatrix} 1 &amp; -0.354 \\ -0.354 &amp; 1  \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Finalmente,</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \rho_{{12}\mid 3} = -0.354
+\end{aligned}
+\]</span></p>
+<p>A continuación, trabajamos con datos en R</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X1, X2] y Y2=[X3]</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>S_11 <span class="ot">&lt;-</span> S[Y1,Y1]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>S_12 <span class="ot">&lt;-</span> S[Y1,Y2]</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>S_21 <span class="ot">&lt;-</span> S[Y2,Y1]</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>S_22 <span class="ot">&lt;-</span> S[Y2,Y2]</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza condicional</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>S_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">round</span>(S_11 <span class="sc">-</span> S_12 <span class="sc">%*%</span> <span class="fu">solve</span>(S_22) <span class="sc">%*%</span> S_21, <span class="dv">3</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz D</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>D_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">diag</span>(S_Y1_Y2))</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de correlacion</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>R_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">sqrt</span>(D_Y1_Y2)) <span class="sc">%*%</span> S_Y1_Y2 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">sqrt</span>(D_Y1_Y2))</span></code></pre></div>
+<p><span class="math inline">\(\begin{bmatrix}  1.000 &amp; -0.354
+\\  -0.354 &amp; 1.000 \\  \end{bmatrix}\)</span></p>
+</div>
 </div>
 <div id="ejercicio-4" class="section level2">
 <h2>Ejercicio 4</h2>
