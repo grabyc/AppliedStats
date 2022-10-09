@@ -1937,8 +1937,8 @@ Var(Z) &amp;= Var(3X_1 - 2X_2 - 11) \\
 \end{aligned}
 \]</span></p>
 </div>
-<div id="h.-encontrar-la-covarianza-entre-z_1-y-z_2-donde-z_12-x_1--3-x_2x_3--3-quad-y-quad-z_23-x_32." class="section level4">
-<h4>h. Encontrar la covarianza entre <span class="math inline">\(Z_1\)</span> y <span class="math inline">\(Z_2\)</span> donde <span class="math inline">\(Z_1=2 X_1 -3 X_2+X_3 -3 \quad\)</span> y <span class="math inline">\(\quad Z_2=3 X_3+2\)</span>.</h4>
+<div id="h.-encontrar-la-covarianza-entre-z_1-y-z_2-donde-z_12-x_1---3-x_2-x_3---3-y-z_23-x_3-2." class="section level4">
+<h4>h. Encontrar la covarianza entre <span class="math inline">\(Z_1\)</span> y <span class="math inline">\(Z_2\)</span> donde <span class="math inline">\(Z_1=2 X_1 - 3 X_2 + X_3 - 3\)</span> y <span class="math inline">\(Z_2=3 X_3 + 2\)</span>.</h4>
 <p>Sean</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1971,12 +1971,95 @@ a una población de 20 inmuebles ubicados en cierta zona residencial. Se
 consideran tres variables que están relacionadas con el costo de
 calefacción de la vivienda: la temperatura exterior media diaria (<span class="math inline">\(X_1\)</span>), el número de cm. de aislamiento
 térmico de las paredes (<span class="math inline">\(X_2\)</span>) y la
-antiguedad del calefactor (<span class="math inline">\(X_3\)</span>). a.
-Obtener el vector de medias y la matriz de varianzas y covarianzas del
-vector <span class="math inline">\(X´= (X_1 X_2 X_3)\)</span>. b.
-Obtener la matriz de correlación. c. Obtener la matriz de correlación
-parcial de <span class="math inline">\(X^{(1)}= (X_1 X_2\)</span> dado
-<span class="math inline">\(X^{(2)}=X_3\)</span>.</p>
+antiguedad del calefactor (<span class="math inline">\(X_3\)</span>).</p>
+<div id="a.-obtener-el-vector-de-medias-y-la-matriz-de-varianzas-y-covarianzas-del-vector-x-x_1-x_2-x_3." class="section level4">
+<h4>a. Obtener el vector de medias y la matriz de varianzas y
+covarianzas del vector <span class="math inline">\(X´= (X_1 X_2
+X_3)\)</span>.</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> calefaccion</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">sapply</span>(data, mean)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">cov</span>(data)</span></code></pre></div>
+<p><span class="math display">\[
+\begin{aligned}
+  \hat \mu =
+           \begin{bmatrix}
+              2.8885 &amp; 16.129 &amp; 7
+           \end{bmatrix}
+  \qquad \qquad
+  \hat \Sigma =
+           \begin{bmatrix}
+              93.5613082 &amp; -6.2723963 &amp; -15.7036842 \\
+              -6.2723963 &amp; 39.5754726 &amp; 1.3368421 \\
+              -15.7036842 &amp; 1.3368421 &amp; 11.1578947 \\
+           \end{bmatrix}
+\end{aligned}
+\]</span></p>
+</div>
+<div id="b.-obtener-la-matriz-de-correlación." class="section level4">
+<h4>b. Obtener la matriz de correlación.</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>corr <span class="ot">&lt;-</span> <span class="fu">cor</span>(data)</span></code></pre></div>
+<p><span class="math display">\[
+\begin{aligned}
+  \hat \Pi =
+           \begin{bmatrix}
+              1 &amp; -0.1030795 &amp; -0.4860291 \\
+              -0.1030795 &amp; 1 &amp; 0.0636174 \\
+              -0.4860291 &amp; 0.0636174 &amp; 1 \\
+           \end{bmatrix}
+\end{aligned}
+\]</span></p>
+</div>
+<div id="c.-obtener-la-matriz-de-correlación-parcial-de-x1-x_1-x_2-dado-x2x_3." class="section level4">
+<h4>c. Obtener la matriz de correlación parcial de <span class="math inline">\(X^{(1)}= (X_1 X_2)\)</span> dado <span class="math inline">\(X^{(2)}=X_3\)</span>.</h4>
+<p>En R</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de varianzas y covarianzas</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> sigma</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Particion en Y1=[X2] y Y2=[X1, X3]</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>S_11 <span class="ot">&lt;-</span> S[Y1,Y1]</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>S_12 <span class="ot">&lt;-</span> S[Y1,Y2]</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>S_21 <span class="ot">&lt;-</span> S[Y2,Y1]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>S_22 <span class="ot">&lt;-</span> S[Y2,Y2]</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Varianza condicional</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>S_Y1_Y2 <span class="ot">&lt;-</span> S_11 <span class="sc">-</span> S_12 <span class="sc">%*%</span> <span class="fu">solve</span>(S_22) <span class="sc">%*%</span> S_21</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz D</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>D_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">diag</span>(S_Y1_Y2))</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de correlacion</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>R_Y1_Y2 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">solve</span>(<span class="fu">sqrt</span>(D_Y1_Y2)) <span class="sc">%*%</span> S_Y1_Y2 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">sqrt</span>(D_Y1_Y2)), <span class="dv">3</span>)</span></code></pre></div>
+<p>Así, <span class="math display">\[
+\begin{aligned}
+  \hat \Sigma_{11.2} &amp;= \hat \Sigma_{11} - \hat \Sigma_{12} \hat
+\Sigma_{22}^{-1} \hat \Sigma_{21} =
+           \begin{bmatrix}
+              71.4598541 &amp; -4.3909172 \\
+              -4.3909172 &amp; 39.4153038
+           \end{bmatrix} \\
+  \hat D &amp;= Diag(\Sigma_{11.2}) =
+           \begin{bmatrix}
+              71.4598541 &amp; 0 \\
+              0 &amp; 39.4153038
+           \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Se tiene que</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \hat \Pi_{[X_1 \: X_2] \; | \; [X_3]} = \hat D^{- \frac {1} {2} } \:
+\hat \Sigma_{11.2} \: \hat D^{- \frac {1} {2} } =
+             \begin{bmatrix}
+              1 &amp; -0.083 \\
+              -0.083 &amp; 1
+             \end{bmatrix}
+\end{aligned}
+\]</span></p>
+</div>
 </div>
 <div id="ejercicio-3" class="section level2">
 <h2>Ejercicio 3</h2>

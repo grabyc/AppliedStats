@@ -634,7 +634,7 @@ $$
 
 
 
-#### h. Encontrar la covarianza entre $Z_1$ y $Z_2$ donde $Z_1=2 X_1 - 3 X_2 + X_3 - 3 $ y $ Z_2=3 X_3 + 2$.
+#### h. Encontrar la covarianza entre $Z_1$ y $Z_2$ donde $Z_1=2 X_1 - 3 X_2 + X_3 - 3$ y $Z_2=3 X_3 + 2$.
 
 Sean
 
@@ -666,9 +666,110 @@ $$
 ## Ejercicio 2
 
 En el archivo *calefacción* se muestran datos correspondientes a una población de 20 inmuebles ubicados en cierta zona residencial. Se consideran tres variables que están relacionadas con el costo de calefacción de la vivienda: la temperatura exterior media diaria ($X_1$), el número de cm. de aislamiento térmico de las paredes ($X_2$) y la antiguedad del calefactor ($X_3$).
-a. Obtener el vector de medias y la matriz de varianzas y covarianzas del vector $X´= (X_1 X_2 X_3)$.
-b. Obtener la matriz de correlación.
-c. Obtener la matriz de correlación parcial de $X^{(1)}= (X_1 X_2$ dado $X^{(2)}=X_3$.
+
+```{r echo=FALSE}
+calefaccion <- read.delim("/home/user/Repos/AppliedStats/03_MODLIN/2022_UNC/TP_1/Data/calefaccion.txt", header = T, sep = "\t", dec = ".")
+```
+
+#### a. Obtener el vector de medias y la matriz de varianzas y covarianzas del vector $X´= (X_1 X_2 X_3)$.
+
+```{r echo=TRUE}
+data <- calefaccion
+
+mean <- sapply(data, mean)
+sigma <- cov(data)
+```
+
+$$
+\begin{aligned}
+  \hat \mu = 
+           \begin{bmatrix} 
+              `r mean[[1]] ` & `r mean[[2]] ` & `r mean[[3]] `
+           \end{bmatrix}
+  \qquad \qquad
+  \hat \Sigma = 
+           \begin{bmatrix} 
+              `r sigma[1,1] ` & `r sigma[1,2] ` & `r sigma[1,3] ` \\
+              `r sigma[2,1] ` & `r sigma[2,2] ` & `r sigma[2,3] ` \\
+              `r sigma[3,1] ` & `r sigma[3,2] ` & `r sigma[3,3] ` \\
+           \end{bmatrix}
+\end{aligned}
+$$
+
+
+#### b. Obtener la matriz de correlación.
+
+```{r echo=TRUE}
+corr <- cor(data)
+```
+
+$$
+\begin{aligned}
+  \hat \Pi = 
+           \begin{bmatrix} 
+              `r corr[1,1] ` & `r corr[1,2] ` & `r corr[1,3] ` \\
+              `r corr[2,1] ` & `r corr[2,2] ` & `r corr[2,3] ` \\
+              `r corr[3,1] ` & `r corr[3,2] ` & `r corr[3,3] ` \\
+           \end{bmatrix}
+\end{aligned}
+$$
+
+#### c. Obtener la matriz de correlación parcial de $X^{(1)}= (X_1 X_2)$ dado $X^{(2)}=X_3$.
+
+En R
+
+```{r echo=TRUE}
+# Matriz de varianzas y covarianzas
+S <- sigma
+
+# Particion en Y1=[X2] y Y2=[X1, X3]
+Y1 <- c(1,2)
+Y2 <- c(3)
+
+S_11 <- S[Y1,Y1]
+S_12 <- S[Y1,Y2]
+S_21 <- S[Y2,Y1]
+S_22 <- S[Y2,Y2]
+
+# Varianza condicional
+S_Y1_Y2 <- S_11 - S_12 %*% solve(S_22) %*% S_21
+
+# Matriz D
+D_Y1_Y2 <- diag(diag(S_Y1_Y2))
+
+# Matriz de correlacion
+R_Y1_Y2 <- round(solve(sqrt(D_Y1_Y2)) %*% S_Y1_Y2 %*% solve(sqrt(D_Y1_Y2)), 3)
+```
+
+Así, 
+$$
+\begin{aligned}
+  \hat \Sigma_{11.2} &= \hat \Sigma_{11} - \hat \Sigma_{12} \hat \Sigma_{22}^{-1} \hat \Sigma_{21} =
+           \begin{bmatrix} 
+              `r S_Y1_Y2[1,1] ` & `r S_Y1_Y2[1,2] ` \\
+              `r S_Y1_Y2[2,1] ` & `r S_Y1_Y2[2,2] ` 
+           \end{bmatrix} \\
+  \hat D &= Diag(\Sigma_{11.2}) =
+           \begin{bmatrix} 
+              `r D_Y1_Y2[1,1] ` & `r D_Y1_Y2[1,2] ` \\
+              `r D_Y1_Y2[2,1] ` & `r D_Y1_Y2[2,2] ` 
+           \end{bmatrix}
+\end{aligned}
+$$
+
+Se tiene que 
+
+$$
+\begin{aligned}
+  \hat \Pi_{[X_1 \: X_2] \; | \; [X_3]} = \hat D^{- \frac {1} {2} } \: \hat \Sigma_{11.2} \: \hat D^{- \frac {1} {2} } =
+             \begin{bmatrix} 
+              `r R_Y1_Y2[1,1] ` & `r R_Y1_Y2[1,2] ` \\
+              `r R_Y1_Y2[2,1] ` & `r R_Y1_Y2[2,2] ` 
+             \end{bmatrix}
+\end{aligned}
+$$  
+
+
 
 ## Ejercicio 3
 

@@ -1,4 +1,4 @@
-temperatura	aislamiento	antigüedad
+temperatura	aislamiento	antiguedad
 1.67	7.62	6
 -1.67	10.16	10
 2.22	17.78	3
