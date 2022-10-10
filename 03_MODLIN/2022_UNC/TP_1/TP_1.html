@@ -1294,6 +1294,8 @@ Magister en Estadística Aplicada
       5</a></li>
       <li><a href="#ejercicio-6" id="toc-ejercicio-6">Ejercicio
       6</a></li>
+      <li><a href="#ejercicio-6-1" id="toc-ejercicio-6-1">Ejercicio
+      6</a></li>
       <li><a href="#ejercicio-7" id="toc-ejercicio-7">Ejercicio
       7</a></li>
       <li><a href="#ejercicio-8" id="toc-ejercicio-8">Ejercicio
@@ -2332,22 +2334,66 @@ D=diag(\Sigma_{11.2})
 </div>
 <div id="ejercicio-4" class="section level2">
 <h2>Ejercicio 4</h2>
-<p>Sea <span class="math inline">\(X \sim N_3(0,\sum)\)</span>,
-encontrar la transformación <span class="math inline">\(CX\)</span> tal
-que la matriz de covarianzas de la variable resultante sea:<span class="math inline">\(\sum =\)</span> <span class="math inline">\(\begin{bmatrix}  7.00 &amp; 2.00 &amp; 1.00
-\\  2.00 &amp; 7.00 &amp; -1.00 \\  1.00 &amp; -1.00 &amp; 4.00
-\\  \end{bmatrix}\)</span> . (Ayuda. Pensar en descomposición espectral
-o descomposición de Cholesky)</p>
+<p>Sea <span class="math inline">\(X \sim N_n(\mu,\Sigma)\)</span>,
+obtener <span class="math inline">\(E(X)\)</span> y <span class="math inline">\(Var(X)\)</span> utilizando la Función Generatriz
+de Momentos</p>
 </div>
 <div id="ejercicio-5" class="section level2">
 <h2>Ejercicio 5</h2>
+<p>Sea <span class="math inline">\(X \sim N_3(0,I)\)</span>, encontrar
+la transformación <span class="math inline">\(CX\)</span> tal que la
+matriz de covarianzas de la variable resultante sea <span class="math inline">\(\Sigma =\)</span> <span class="math inline">\(\begin{bmatrix}  7.00 &amp; 2.00 &amp; 1.00
+\\  2.00 &amp; 7.00 &amp; -1.00 \\  1.00 &amp; -1.00 &amp; 4.00
+\\  \end{bmatrix}\)</span> . (Ayuda: utilizar R o algún software que
+soporte álgebra matricial. Pensar en descomposición espectral o
+descompoisción de Cholesky)</p>
+<p>Se busca</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Sigma &amp;= Var(CX) = \begin{bmatrix} 7 &amp; 2 &amp; 1 \\ 2 &amp; 7
+&amp; -1 \\ 1 &amp; -1 &amp; 4 \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<p>Luego</p>
+<p><span class="math display">\[
+\begin{aligned}
+  Var(CX) = C Var(X) C&#39; = C I C&#39; = C C&#39;
+\end{aligned}
+\]</span></p>
+<p>Por lo tanto, se busca</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Sigma &amp;= C C&#39; = \begin{bmatrix} 7 &amp; 2 &amp; 1 \\ 2 &amp;
+7 &amp; -1 \\ 1 &amp; -1 &amp; 4 \end{bmatrix}
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p>Descomposición de Cholesky: Sea <span class="math inline">\(\Sigma\)</span> real, simétrica y definida
+positiva, entonces siempre existe una matriz triangular superior <span class="math inline">\(A\)</span> tal que <span class="math inline">\(\Sigma = A&#39;A\)</span></p>
+</blockquote>
+<p>En R</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de covarianzas</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">4</span>),<span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">chol</span>(sigma)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">t</span>(A)</span></code></pre></div>
+<p>Finalmente</p>
+<p><span class="math display">\[
+  \Sigma = A&#39; A = C C&#39; \qquad \rightarrow A&#39; = C
+\]</span></p>
+<p>C = <span class="math inline">\(\begin{bmatrix}  2.65 &amp; 0.00
+&amp; 0.00 \\  0.76 &amp; 2.54 &amp; 0.00 \\  0.38 &amp; -0.51 &amp;
+1.90 \\  \end{bmatrix}\)</span></p>
+</div>
+<div id="ejercicio-6" class="section level2">
+<h2>Ejercicio 6</h2>
 <p>Dada <span class="math inline">\(X\sim N_2(\)</span> <span class="math inline">\(\begin{bmatrix}  1.00 \\  2.00
 \\  \end{bmatrix}\)</span> , <span class="math inline">\(\begin{bmatrix}  3.00 &amp; 1.00 \\  1.00 &amp;
 3.00 \\  \end{bmatrix}\)</span> <span class="math inline">\()\)</span>
 encontrar la transformación <span class="math inline">\(Y=TX+c\)</span>
 tal que <span class="math inline">\(Y\sim N_3(0,I)\)</span></p>
 </div>
-<div id="ejercicio-6" class="section level2">
+<div id="ejercicio-6-1" class="section level2">
 <h2>Ejercicio 6</h2>
 <p>En el ejercicio anterior la función de densidad multivariada está
 dada por: <span class="math inline">\(f(x)=(2\pi)^{-1}

@@ -1056,21 +1056,71 @@ R_Y1_Y2 <- solve(sqrt(D_Y1_Y2)) %*% S_Y1_Y2 %*% solve(sqrt(D_Y1_Y2))
 
 ```
 
-
 ## Ejercicio 4
 
+Sea $X \sim N_n(\mu,\Sigma)$, obtener $E(X)$ y $Var(X)$ utilizando la Función Generatriz de Momentos
+
+
+
+## Ejercicio 5 
+
 ```{r echo=FALSE}
-UUU<-matrix(c(0,0,0),ncol =1,byrow=TRUE)
-WWW<- matrix(c(7,2,1,2,7,-1,1,-1,4),3,3) 
+sigma<-matrix(c(7,2,1,2,7,-1,1,-1,4),nrow = 3, ncol = 3, byrow=TRUE)
 ```
 
-Sea $X \sim N_3(0,\sum)$, encontrar la transformación $CX$ tal que la matriz de covarianzas de la variable resultante sea:$\sum =$ 
+Sea $X \sim N_3(0,I)$,  encontrar la transformación $CX$ tal que la matriz de covarianzas de la variable resultante sea $\Sigma =$
 ```{r echo=FALSE,results='asis'}
-"$" %_% xm(WWW, mtype = "bm") %_% "$"
+"$" %_% xm(sigma, mtype = "bm")  %_% "$"
 ```
-. (Ayuda. Pensar en descomposición espectral o descomposición de Cholesky)
+. (Ayuda: utilizar R o algún software que soporte álgebra matricial. Pensar en descomposición espectral o descompoisción de Cholesky)
 
-## Ejercicio 5
+Se busca
+
+$$
+\begin{aligned}
+  \Sigma &= Var(CX) = \begin{bmatrix} 7 & 2 & 1 \\ 2 & 7 & -1 \\ 1 & -1 & 4 \end{bmatrix}
+\end{aligned}
+$$
+
+Luego
+
+$$
+\begin{aligned}
+  Var(CX) = C Var(X) C' = C I C' = C C' 
+\end{aligned}
+$$
+
+Por lo tanto, se busca
+
+$$
+\begin{aligned}
+  \Sigma &= C C' = \begin{bmatrix} 7 & 2 & 1 \\ 2 & 7 & -1 \\ 1 & -1 & 4 \end{bmatrix}
+\end{aligned}
+$$
+
+> Descomposición de Cholesky: Sea $\Sigma$ real, simétrica y definida positiva, entonces siempre existe una matriz triangular superior $A$ tal que $\Sigma = A'A$
+
+En R
+```{r echo=TRUE}
+# Matriz de covarianzas
+sigma <- matrix(c(7,2,1,2,7,-1,1,-1,4),nrow = 3, ncol = 3, byrow=TRUE)
+
+A <- chol(sigma)
+C <- t(A)
+```
+
+Finalmente
+
+$$
+  \Sigma = A' A = C C' \qquad \rightarrow \qquad A' = C
+$$
+
+C = 
+```{r echo=FALSE,results='asis'}
+"$" %_% xm(C, mtype = "bm")  %_% "$"
+```
+
+## Ejercicio 6
 
 ```{r echo=FALSE}
 UUUU<-matrix(c(1,2),ncol =1,byrow=TRUE)
