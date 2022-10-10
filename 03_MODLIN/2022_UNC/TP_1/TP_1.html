@@ -1294,18 +1294,6 @@ Magister en Estadística Aplicada
       5</a></li>
       <li><a href="#ejercicio-6" id="toc-ejercicio-6">Ejercicio
       6</a></li>
-      <li><a href="#ejercicio-6-1" id="toc-ejercicio-6-1">Ejercicio
-      6</a></li>
-      <li><a href="#ejercicio-7" id="toc-ejercicio-7">Ejercicio
-      7</a></li>
-      <li><a href="#ejercicio-8" id="toc-ejercicio-8">Ejercicio
-      8</a></li>
-      <li><a href="#ejercicio-9" id="toc-ejercicio-9">Ejercicio
-      9</a></li>
-      <li><a href="#ejercicio-10" id="toc-ejercicio-10">Ejercicio
-      10</a></li>
-      <li><a href="#ejercicio-11" id="toc-ejercicio-11">Ejercicio
-      11</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
@@ -2379,7 +2367,7 @@ positiva, entonces siempre existe una matriz triangular superior <span class="ma
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">t</span>(A)</span></code></pre></div>
 <p>Finalmente</p>
 <p><span class="math display">\[
-  \Sigma = A&#39; A = C C&#39; \qquad \rightarrow A&#39; = C
+  \Sigma = A&#39; A = C C&#39; \qquad \rightarrow \qquad A&#39; = C
 \]</span></p>
 <p>C = <span class="math inline">\(\begin{bmatrix}  2.65 &amp; 0.00
 &amp; 0.00 \\  0.76 &amp; 2.54 &amp; 0.00 \\  0.38 &amp; -0.51 &amp;
@@ -2389,72 +2377,62 @@ positiva, entonces siempre existe una matriz triangular superior <span class="ma
 <h2>Ejercicio 6</h2>
 <p>Dada <span class="math inline">\(X\sim N_2(\)</span> <span class="math inline">\(\begin{bmatrix}  1.00 \\  2.00
 \\  \end{bmatrix}\)</span> , <span class="math inline">\(\begin{bmatrix}  3.00 &amp; 1.00 \\  1.00 &amp;
-3.00 \\  \end{bmatrix}\)</span> <span class="math inline">\()\)</span>
+3.00 \\  \end{bmatrix}\)</span> <span class="math inline">\()\)</span>,
 encontrar la transformación <span class="math inline">\(Y=TX+c\)</span>
-tal que <span class="math inline">\(Y\sim N_3(0,I)\)</span></p>
-</div>
-<div id="ejercicio-6-1" class="section level2">
-<h2>Ejercicio 6</h2>
-<p>En el ejercicio anterior la función de densidad multivariada está
-dada por: <span class="math inline">\(f(x)=(2\pi)^{-1}
-\mid\sum\mid^{-1/2} e^{-1/2[(x-\mu)´\sum^{-1} (x-\mu)]}\)</span> donde
-<span class="math inline">\(Q=(x-\mu)´\sum^{-1}(x-\mu)\)</span> es una
-forma cuadrática que mide el cuadrado de la distancia entre cada punto
-del plano y el vector de medias <span class="math inline">\(\mu\)</span>. Encontrar la distribución de dicha
-forma cuadrática.</p>
-</div>
-<div id="ejercicio-7" class="section level2">
-<h2>Ejercicio 7</h2>
-<p>Dado <span class="math inline">\(Y\sim N_3(\mu,I)\)</span> establecer
-si el vector <span class="math inline">\(BY\)</span> es independiente de
-la forma cuadrática <span class="math inline">\(Y´AY\)</span> donde:
-<span class="math inline">\(B=\)</span> <span class="math inline">\(\begin{bmatrix}  2.00 &amp; -1.00 &amp; 0.00
-\\  -1.00 &amp; 0.00 &amp; 1.00 \\  \end{bmatrix}\)</span> y <span class="math inline">\(A=\)</span> <span class="math inline">\(\begin{bmatrix}  0.17 &amp; 0.33 &amp; 0.17
-\\  0.33 &amp; 0.67 &amp; 0.33 \\  0.17 &amp; 0.33 &amp; 0.17
+tal que <span class="math inline">\(Y \sim N_2(0,I)\)</span></p>
+<p>Se plantea el siguiente sistema de ecuaciones con incógnitas <span class="math inline">\(T\)</span> y <span class="math inline">\(c\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+  E(Y) &amp;= E(TX + c) = T E(X) + c = T \mu + c =\mathbf{0}\\
+  Var(Y) &amp;= Var(TX + c) = T Var(X)T&#39;= T \Sigma T&#39; =
+\mathbf{I}
+\end{aligned}
+\]</span></p>
+<p>Aplicando la descomposición de Cholesky sobre <span class="math inline">\(\Sigma\)</span> y trabajando sobre la igualdad, se
+tiene que</p>
+<p><span class="math display">\[
+  T \Sigma T&#39; = T \cdot A&#39; \cdot A \cdot T&#39; = \mathbf{I}
+\]</span></p>
+<p>Si se toma <span class="math inline">\(T = A&#39;^{-1}\)</span>,
+entonces</p>
+<p><span class="math display">\[
+\begin{aligned}
+  A&#39;^{-1} \cdot A&#39; \cdot A \cdot (A&#39;^{-1})&#39; &amp;= I \\
+  I \cdot I &amp;= I
+\end{aligned}
+\]</span></p>
+<p>Así,</p>
+<p><span class="math display">\[
+\begin{aligned}
+  T &amp;= A&#39;^{-1} \\
+  c &amp; = -T \mu = -(A&#39;^{-1}) \mu
+\end{aligned}
+\]</span></p>
+<p>En R,</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector de medias</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">ncol =</span> <span class="dv">1</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de covarianzas</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>),<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Descomposición de sigma</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">chol</span>(sigma)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Incógnitas</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>Te <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(A)) </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> (<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (Te <span class="sc">%*%</span> mu)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificaciones de E(Y) y Var(Y)</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>(Te <span class="sc">%*%</span> mu) <span class="sc">+</span> c</span></code></pre></div>
+<pre><code> [,1]</code></pre>
+<p>[1,] 0 [2,] 0</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Te <span class="sc">%*%</span> sigma <span class="sc">%*%</span> <span class="fu">t</span>(Te), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code> [,1] [,2]</code></pre>
+<p>[1,] 1 0 [2,] 0 1</p>
+<p><span class="math inline">\(T =\)</span> <span class="math inline">\(\begin{bmatrix}  0.58 &amp; 0.00 \\  -0.20 &amp;
+0.61 \\  \end{bmatrix}\)</span> , <span class="math inline">\(c
+=\)</span> <span class="math inline">\(\begin{bmatrix}  -0.58 \\  -1.02
 \\  \end{bmatrix}\)</span></p>
-</div>
-<div id="ejercicio-8" class="section level2">
-<h2>Ejercicio 8</h2>
-<p>Dado <span class="math inline">\(Y\sim N_2(\)</span> <span class="math inline">\(\begin{bmatrix}  1.00 \\  3.00
-\\  \end{bmatrix}\)</span> , <span class="math inline">\(\begin{bmatrix}  1.00 &amp; 1.00 \\  1.00 &amp;
-2.00 \\  \end{bmatrix}\)</span> <span class="math inline">\()\)</span>,
-con: <span class="math inline">\(B=\)</span> <span class="math inline">\(\begin{bmatrix}  0.50 &amp; 0.50 \\  -1.00 &amp;
-1.00 \\  \end{bmatrix}\)</span> y <span class="math inline">\(A=\)</span> <span class="math inline">\(\begin{bmatrix}  2.00 &amp; -1.00 \\  -1.00 &amp;
-1.00 \\  \end{bmatrix}\)</span></p>
-<ol style="list-style-type: lower-alpha">
-<li>Probar si la forma linear <span class="math inline">\(BY\)</span> es
-independiente de la forma cuadrática <span class="math inline">\(Y´AY\)</span>.</li>
-<li>Determinar la distribución de la forma cuadrática <span class="math inline">\(Y´AY\)</span>.</li>
-</ol>
-</div>
-<div id="ejercicio-9" class="section level2">
-<h2>Ejercicio 9</h2>
-<p>Con <span class="math inline">\(Y\)</span> y <span class="math inline">\(\sum\)</span> como en el ejercicio anterior,
-establezca si las formas cuadráticas <span class="math inline">\(Y´BY\)</span> e <span class="math inline">\(Y´AY\)</span> son independientes, donde: <span class="math inline">\(B=\)</span> <span class="math inline">\(\begin{bmatrix}  2.00 &amp; -1.00 \\  -1.00 &amp;
-1.00 \\  \end{bmatrix}\)</span> y <span class="math inline">\(A=\)</span> <span class="math inline">\(\begin{bmatrix}  3.00 &amp; 0.50 \\  0.50 &amp;
-2.00 \\  \end{bmatrix}\)</span></p>
-</div>
-<div id="ejercicio-10" class="section level2">
-<h2>Ejercicio 10</h2>
-<p>El estadístico <span class="math inline">\(T\)</span> para la prueba
-de hipótesis de diferencia de medias está dado por: <span class="math display">\[T=\frac{(\overline{X}_1-\overline{X}_2)-(\mu_1-\mu_2)}{\sqrt[2]{S_P^2(\frac{1}{n_1}+\frac{1}{n_2})
-}}\]</span> a. Demuestre que este estadístico tiene distribución
-<em>t-Student</em> con <span class="math inline">\((n_1+n_2-2)\)</span>
-grados de libertad cuando <span class="math inline">\((\overline{X}_1-\overline{X}_2)\)</span> es
-obtenida a partír de muestras aleatorias simples e independientes de
-tamaños <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span>, de poblaciones normales con idéntica
-varianza (<span class="math inline">\(\sigma^2\)</span>)y esperanzas
-<span class="math inline">\(\mu_1\)</span> y <span class="math inline">\(\mu_2\)</span>. b. Demostrar que: <span class="math inline">\(S^2_p={\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}}\)</span>
-es un estimador insesgado de <span class="math inline">\(\sigma^2\)</span>.</p>
-</div>
-<div id="ejercicio-11" class="section level2">
-<h2>Ejercicio 11</h2>
-<p>El estadístico <span class="math inline">\(F\)</span> para la prueba
-de hipótesis de igualdad de varianzas está dado por: <span class="math display">\[F=
-\frac{S_1^2/\sigma_1^2}{S_1^2/\sigma_1^2}\]</span> Demuestre que este
-estadístico tiene distribución F con <span class="math inline">\((n_1-n_2-1)\)</span> grados de libertad cuando las
-muestras aleatorias son independientes de tamaños <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span> provenientes de poblaciones
-normales</p>
 </div>
 </div>
 

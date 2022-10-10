@@ -1123,102 +1123,79 @@ C =
 ## Ejercicio 6
 
 ```{r echo=FALSE}
-UUUU<-matrix(c(1,2),ncol =1,byrow=TRUE)
-WWWW<- matrix(c(3,1,1,3),2,2) 
+mu <- matrix(c(1,2), ncol = 1,byrow=TRUE)
+sigma <- matrix(c(3,1,1,3),2,2) 
 ```
 
 Dada $X\sim N_2($
 ```{r echo=FALSE,results='asis'}
-"$" %_% xm(UUUU, mtype = "bm")  %_% "$"
+"$" %_% xm(mu, mtype = "bm")  %_% "$"
 ```
 , 
 ```{r echo=FALSE,results='asis'}
-"$" %_% xm(WWWW, mtype = "bm") %_% "$"
+"$" %_% xm(sigma, mtype = "bm") %_% "$"
 ```
-$)$ encontrar la transformación $Y=TX+c$ tal que $Y\sim N_3(0,I)$
+$)$, encontrar la transformación $Y=TX+c$ tal que $Y \sim N_2(0,I)$
 
 
-## Ejercicio 6
+Se plantea el siguiente sistema de ecuaciones con incógnitas $T$ y $c$
 
-En el ejercicio anterior la función de densidad multivariada está dada por:
-$f(x)=(2\pi)^{-1} \mid\sum\mid^{-1/2} e^{-1/2[(x-\mu)´\sum^{-1} (x-\mu)]}$ donde $Q=(x-\mu)´\sum^{-1}(x-\mu)$ es una forma cuadrática que mide el cuadrado de la distancia entre cada punto del plano y el vector de medias $\mu$. Encontrar la distribución de dicha forma cuadrática.
+$$
+\begin{aligned}
+  E(Y) &= E(TX + c) = T E(X) + c = T \mu + c =\mathbf{0}\\
+  Var(Y) &= Var(TX + c) = T Var(X)T'= T \Sigma T' = \mathbf{I}
+\end{aligned}
+$$
 
-## Ejercicio 7
+Aplicando la descomposición de Cholesky sobre $\Sigma$ y trabajando sobre la igualdad, se tiene que
+
+$$
+  T \Sigma T' = T \cdot A' \cdot A \cdot T' = \mathbf{I}
+$$
+
+Si se toma $T = A'^{-1}$, entonces
+
+$$
+\begin{aligned}
+  A'^{-1} \cdot A' \cdot A \cdot (A'^{-1})' &= I \\
+  I \cdot I &= I
+\end{aligned}
+$$
+
+Así,
+
+$$
+\begin{aligned}
+  T &= A'^{-1} \\
+  c & = -T \mu = -(A'^{-1}) \mu
+\end{aligned}
+$$
+
+En R,
+```{r echo=TRUE}
+# Vector de medias
+mu <- matrix(c(1,2), ncol = 1,byrow=TRUE)
+
+# Matriz de covarianzas
+sigma <- matrix(c(3,1,1,3),nrow = 2, ncol = 2, byrow=TRUE)
+
+# Descomposición de sigma
+A <- chol(sigma)
+
+# Incógnitas
+Te <- solve(t(A)) 
+c <- (-1) * (Te %*% mu)
+
+# Verificaciones de E(Y) y Var(Y)
+(Te %*% mu) + c
+round(Te %*% sigma %*% t(Te), 2)
+```
+
+$T =$
 ```{r echo=FALSE,results='asis'}
-B<- matrix(c(2,-1,-1,0,0,1),2,3) 
-A<- matrix(c(1/6,1/3,1/6,1/3,2/3,1/3,1/6,1/3,1/6),3,3) 
+"$" %_% xm(Te, mtype = "bm") %_% "$"
 ```
-
-Dado $Y\sim N_3(\mu,I)$ establecer si el vector $BY$ es independiente de la forma cuadrática $Y´AY$ donde: $B=$
+, $c =$
 ```{r echo=FALSE,results='asis'}
-"$" %_% xm(B, mtype = "bm") %_% "$"
+"$" %_% xm(c, mtype = "bm") %_% "$"
 ```
-y $A=$
-```{r echo=FALSE,results='asis'}
-"$" %_% xm(A, mtype = "bm") %_% "$"
-```
-
-## Ejercicio 8
-
-```{r echo=FALSE,results='asis'}
-A<- matrix(c(2,-1,-1,1),2,2)
-B<- matrix(c(0.5,-1,0.5,1),2,2)
-W5<- matrix(c(1,1,1,2),2,2)
-U5<-matrix(c(1,3),2,1)
-```
-
-
-Dado $Y\sim N_2($
-```{r echo=FALSE,results='asis'}
-"$" %_% xm(U5, mtype = "bm")  %_% "$"
-```
-, 
-```{r echo=FALSE,results='asis'}
-"$" %_% xm(W5, mtype = "bm") %_% "$"
-```
-$)$, con: $B=$
-```{r echo=FALSE,results='asis'}
-"$" %_% xm(B, mtype = "bm") %_% "$"
-```
-y $A=$
-```{r echo=FALSE,results='asis'}
-"$" %_% xm(A, mtype = "bm") %_% "$"
-```
-
-a. Probar si la forma linear $BY$ es independiente de la forma cuadrática $Y´AY$.
-b. Determinar la distribución de la forma cuadrática $Y´AY$.
-
-## Ejercicio 9
-
-```{r echo=FALSE,results='asis'}
-A9<- matrix(c(3,0.5,0.5,2),2,2)
-B9<- matrix(c(2,-1,-1,1),2,2)
-W9<- matrix(c(1,1,1,2),2,2)
-```
-
-Con $Y$ y $\sum$ como en el ejercicio anterior, establezca si las formas cuadráticas $Y´BY$ e $Y´AY$ son independientes, donde: $B=$
-```{r echo=FALSE,results='asis'}
-"$" %_% xm(B9, mtype = "bm") %_% "$"
-```
-y $A=$
-```{r echo=FALSE,results='asis'}
-"$" %_% xm(A9, mtype = "bm") %_% "$"
-```
-
-## Ejercicio 10
-
-El estadístico $T$ para la prueba de hipótesis de diferencia de medias está dado por:
-$$T=\frac{(\overline{X}_1-\overline{X}_2)-(\mu_1-\mu_2)}{\sqrt[2]{S_P^2(\frac{1}{n_1}+\frac{1}{n_2}) }}$$
-a. Demuestre que este estadístico tiene distribución *t-Student* con $(n_1+n_2-2)$ grados de libertad cuando $(\overline{X}_1-\overline{X}_2)$ es obtenida a partír de muestras aleatorias simples e independientes de tamaños $n_1$ y $n_2$, de poblaciones normales con idéntica varianza ($\sigma^2$)y esperanzas $\mu_1$ y $\mu_2$.
-b.  Demostrar que: $S^2_p={\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}}$ es un estimador insesgado de $\sigma^2$.
-
-## Ejercicio 11
-
-El estadístico $F$ para la prueba de hipótesis de igualdad de varianzas está dado por:
-$$F= \frac{S_1^2/\sigma_1^2}{S_1^2/\sigma_1^2}$$
-Demuestre que este estadístico tiene distribución F con $(n_1-n_2-1)$ grados de libertad cuando las muestras aleatorias son independientes de tamaños $n_1$ y $n_2$ provenientes de poblaciones normales
-
-
-
-
-
