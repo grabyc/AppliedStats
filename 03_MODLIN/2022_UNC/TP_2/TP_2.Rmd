@@ -1,0 +1,97 @@
+---
+title:  'Curso Modelos Lineales'
+subtitle: <h1>Magister en Estadística Aplicada</h1>
+author:
+- UNC 2022
+date: "Guia de Actividades II"
+output: 
+  rmdformats::readthedown
+code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA, background = NA, results='asis', warning=FALSE)
+```
+
+## Ejercicio 1
+En el ejercicio 6 de la Guía 1 la función de densidad multivariada está dada por
+
+$$
+\begin{aligned}
+f(\mathbf{X}) = (2\pi)^{-1} |\Sigma|^{-\frac {1} {2}} 
+e^{-\frac {1} {2} \big[(\mathbf{X} - \boldsymbol{\mu})' \Sigma^{-1} (\mathbf{X} - \boldsymbol{\mu})\big]}   
+\end{aligned}
+$$
+donde $Q = (\mathbf{X} - \boldsymbol{\mu})' \Sigma^{-1} (\mathbf{X} - \boldsymbol{\mu})$ es una forma cuadrática que mide el cuadrado de la distancia entre cada punto del plano y el vector de medias $\mu$. Encontrar la distribución de dicha forma cuadrática.
+
+Se tiene de Ej. 06 de la Guía 1
+
+$$
+\begin{aligned}
+  X \sim N_2(
+          \mu = \begin{bmatrix} 1 \\ 2 \end{bmatrix},
+          \Sigma = \begin{bmatrix} 3 & 1 \\ 1 & 3 \end{bmatrix})
+\end{aligned}
+$$
+ 
+Si se considera $Y = X - \mu$, entonces
+
+$$
+\begin{aligned}
+  Y \sim N_2(
+          \mu = \begin{bmatrix} 0 \\ 0 \end{bmatrix},
+          \Sigma = \begin{bmatrix} 3 & 1 \\ 1 & 3 \end{bmatrix})
+\end{aligned}
+$$
+
+Luego
+
+$$
+  Q = (X - \mu)' \Sigma^{-1} (X - \mu) = Y' \Sigma^{-1} Y  
+$$
+Por otro lado, se conoce
+
+> Si $Y \sim N(\mu, \Sigma)$ y $A$ es simétrica de rango k y $A \Sigma$ es idempotente, entonces $Y'AY$ se distribuye como una Chi-cuadrado no central con $rango(A)$ como grados de libertad y parámetro de no centralidad $\lambda = \frac {1} {2} \mu' A \mu$
+
+Se sabe que $\Sigma^{-1}$ es simétrica. Si
+
+$$
+\begin{aligned}
+  A &= \Sigma^{-1} \\
+  A \Sigma &= \Sigma^{-1} \Sigma = I \qquad \therefore \qquad A \Sigma \text{ es idempotente} 
+\end{aligned}
+$$
+
+De esta manera $Q = Y' \Sigma^{-1} Y$ cumple las condiciones para la distribución Chi-cuadrado no central con los siguientes parámetros
+
+$$
+\begin{aligned}
+  gl &= r(\Sigma^{-1}) = 2 \\
+  \lambda &= \frac {1} {2} \mu' A \mu =
+      \frac {1} {2} 
+      \begin{bmatrix} 0 & 0 \end{bmatrix}
+      \begin{bmatrix} 3 & 1 \\ 1 & 3 \end{bmatrix}^{-1}
+      \begin{bmatrix} 0 \\ 0 \end{bmatrix} = 0 \\
+ Q = (X - \mu)' \Sigma^{-1} (X - \mu) &\sim \chi^2_2
+\end{aligned}
+$$
+
+
+## Ejercicio 2
+
+
+## Ejercicio 3
+
+
+
+
+## Ejercicio 4
+
+
+
+
+## Ejercicio 5 
+
+
+## Ejercicio 6
+
